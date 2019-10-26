@@ -27,7 +27,7 @@
              <tr>
                  <td colspan="2"><?php echo htmlspecialchars($active[2]. " ".$active[3]);  ?></td>
                 <td>
-                    <a href='?action=patient_page=<?php echo $active[0]; ?>' class="select_btn">Select</a>
+                    <a href='?action=patient_page'value='<?php echo $active[0]; ?>'class="select_btn">Select</a>
                
                 </td>
              </tr>

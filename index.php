@@ -101,7 +101,7 @@ switch ($action){
     
     case 'patient_page':
         
-        
+        include 'view/patientPage.php';
         
         die();
         break;
