@@ -2,7 +2,7 @@
     <!-- These links are for testing only.
          Remove them from a production application. -->
 <!--    <h2>Links</h2>-->
-    <ul>
+    <ul class="profileNav">
         <li>
             <a href="?action=default">LogOut</a>
         </li>

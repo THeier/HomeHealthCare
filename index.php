@@ -31,6 +31,8 @@ if ($action == NULL){
       }
 }
 
+//$_SESSION['usnm']=$uName;
+
 switch ($action){
     case 'login':
         // sends user to login page
@@ -107,6 +109,18 @@ switch ($action){
         
         include 'view/patientPage.php';
         
+        die();
+        break;
+    
+     case 'home':
+        $aUser =user_db::get_userInfo($_SESSION['usnm']);
+        $_SESSION['id']=$aUser->getUserID();
+               
+        $userid = user_db::select_userid($_SESSION['usnm']);
+        $endDate =NULL;
+        $p =patient_db::select_patients($userid, $endDate); 
+
+        include 'view/userProfile_view.php';
         die();
         break;
         

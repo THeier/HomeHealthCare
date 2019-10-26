@@ -1,9 +1,10 @@
 
 <?php include 'view/header.php'; ?>
-<?php include 'view/sidebar_profile.php'; ?>
+ <?php include 'view/sidebar_profile.php'; ?>
 
 <div class="row">
     <div class="column">
+       
         <h2 class="cardh2"><?php echo htmlspecialchars("Welcome" . " " . $_SESSION['fname'] . " " . $_SESSION['lname']); ?></h2> 
         <div class="card">
             <img src="<?php echo $_SESSION['pic']; ?>" alt="picture" style="width: 100%"/>
