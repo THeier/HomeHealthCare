@@ -27,7 +27,7 @@ $action = filter_input(INPUT_POST, 'action');
 if ($action == NULL){
     $action = filter_input(INPUT_GET, 'action');
         if ($action == NULL){
-         $action = 'login_user';
+         $action = 'login';
       }
 }
 
@@ -98,6 +98,14 @@ switch ($action){
         include 'view/login_view.php';
         die();
         break;
+    
+    case 'patient_page':
+        
+        
+        
+        die();
+        break;
+        
         
     default :
         

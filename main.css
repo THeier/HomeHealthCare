@@ -32,9 +32,9 @@ main {
 
 }
 aside {
-    float: left;
+    display: block;
     width: 100px;
-    margin-top: 40px;
+    
 }
 section {
     float: left;
@@ -43,10 +43,16 @@ section {
 }
 .column{
   float: left;
-  width: 40%; 
+  width: 50%; 
+  margin-left: 10px;
+  margin-top: 35px;
 }
 .column1{
+    float: right;
+    width: auto;
+    margin-right: 10px;
     column-count: 1;
+    margin-top: 75px;
 }
 /* Clear floats after the columns */
 .row:after {
@@ -80,13 +86,23 @@ p {
 }
 ul {
     list-style-type: none;
-    padding-left: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+aside{
+    float: left;
+    display: inline-block;
 }
 li {
+    float: left;
     padding-bottom: .5em;
-    margin-bottom: 5px;
+    
 }
-a {
+li a {
+    display: block;
+    padding: 8px;
     color: rgb(41, 64, 124);
     font-weight: bold;
 }

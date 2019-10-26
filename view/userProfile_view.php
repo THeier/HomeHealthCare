@@ -27,9 +27,8 @@
              <tr>
                  <td colspan="2"><?php echo htmlspecialchars($active[2]. " ".$active[3]);  ?></td>
                 <td>
-                    <a href='index.php?edit=<?php echo $active[0]; ?>' class="edit_btn">Edit</a>
-                
-                    <a href='index.php?update=<?php echo $active[0]; ?>' class="update_btn">Update</a>
+                    <a href='?action=patient_page=<?php echo $active[0]; ?>' class="select_btn">Select</a>
+               
                 </td>
              </tr>
            <?php endforeach; ?>  
