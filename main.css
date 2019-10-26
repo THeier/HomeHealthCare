@@ -101,8 +101,9 @@ li {
     
 }
 li a {
-    display: block;
+    display: inline;
     padding: 8px;
+    width: 60px;
     color: rgb(41, 64, 124);
     font-weight: bold;
 }
@@ -162,4 +163,37 @@ table td{
 table th{
     margin-bottom: 2px;
     text-align: left;
+}
+
+
+dl {
+  width: 60%;
+  overflow: hidden;
+  background: #ff0;
+  padding: 0;
+  margin: 0;
+  margin-bottom: .5em;
+  margin-top: .5em;
+  margin-left: 2px;
+}
+dt {
+  float: left;
+  width: 40%;
+  /* adjust the width; make sure the total of both is 100% */
+  background: #ccc;
+  padding: 0;
+  margin: 0;
+/*  margin-bottom: .1em;
+  margin-top: .1em;*/
+}
+dd {
+  float: left;
+  width: 20%;
+  /* adjust the width; make sure the total of both is 100% */
+  background: #dd0;
+  padding: 0;
+  margin: 0;
+}
+.patientInfo{
+    margin-top: 0;
 }

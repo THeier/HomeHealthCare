@@ -101,6 +101,10 @@ switch ($action){
     
     case 'patient_page':
         
+//        $pid= filter_input(INPUT_POST, $action[0]);
+//        $uid= $userid;
+//        $aPatient = patient_db::selectPatient($pid, $uid);
+        
         include 'view/patientPage.php';
         
         die();

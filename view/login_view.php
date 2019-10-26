@@ -56,5 +56,8 @@ if (!isset($loginErr)) {
             <label>&nbsp;</label><br>
             <input type="submit" value="Login">
     </form> 
+    <a href="view/patientPage.php">Patient Page</a><br>
+    <a href='view/register_view.php'>Register</a><br>
+    <a href="view/userProfile_view.php">User Profile Page</a><br>
 </section>
 <?php include 'view/footer.php'; ?>
