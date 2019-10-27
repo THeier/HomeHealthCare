@@ -10,7 +10,10 @@
             <a href="?action=charts">Charts</a>
         </li>
         <li>
-            <a href="?action=patients">Patients</a>
+            <a href="?action=patients">Add Patients</a>
+        </li>
+        <li>
+            <a href="?action=patients">Add Patients</a>
         </li>
         
     </ul>
