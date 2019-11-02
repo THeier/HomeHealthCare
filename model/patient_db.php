@@ -57,5 +57,9 @@ class patient_db {
         
         
     }
+    // sql to select patient address by id
+    // sql to select pateint med by id 
+    
+    
 
 }

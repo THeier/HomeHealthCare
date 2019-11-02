@@ -77,8 +77,9 @@ switch ($action){
     
     case 'login_user':
         
-        $urName = filter_input(INPUT_POST, 'userName');
+        //add if statement to add if no validation error occur
         
+        $urName = filter_input(INPUT_POST, 'userName');
         $aUser =user_db::get_userInfo($urName);
         $_SESSION['uid']=$aUser->getUserID();
         $_SESSION['fName']=$aUser->getFName();
@@ -138,11 +139,10 @@ switch ($action){
         $patientid =filter_input(INPUT_POST, 'pid');
         $userid =$_SESSION['uid'];
         $aPatient = patient_db::select_patient($patientid, $userid);
-        $_SESSION['patient']=$aPatient;
-                    
-        var_dump($aPatient);
-        var_dump($patientid);
-        var_dump($userid);
+                           
+//        var_dump($aPatient);
+//        var_dump($patientid);
+//        var_dump($userid);
         include 'view/patientPage.php';
         
         die();
@@ -157,13 +157,20 @@ switch ($action){
         $t =$_SESSION['type'];
         $userpic =$_SESSION['pic'];
         
-        unset($_SESSION['patient']);
-        var_dump($_SESSION['patient']);
+        
+        //var_dump($_SESSION['patient']);
         $userid = user_db::select_userid($un); 
         $endDate =NULL;
-        $ptnt =patient_db::select_patients($id, $endDate); 
+        $pats =patient_db::selectPatients($userid); 
 
         include 'view/userProfile_view.php';
+        die();
+        break;
+    
+    case 'charts':
+        
+        include 'view/chartsView.php';
+        
         die();
         break;
         

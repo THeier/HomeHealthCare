@@ -4,30 +4,29 @@
 */
 /* the styles for the HTML elements */
 html {
+    width: 100%;
 /*    background-color: #253451;*/
 }
 body {
+    font-size: 100%;
+    vertical-align: baseline;
     font-family: Arial, Helvetica, sans-serif;
-    width: 800px;
-    margin: 0 auto;
-    padding: 0 2em;
+    text-align: center;
+    width: auto;
     background-color: white;
-/*    border: 1px solid black;
-    border-radius: 25px;*/
+
 }
+
 header {
-    background: url('CAREGiver.jpg');
-    background-repeat: no-repeat;
-/*    background-size: 300px 180px;*/
-    background-position: center;
-    margin-top: 10px;
-    width: 800px;
-    height: 175px;
-    border-bottom: 2px solid black;
-    padding: .5em 0;
+    width: 100%;
+    height:auto;
 }
 header h1 {
     color: black;
+}
+.chart{
+    margin: auto;
+    width: 800px;
 }
 .loginPage{
     display: table;
@@ -40,6 +39,7 @@ header h1 {
     text-align: center;
     vertical-align: top;
 }
+.field_set{}
 /*aside {
     display: block;
     width: 100px;
