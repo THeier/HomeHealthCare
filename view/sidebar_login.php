@@ -3,13 +3,16 @@
          Remove them from a production application. -->
     
     <ul>
-        
-        <li class="login">
-            <a href="register_view.php">Register</a>
+        <li>
+            <a href="?action=default">Contact Us</a>
         </li>
         <li>
-            <a href="?action=default">LogOut</a>
+            <a href="?action=default">About Us</a>
         </li>
+        <li class="nav">
+            <a href="?action=register">Register</a>
+        </li>
+        
     </ul>
     
 </aside>

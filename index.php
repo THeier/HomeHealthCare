@@ -17,13 +17,18 @@ if (!isset($loginUser)){
     $loginUser[] ='';
 }
 
+if (!isset($_SESSION['user'])){
+    $_SESSION['user']='';
+}
 $_SESSION['user']=$loginUser;
 
-//$_SESSION['uid'] =$uid;
+if(!isset($_SESSION['patient'])){
+$_SESSION['patient']='';
+}
 if (!isset($_SESSION['uid'])) {
     $_SESSION['uid'] = '';
 }
-if (!isset($_SESSION['username'])) {
+if (!isset($_SESSION['userName'])) {
     $_SESSION['username'] = '';
 }
 if (!isset($_SESSION['fName'])) {
@@ -32,6 +37,14 @@ if (!isset($_SESSION['fName'])) {
 if (!isset($_SESSION['lName'])) {
     $_SESSION['lname'] = '';
 }
+if (!isset($_SESSION['type'])) {
+    $_SESSION['type'] = '';
+}
+if (!isset($_SESSION['pic'])) {
+    $_SESSION['pic'] = '';
+}
+
+
 
 require_once ('model/database.php');
 require_once('model/database_oo.php');
@@ -57,7 +70,6 @@ switch ($action){
     case 'login':
         // sends user to login page
            
-        //var_dump($action);
         include 'view/login_view.php';
         
         die();
@@ -65,30 +77,32 @@ switch ($action){
     
     case 'login_user':
         
-        $uName = filter_input(INPUT_POST, 'userName');
-        $aUser =user_db::get_userInfo($uName);
-        $id=$aUser->getUserID();
-        $fname=$aUser->getFName();
-        $lname=$aUser->getLName();
-        $email=$aUser->getUserName();
-        $type=$aUser->getUserType();
-        $pic=$aUser->getFilePath();
-        array_push($_SESSION['user'], $id, $fname, $lname, $email, $type, $pic);
+        $urName = filter_input(INPUT_POST, 'userName');
         
-        $userid = user_db::select_userid($uName);
+        $aUser =user_db::get_userInfo($urName);
+        $_SESSION['uid']=$aUser->getUserID();
+        $_SESSION['fName']=$aUser->getFName();
+        $_SESSION['lName']=$aUser->getLName();
+        $_SESSION['userName']=$aUser->getUserName();
+        $_SESSION['type']=$aUser->getUserType();
+        $_SESSION['pic']=$aUser->getFilePath();
+        $userid=$_SESSION['uid'];
+        $fn =$_SESSION['fName'];
+        $ln =$_SESSION['lName'];
+        $un =$_SESSION['userName'];
+        $t =$_SESSION['type'];
+        $userpic =$_SESSION['pic'];
+        $begDate= date('Y-m-d');
+        $endDate = NULL;
+        array_push($_SESSION['user'], $userid, $fn, $ln, $un, $t, $begDate, $endDate, $userpic);
         
-        //$fullName = $_SESSION['fname'].' '.$_SESSION['lname'];
-        // get user patient list 
-       $endDate =NULL;
-       $p =patient_db::select_patients($userid, $endDate); 
-//       var_dump($uName);  
-//       var_dump($p);
-//       var_dump($aUser);
+        $pats = patient_db::selectPatients($userid);
+        //var_dump($pats);
+       
         include 'view/userProfile_view.php';
         die();
         break;
-        
-        
+               
     
      case 'register':
         // sends user to home page
@@ -100,12 +114,12 @@ switch ($action){
          
     case 'register_user':
         
-        // add validation for user information
+        // add validation (page) for user information
         // add user info to database
         $begDate = date('y-m-d');
         $fName = filter_input(INPUT_POST, 'fName');
         $lName = filter_input(INPUT_POST, 'lName');
-        // email address is used as user name
+        // email is the user name
         $userName = filter_input(INPUT_POST, 'userName');
         $password = filter_input(INPUT_POST, 'password');
         $userType = filter_input(INPUT_POST, 'serviceType');
@@ -114,7 +128,6 @@ switch ($action){
         $_SESSION['userType'] =$userType;
         user_db::insert_user($fName, $lName, $userName, $password, $userType, $begDate);      
         
-        //var_dump($fName,$lName, $userName, $password, $userType, $begDate, $action);
         // sends user to login page
         include 'view/login_view.php';
         die();
@@ -122,10 +135,14 @@ switch ($action){
     
     case 'patient_page':
         
-        $pid= filter_input(INPUT_POST, 'patientID');
-        $aPatient = patient_db::selectPatient($pid, $_SESSION['uid']);
+        $patientid =filter_input(INPUT_POST, 'pid');
+        $userid =$_SESSION['uid'];
+        $aPatient = patient_db::select_patient($patientid, $userid);
+        $_SESSION['patient']=$aPatient;
+                    
         var_dump($aPatient);
-        var_dump($pid);
+        var_dump($patientid);
+        var_dump($userid);
         include 'view/patientPage.php';
         
         die();
@@ -133,17 +150,18 @@ switch ($action){
     
      case 'home':
          
-        $auser =user_db::get_userInfo($_SESSION['username']);
-        $id=$auser->getUserID();
-        $fname=$auser->getFName();
-        $lname=$auser->getLName();
-        $email=$auser->getUserName();
-        $type=$auser->getUserType();
-        $pic=$auser->getFilePath(); 
-       
-        $userid = user_db::select_userid($username); 
+        $id=$_SESSION['uid'];
+        $fn =$_SESSION['fName'];
+        $ln =$_SESSION['lName'];
+        $un =$_SESSION['userName'];
+        $t =$_SESSION['type'];
+        $userpic =$_SESSION['pic'];
+        
+        unset($_SESSION['patient']);
+        var_dump($_SESSION['patient']);
+        $userid = user_db::select_userid($un); 
         $endDate =NULL;
-        $p =patient_db::select_patients($id, $endDate); 
+        $ptnt =patient_db::select_patients($id, $endDate); 
 
         include 'view/userProfile_view.php';
         die();

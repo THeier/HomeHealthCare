@@ -4,7 +4,7 @@
 */
 /* the styles for the HTML elements */
 html {
-    background-color: #253451;
+/*    background-color: #253451;*/
 }
 body {
     font-family: Arial, Helvetica, sans-serif;
@@ -12,8 +12,8 @@ body {
     margin: 0 auto;
     padding: 0 2em;
     background-color: white;
-    border: 1px solid black;
-    border-radius: 25px;
+/*    border: 1px solid black;
+    border-radius: 25px;*/
 }
 header {
     background: url('CAREGiver.jpg');
@@ -98,12 +98,7 @@ h1, h2 {
 p {
     margin: .5em 0;
 }
-ul {
-    list-style-type: none;
-    margin: 10px;
-    padding: 0;
-    overflow: hidden;
-}
+
 .profileNav{
     margin: 10px;
     width: 600px;
@@ -112,12 +107,34 @@ aside{
     margin: .5em;
    display: inline;
 }
+ul {
+    list-style-type: none;
+    margin: 10px;
+    padding: 0;
+    overflow: hidden;
+}
+nav{
+ border:1px solid #ccc;
+    border-width:1px 0;
+    list-style:none;
+    margin:0;
+    padding:0;
+    text-align:center;
+}
+nav li{
+    display:inline;
+}
+nav a{
+    display:inline-block;
+    padding:10px;
+}
 li {
     display: block;
     width: 120px;
-    float: left;
-    margin-left: 2px;
-    border: 1px solid #000;
+    float: right;
+    text-align: center;
+    margin-right: 10px;
+/*    border: 1px solid #000;*/
     
     
     
@@ -226,3 +243,4 @@ dd {
     margin-top: 20px;
     margin-left: 20px;
 }
+.col3{ visibility: collapse }

@@ -12,14 +12,16 @@
  * @author Tania Heieer
  */
 class patient {
-   private $patientID, $userID, $fName, $lName, $dob, $disabled, $deceasedDate, $begDate, $endDate;
+   private $patientID, $userID, $fName, $lName, $dob, $sex, $disabled, $deceasedDate, $begDate, $endDate;
    
-   function __construct($patientID, $userID, $fName, $lName, $dob, $disabled, $deceasedDate, $begDate, $endDate) {
+   function __construct($patientID, $userID, $fName, $lName, $dob, $sex, $disabled, $deceasedDate, $begDate, $endDate) {
+       
        $this->patientID = $patientID;
        $this->userID = $userID;
        $this->fName = $fName;
        $this->lName = $lName;
        $this->dob = $dob;
+       $this->sex = $sex;
        $this->disabled = $disabled;
        $this->deceasedDate = $deceasedDate;
        $this->begDate = $begDate;
@@ -42,6 +44,9 @@ class patient {
        return $this->lName;
    }
 
+   function getSex() {
+       return $this->sex;
+   }
    function getDob() {
        return $this->dob;
    }
@@ -80,6 +85,10 @@ class patient {
 
    function setDob($dob) {
        $this->dob = $dob;
+   }
+   
+   function setSex() {
+       return $this->sex;
    }
 
    function setDisabled($disabled) {

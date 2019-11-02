@@ -4,13 +4,13 @@
 <section>
     <div class="patientInfo">
     <dt>Patient Name: </dt>
-    <dl>name</dl>
+    <dl><?php echo htmlspecialchars($aPatient->getFName(). ' '.$aPatient->getLName()); ?></dl>
     <dt>Address: </dt>
     <dl>address</dl>
     <dt>Phone Number: </dt>
     <dl>402-555-555</dl>
     <dt>Date of Birth: </dt>
-    <dl>10-11-2014</dl>
+    <dl><?php echo date("m-d-Y", strtotime($aPatient->getDob())); ?></dl>
     <dt></dt>
     
 <!-- Need to get user id via patient id to pass back to home case-->

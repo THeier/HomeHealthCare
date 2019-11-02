@@ -5,9 +5,7 @@
  */-->
 <?php
 //set default value for variable for inital page load
-if (!isset($fName)){
-    $fName ='';
-}
+
 if (!isset($userName)) {
     $userName = '';
 }
@@ -32,15 +30,14 @@ if (!isset($loginErr)) {
             <br>
             
             <label>User Name</label>
-            <input type="text" name="userName"
-                   value="<?php echo htmlspecialchars($userName); ?>"><br>
-                          <?php if (!empty($loginErr)) { ?><br>
+            <input type="text" name="userName" value='<?php echo htmlspecialchars($userName) ?>'required>
+                   <?php if (!empty($loginErr)) { ?><br>
                 <span class="error"><?php echo htmlspecialchars($loginErr); ?></span>
                            <?php } ?>
             <br><br>
 
             <label>Password</label>
-            <input type="password" name="pass">
+            <input type="password" name="pass" required>
                     <?php if (!empty($loginErr)) { ?><br><br>
                 <span class="error"><?php echo htmlspecialchars($loginErr); ?></span>
                     <?php } ?>
