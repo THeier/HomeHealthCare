@@ -28,23 +28,41 @@ header h1 {
     margin: auto;
     width: 800px;
 }
-.loginPage{
-    display: table;
-    width: 100%;
-    margin-top: 40px;
-}
-.loginform{
-    
-    display: table-cell;
+/*.loginPage{
+    display: inline-block;
+    margin: 10px 25px 100px 400px; 
+    width: 400px;
     text-align: center;
-    vertical-align: top;
-}
-.field_set{}
-/*aside {
-    display: block;
-    width: 100px;
-    
 }*/
+.loginform{
+    display: inline-block;
+    margin: 10px 25px 100px 400px; 
+    width: 300px;
+    text-align: center;
+    
+}
+#login{
+    float: right; 
+    margin-left: 5px;
+    margin-right: 5px;
+    padding: 3px 3px 3px 3px;
+    
+}
+#loginh2{
+    margin-left: 35px;
+}
+#lglb{
+    margin-right: 1px;
+}
+#lginput{
+    margin-left: 115px;
+}
+
+.field_set{
+    text-align: left;
+    
+}
+
 section {
     float: left;
     width: 500px;
@@ -83,6 +101,10 @@ footer p {
     text-align: right;
     font-size: 80%;
 }
+.footerNav a{
+    display: inline;
+    width: 700px;
+}
 h1 {
     font-size: 150%;
     margin: .5em .2em .25em;
@@ -100,8 +122,9 @@ p {
 }
 
 .profileNav{
-    margin: 10px;
-    width: 600px;
+    
+    margin-right: 250px;
+    width: auto;
 }
 aside{
     margin: .5em;
@@ -113,16 +136,17 @@ ul {
     padding: 0;
     overflow: hidden;
 }
-nav{
+/*nav{
  border:1px solid #ccc;
     border-width:1px 0;
     list-style:none;
     margin:0;
     padding:0;
     text-align:center;
-}
+}*/
 nav li{
-    display:inline;
+    display: inline;
+    width: 30px;
 }
 nav a{
     display:inline-block;
@@ -244,3 +268,39 @@ dd {
     margin-left: 20px;
 }
 .col3{ visibility: collapse }
+
+#ptntProfileUpdateBtns{
+     margin: 80px 50px 50px 50px;
+     padding: 30px;
+}
+#ptntProfileUpdateBtns input{
+    
+    margin-bottom: 15px;
+    width: 200px;
+    font-weight:  bold;
+    
+}
+#patientprofile{
+    
+    margin: 30px 100px 50px 200px;
+    width: 400px;
+    padding: 30px;
+    
+}
+#patientprofile input{
+    display: inline-block;
+    float: right;  
+    margin-right: 50px;
+    padding: 3px 3px 3px 3px;
+}
+#ptntProfilediv{
+    margin: 40px 80px 80px 80px;
+    padding: 30px;
+    
+}
+#pntbutton{
+    padding:  40px;
+}
+td{
+    margin-bottom: 15px;
+}

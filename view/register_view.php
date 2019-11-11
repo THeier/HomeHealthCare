@@ -14,6 +14,7 @@ if (!isset($RegErr)) {$RegErr = '';}
 ?>
 
 <?php include 'view/header.php'; ?>
+<?php include 'view/navigation.php'; ?>
 
 <section>
     <h1 id='regh1'>Register</h1>

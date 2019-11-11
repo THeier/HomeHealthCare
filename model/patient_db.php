@@ -58,8 +58,79 @@ class patient_db {
         
     }
     // sql to select patient address by id
+   
+    public function select_patientAddress($patientid) { 
+        
+        $db = Database::getDB();
+        $query = 'SELECT * FROM patientaddress WHERE patientid =:PatientID';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':PatientID', $patientid);
+        $statement->execute();
+        $results = $statement->fetch();
+        $statement->closeCursor();
+               
+        if (!empty($results)) 
+          {
+            $patAdd = new patientAddress($results['addressID'], 
+                    $results['patientID'], $results['number'],
+                    $results['street'], $results['city'], 
+                    $results['state'], $results['zip']);
+          
+              return $patAdd;
+      }else{
+            return null;
+        }
+    }
+    
+    
     // sql to select pateint med by id 
+     public function select_patientMeds($patientid) { 
+        
+        $db = Database::getDB();
+        $query = 'SELECT * FROM patientmed WHERE patientid =:PatientID';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':PatientID', $patientid);
+        $statement->execute();
+        $results = $statement->fetchAll();
+        $statement->closeCursor();
+               
+        if (!empty($results)) 
+          {
+            foreach ($results as $result){
+            $meds = new patientMedications($result['medID'], 
+                    $result['patientID'], $result['drug'],
+                    $result['quantity'], $result['timesPerDay'], 
+                    $result['medNotes'], $result['begDate'], $result['endDate']);
+            $ptMeds[]=$meds;
+            }
+              return $ptMeds;
+      }else{
+            return null;
+        }
+    }
     
-    
+  
+    public function select_patMed($patientid) { 
+        
+        $db = Database::getDB();
+        $query = 'SELECT * FROM patientmed WHERE patientid =:PatientID';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':PatientID', $patientid);
+        $statement->execute();
+        $results = $statement->fetch();
+        $statement->closeCursor();
+               
+        if (!empty($results)) 
+          {
+                    $med = new patientMedications($results['medID'], 
+                    $results['patientID'], $results['drug'],
+                    $results['quantity'], $results['timesPerDay'], 
+                    $results['medNotes'], $results['begDate'], $results['endDate']);
+        
+              return $med;
+      }else{
+            return null;
+        }
+    }
 
 }

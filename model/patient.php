@@ -13,9 +13,7 @@
  */
 class patient {
    private $patientID, $userID, $fName, $lName, $dob, $sex, $disabled, $deceasedDate, $begDate, $endDate;
-   
-   function __construct($patientID, $userID, $fName, $lName, $dob, $sex, $disabled, $deceasedDate, $begDate, $endDate) {
-       
+     function __construct($patientID, $userID, $fName, $lName, $dob, $sex, $disabled, $deceasedDate, $begDate, $endDate) {
        $this->patientID = $patientID;
        $this->userID = $userID;
        $this->fName = $fName;
@@ -28,7 +26,7 @@ class patient {
        $this->endDate = $endDate;
    }
 
-   function getPatientID() {
+      function getPatientID() {
        return $this->patientID;
    }
 
@@ -47,6 +45,7 @@ class patient {
    function getSex() {
        return $this->sex;
    }
+   
    function getDob() {
        return $this->dob;
    }
@@ -103,8 +102,5 @@ class patient {
        $this->begDate = $begDate;
    }
 
-   function setFullName() {
-       $this->fullName =getFName(). ' '.getLName();
-   }
-    
+      
 }

@@ -1,10 +1,15 @@
 <?php
 
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
+require_once ('model/database.php');
+require_once('model/database_oo.php');
+require_once('model/patient_db.php');
+require_once('model/patientMedications.php');
+require_once('model/patientAddress.php');
+require_once('model/patient.php');
+require_once('model/user_db.php');
+require_once('model/user.php');
+
 
 
 session_start();
@@ -43,15 +48,6 @@ if (!isset($_SESSION['type'])) {
 if (!isset($_SESSION['pic'])) {
     $_SESSION['pic'] = '';
 }
-
-
-
-require_once ('model/database.php');
-require_once('model/database_oo.php');
-require_once('model/patient_db.php');
-require_once('model/patient.php');
-require_once('model/user_db.php');
-require_once('model/user.php');
 
 
 
@@ -135,11 +131,51 @@ switch ($action){
         break;
     
     case 'patient_page':
-        
+        // patient profile page  
         $patientid =filter_input(INPUT_POST, 'pid');
         $userid =$_SESSION['uid'];
         $aPatient = patient_db::select_patient($patientid, $userid);
-                           
+        // get patient address make session varibles to use with update
+        // handle when $address is null
+        $address = patient_db::select_patientAddress($patientid);
+        if (!empty($address)) {
+            $number = $address->getNumber();
+            $street = ucfirst($address->getStreet());
+            $city = ucfirst($address->getCity());
+            $st = ucfirst($address->getState());
+            $zip = $address->getZip();
+            $fullstreet = $number . ' ' . $street;
+        } else {
+            $number = '';
+            $street = '';
+            $city = '';
+            $st = '';
+            $zip = '';
+            $fullstreet = '';
+        }
+        //$patMeds = patient_db::select_patientMeds($patientid);
+//        $meds ="";
+//        If(!empty($patMeds)){
+//            $meds= true;
+//            return $meds;
+//        }else{
+//            $meds = false;
+//            return $meds;
+//            
+//        }
+//        $_SESSION['med']=$meds;
+//        $amed = patient_db::select_patMed($patientid);
+        // caluate age with dob
+        // author:  Tim
+        // title:  PHP: Calculating a person’s 
+        // age from their date of birth. 
+        // website: https://thisinterestsme.com/php-calculate-age-date-of-birth/
+          
+        $today = time();
+        $dob = strtotime($aPatient->getDob());
+        $todaysAge = $today - $dob;
+        $age =floor($todaysAge/ 31556926);     
+             
 //        var_dump($aPatient);
 //        var_dump($patientid);
 //        var_dump($userid);
@@ -148,7 +184,33 @@ switch ($action){
         die();
         break;
     
+    case 'demographic':
+        
+        //allows the user to update a patients demographic information
+       
+        $patientid =filter_input(INPUT_POST, 'pid');
+        $userid =$_SESSION['uid'];
+        $aPatient = patient_db::select_patient($patientid, $userid);
+        $fname =$aPatient->getFName();
+        $lname =$aPatient->getLName();
+        $dob =$aPatient->getDob();
+        $adob = date("m-d-Y", strtotime($dob));
+        $sex =$aPatient->getSex();
+        $edate =$aPatient->getEndDate();
+        
+        // add validation to date format
+        // add validation for sex
+               
+//        var_dump($aPatient);
+//        var_dump($patientid);
+//        var_dump($userid);
+        include 'view/demographicUpdate.php';
+        
+        die();
+        break;
+    
      case 'home':
+        // takes the logged in user to their profile page 
          
         $id=$_SESSION['uid'];
         $fn =$_SESSION['fName'];
@@ -156,8 +218,7 @@ switch ($action){
         $un =$_SESSION['userName'];
         $t =$_SESSION['type'];
         $userpic =$_SESSION['pic'];
-        
-        
+                
         //var_dump($_SESSION['patient']);
         $userid = user_db::select_userid($un); 
         $endDate =NULL;

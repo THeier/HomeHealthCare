@@ -1,11 +1,5 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of patientMedications
  *
@@ -13,14 +7,18 @@
  */
 class patientMedications {
    
-    private $medID, $patientID, $drug, $quanity, $timesPerDay;
+    private $medID, $patientID, $drug, $quanity, $timesPerDay, $medNotes, $begDate, $endDate;
     
-    function __construct($medID, $patientID, $drug, $quanity, $timesPerDay) {
+    function __construct($medID, $patientID, $drug, $quanity, $timesPerDay, $medNotes, $begDate, $endDate) {
         $this->medID = $medID;
         $this->patientID = $patientID;
         $this->drug = $drug;
         $this->quanity = $quanity;
         $this->timesPerDay = $timesPerDay;
+        $this->medNotes = $medNotes;
+        $this->begDate =$begDate;
+        $this->endDate =$endDate;
+        
     }
     function getMedID() {
         return $this->medID;
@@ -61,6 +59,30 @@ class patientMedications {
     function setTimesPerDay($timesPerDay) {
         $this->timesPerDay = $timesPerDay;
     }
+
+    function getMedNotes() {
+        return $this->medNotes;
+    }
+
+    function setMedNotes($medNotes) {
+        $this->medNotes = $medNotes;
+    }
+    function getBegDate() {
+        return $this->begDate;
+    }
+
+    function getEndDate() {
+        return $this->endDate;
+    }
+
+    function setBegDate($begDate) {
+        $this->begDate = $begDate;
+    }
+
+    function setEndDate($endDate) {
+        $this->endDate = $endDate;
+    }
+
 
 
 }

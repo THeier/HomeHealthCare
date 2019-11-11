@@ -18,7 +18,7 @@ if (!isset($loginErr)) {
 ?>
 
 <?php include 'view/header.php'; ?>
-<?php include 'view/sidebar_login.php'; ?>
+<?php include 'view/navigation.php'; ?>
  <h2> <?php if ($userName != ''){ ?>
         <span><?php echo htmlspecialchars('Thank you for registering '.$fName) ?></span>
     <?php } ?>
@@ -28,23 +28,22 @@ if (!isset($loginErr)) {
             <input type="hidden" name="action" value="login_user" />
             <h2 id="loginh2"><?php echo htmlspecialchars('Login Page') ?></h2>
             <br>
-            
-            <label>User Name</label>
-            <input type="text" name="userName" value='<?php echo htmlspecialchars($userName) ?>'required>
+            <label id="lglb">User Name: </label>
+            <input id="login" type="text" name="userName" value='<?php echo htmlspecialchars($userName) ?>'required>
                    <?php if (!empty($loginErr)) { ?><br>
                 <span class="error"><?php echo htmlspecialchars($loginErr); ?></span>
                            <?php } ?>
             <br><br>
 
-            <label>Password</label>
-            <input type="password" name="pass" required>
+            <label id="lglb">Password: </label>
+            <input id="login" type="password" name="pass" required>
                     <?php if (!empty($loginErr)) { ?><br><br>
                 <span class="error"><?php echo htmlspecialchars($loginErr); ?></span>
                     <?php } ?>
             <br><br>
 
             <label>&nbsp;</label><br>
-            <input type="submit" value="Login">
+            <input id="lginput" type="submit" value="Login">
     </form> 
 </section>
 

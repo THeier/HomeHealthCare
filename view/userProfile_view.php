@@ -14,7 +14,7 @@ if (!isset($patID)) {
 
 
 <?php include 'view/header.php'; ?>
-<?php include 'view/sidebar_profile.php'; ?>
+<?php include 'view/navigation.php'; ?>
 
 
 <div class="row">
@@ -39,7 +39,7 @@ if (!isset($patID)) {
                     <th colspan="1">Name</th>
                     <th colspan="2">Action</th>
                 </tr>
-                 <?php foreach ($pats as $p) : ?> 
+                 <?php foreach ($pats as $p) : ?>  
                 <tr>
                      <td colspan="2"><?php echo htmlspecialchars($p->getFName(). " " .$p->getLName()); ?></td>
                      <td><form action="index.php" method="POST">                
@@ -48,10 +48,11 @@ if (!isset($patID)) {
                          <input type="hidden" name="pid"
                                 value="<?php echo htmlspecialchars($p->getPatientID()); ?>">
                          <input type="submit" value="Select">
-                     </form></td>
-                   
-                    </tr>
-                 <?php endforeach; ?>  
+                  
+                     </form>
+                     </td>
+                </tr>
+                <?php endforeach; ?>   
             </table>
 </div>  
     </form>          
