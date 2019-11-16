@@ -1,6 +1,41 @@
 <?php
 
 class patient_db {
+    
+       function insert_patient($patientID, $userID, $fName, $lName, $dob, $sex, $disabled, $deceasedDate, $begDate){
+        $db = database::getDB();
+        $query = 'insert into user(fname, lname, userName, password, userType, begDate, filePath)'
+                 .'VALUES (:fName, :lName, :userName, :password, :userType, :begDate, :filePath)';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':fName',$fName);
+        $statement->bindValue(':lName',$lName);
+        $statement->bindValue(':userName',$userName);
+        $statement->bindValue(':password',$password);
+        $statement->bindValue(':userType',$userType);
+        $statement->bindValue(':begDate', $begDate);
+        $statement->bindValue(':filePath', 'images/default avatar.jpg');
+        $statement->execute();
+        $statement->closeCursor();
+                
+    }
+    
+    function update_patient($patientID, $userID, $fName, $lName, $dob, $sex, $disabled, $deceasedDate, $begDate, $endDate){
+        $db = database::getDB();
+        $query = 'insert into user(fname, lname, userName, password, userType, begDate, filePath)'
+                 .'VALUES (:fName, :lName, :userName, :password, :userType, :begDate, :filePath)';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':fName',$fName);
+        $statement->bindValue(':lName',$lName);
+        $statement->bindValue(':userName',$userName);
+        $statement->bindValue(':password',$password);
+        $statement->bindValue(':userType',$userType);
+        $statement->bindValue(':begDate', $begDate);
+        $statement->bindValue(':filePath', 'images/default avatar.jpg');
+        $statement->execute();
+        $statement->closeCursor();
+                
+    }
+    
 
     public function select_patient($patientid, $userid) { 
         
@@ -15,12 +50,12 @@ class patient_db {
                
         if (!empty($results)) 
           {
-            $pat = new patient($results['patientID'], $results['userID'], $results['fName'],
+            $pats = new patient($results['patientID'], $results['userID'], $results['fName'],
                     $results['lName'], $results['dob'], $results['sex'], $results['disabled'], 
                     $results['deceasedDate'], $results['begDate'], $results['endDate']);
             
             
-              return $pat;
+              return $pats;
       }else{
             return null;
         }
@@ -74,7 +109,8 @@ class patient_db {
             $patAdd = new patientAddress($results['addressID'], 
                     $results['patientID'], $results['number'],
                     $results['street'], $results['city'], 
-                    $results['state'], $results['zip']);
+                    $results['state'], $results['zip'], 
+                    $results['email']);
           
               return $patAdd;
       }else{

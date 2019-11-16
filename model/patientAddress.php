@@ -12,9 +12,9 @@
  * @author Tania Heieer
  */
 class patientAddress {
-    private $addressID, $patientID, $number, $street, $city, $state, $zip;
+    private $addressID, $patientID, $number, $street, $city, $state, $zip, $email;
     
-    function __construct($addressID, $patientID, $number, $street, $city, $state, $zip) {
+    function __construct($addressID, $patientID, $number, $street, $city, $state, $zip, $email) {
         $this->addressID = $addressID;
         $this->patientID = $patientID;
         $this->number = $number;
@@ -22,6 +22,7 @@ class patientAddress {
         $this->city = $city;
         $this->state = $state;
         $this->zip = $zip;
+        $this->email = $email;
     }
     
     function getAddressID() {
@@ -79,6 +80,14 @@ class patientAddress {
     function setZip($zip) {
         $this->zip = $zip;
     }
+    function getEmail() {
+        return $this->email;
+    }
+
+    function setEmail($email) {
+        $this->email = $email;
+    }
+
 
 
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 12, 2019 at 11:46 PM
+-- Generation Time: Nov 16, 2019 at 06:35 PM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.2
 
@@ -36,11 +36,22 @@ CREATE TABLE `patient` (
   `fName` varchar(50) NOT NULL,
   `lName` varchar(50) NOT NULL,
   `dob` date NOT NULL,
+  `sex` varchar(1) NOT NULL,
   `disabled` bit(1) NOT NULL DEFAULT b'0',
   `deceasedDate` date DEFAULT NULL,
   `begDate` date NOT NULL,
   `endDate` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `patient`
+--
+
+INSERT INTO `patient` (`patientID`, `userID`, `fName`, `lName`, `dob`, `sex`, `disabled`, `deceasedDate`, `begDate`, `endDate`) VALUES
+(1, 1, 'Edward', 'Jones', '1939-09-01', 'M', b'0', NULL, '2019-10-02', NULL),
+(2, 1, 'Ethel', 'Howard', '1930-01-02', 'F', b'0', NULL, '2019-08-01', NULL),
+(3, 1, 'Nancy', 'Smith', '1937-10-01', 'F', b'0', NULL, '2019-10-02', NULL),
+(4, 1, 'Ethel', 'Maynard', '1930-11-06', 'F', b'0', NULL, '2019-07-01', NULL);
 
 -- --------------------------------------------------------
 
@@ -84,10 +95,21 @@ CREATE TABLE `user` (
   `lName` varchar(55) NOT NULL,
   `userName` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `userType` varchar(50) NOT NULL,
+  `userType` varchar(100) NOT NULL,
   `begDate` date NOT NULL,
-  `endDate` date DEFAULT NULL
+  `endDate` date DEFAULT NULL,
+  `filePath` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`userID`, `fName`, `lName`, `userName`, `password`, `userType`, `begDate`, `endDate`, `filePath`) VALUES
+(1, 'Joe', 'Jones', 'joe@abc.com', 'pass', 'cna', '2019-10-14', NULL, 'images/default avatar.jpg'),
+(4, 'jane', 'doe', 'janedoe@abc.com', 'pass', 'pas', '2019-10-14', NULL, 'images/default avatar.jpg'),
+(8, 'Tania', 'Heier', 'theier@abc.com', 'pass', 'cma', '2019-10-14', NULL, 'images/default avatar.jpg'),
+(13, 'jim', 'jim', 'jim@abc.com', 'pass', 'cma', '2019-10-21', NULL, 'images/default avatar.jpg');
 
 -- --------------------------------------------------------
 
@@ -149,31 +171,13 @@ ALTER TABLE `userbio`
 -- AUTO_INCREMENT for table `patient`
 --
 ALTER TABLE `patient`
-  MODIFY `patientID` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `patientaddress`
---
-ALTER TABLE `patientaddress`
-  MODIFY `addressID` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `patientmed`
---
-ALTER TABLE `patientmed`
-  MODIFY `medID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `patientID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `userbio`
---
-ALTER TABLE `userbio`
-  MODIFY `userBioID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Constraints for dumped tables

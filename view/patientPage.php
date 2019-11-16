@@ -18,20 +18,21 @@
 
         <fieldset class="field_set">
             <legend><b>Personal Information</b></legend>
-            Name: <?php echo htmlspecialchars($aPatient->getFName() . ' ' . $aPatient->getLName()); ?><br>
-            Age: <?php echo htmlspecialchars($age); ?><br>
-            Date of Birth: <?php echo date("m-d-Y", strtotime($aPatient->getDob())); ?><br>
-            Gender: <?php echo htmlspecialchars($aPatient->getSex()); ?><br>
+            Name:&nbsp;<?php echo htmlspecialchars($aPatient->getFName() . ' ' . $aPatient->getLName()); ?><br>
+            Age:&nbsp;<?php echo htmlspecialchars($age); ?><br>
+            Date of Birth:&nbsp;<?php echo date("m-d-Y", strtotime($aPatient->getDob())); ?><br>
+            Gender: &nbsp;<?php echo htmlspecialchars($aPatient->getSex()); ?><br>
             
         </fieldset><br>
         <!-- Conditionally display
         -- these last two sections -->
         <fieldset class="field_set">
             <legend><b>Address</b></legend>
-            Street: <?php echo htmlspecialchars($fullstreet) ; ?><br>
-            City: <?php echo htmlspecialchars($city)  ; ?><br>
-            State: <?php echo htmlspecialchars($st)  ; ?><br>
-            Zip Code:<?php echo htmlspecialchars($zip)  ; ?><br>
+            Street:&nbsp;<?php echo htmlspecialchars($fullstreet) ; ?><br>
+            City:&nbsp;<?php echo htmlspecialchars($city)  ; ?><br>
+            State:&nbsp;<?php echo htmlspecialchars($st)  ; ?><br>
+            Zip Code:&nbsp;<?php echo htmlspecialchars($zip)  ; ?><br>
+            Email:&nbsp;<?php echo htmlspecialchars($email); ?>  
         </fieldset><br>
         
         <fieldset class="field_set">

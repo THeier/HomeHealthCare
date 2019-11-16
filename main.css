@@ -60,33 +60,30 @@ header h1 {
 
 .field_set{
     text-align: left;
+    margin-bottom: 10px;
     
 }
 
 section {
     float: left;
     width: 500px;
-    height: 500px;
-}
-.column{
-  float: left;
-  width: 50%; 
-  margin-left: 10px;
-  margin-top: 35px;
-  margin-bottom: 50px;
+    height: auto;
 }
 .column1{
-    float: right;
-    width: auto;
-    margin-right: 10px;
-    column-count: 1;
-    margin-top: 35px;
-    margin-bottom:  50px;
+  width: 300px;
+ 
+}
+.column2{
+
+   
+    width: 300px;
+    margin: 50px;
 }
 .row{
     clear: both;
-}
-/* Clear floats after the columns */
+}/*
+ Clear floats after the columns 
+*/
 .row :after {
   content: "";
   display: table;
@@ -203,14 +200,25 @@ img{
 }
 .card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  max-width: 150px;
-  margin-top: 5px;
-  margin-left: 10px;
+  max-height: 600px;
+  max-width: 200px;
+  margin: 15px;
+  margin-left: 100px;
   text-align: center;
 }
+.cardheader{
+    margin: 25px;
+    text-align: center;
+}
+.card-img-top{
+    width: 50px;
+    height: 150px;
+    margin: 2px;
+    padding: 10px;
+}
 .cardh2{
-    margin-left: 20px;
- 
+    margin: 30px;
+    text-align: center;
 }
 .patientListh2{
     margin-top: .1em;
