@@ -17,7 +17,7 @@
             <a href="?action=charts">Charts</a>
         </li>
         <li class="nav">
-            <a href="?action=patients">Add Patients</a>
+            <a href="?action=addNewPatientPage">Add New Patient</a>
         </li>
         <li class="nav">
              <a href="?action=default">LogOut</a>

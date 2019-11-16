@@ -142,17 +142,18 @@ switch ($action) {
         die();
         break;
 
-    case 'addNewClientPage';
+    case 'addNewPatientPage';
 
         include 'view/addPatient.php';
 
         die();
         break;
 
-    case 'addClient';
+    case 'addPatient';
         // add new client info to the database
         // sends them to the patient profile page
-
+        $f = filter_input(INPUT_POST, 'fnm');
+        $l = filter_input(INPUT_POST, 'lnm');
 
         include 'view/patientPage';
 
