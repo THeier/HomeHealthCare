@@ -22,6 +22,7 @@
             Age:&nbsp;<?php echo htmlspecialchars($age); ?><br>
             Date of Birth:&nbsp;<?php echo date("m-d-Y", strtotime($aPatient->getDob())); ?><br>
             Gender: &nbsp;<?php echo htmlspecialchars($aPatient->getSex()); ?><br>
+            Disabled:  &nbsp;<?php echo htmlspecialchars($aPatient->getDisabled()); ?><br>
             
         </fieldset><br>
         <!-- Conditionally display

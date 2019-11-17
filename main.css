@@ -63,6 +63,9 @@ header h1 {
     margin-bottom: 10px;
     
 }
+#demobtn input{
+    display: inline;
+}
 
 section {
     float: left;

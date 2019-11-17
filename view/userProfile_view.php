@@ -5,7 +5,11 @@
 if (!isset($patID)) {
     $patID = '';
 }
-
+//if (!isset($strU)) {$strU = '';}
+//if (!isset($$userpic)) {$userpic = '';}
+//if (!isset($ut)) {$ut = '';}
+//if (!isset($un)) {$un = '';}
+//if (!isset($pats)) {$pats = array();}
 //var_dump($uName);
 ?>
 
@@ -18,11 +22,11 @@ if (!isset($patID)) {
     
     <div class="column">
         <div class="card">
-            <h5 class="cardheader"><b><?php echo $strU; ?><b></h5>
-            <img class="card-img-top" src="<?php echo $userpic; ?>" alt="Card image">
+            <h5 class="cardheader"><b><?php echo $_SESSION['userFullName']; ?><b></h5>
+            <img class="card-img-top" src="<?php echo $_SESSION['pic']; ?>" alt="Card image">
             <div class="card-body">
-                <h5 class="card-title"><?php echo $ut; ?></h5>
-                <p class="card-text"><?php echo $un; ?></p>
+                <h5 class="card-title"><?php echo $_SESSION['title']; ?></h5>
+                <p class="card-text"><?php echo $_SESSION['userName']; ?></p>
             </div>
         </div>
 
@@ -37,7 +41,7 @@ if (!isset($patID)) {
             <tr>
                 <th colspan="1">Name</th>
                 <th colspan="2">Action</th>
-            </tr>
+            </tr><br>
             <?php foreach($pats as $p) : ?>  
                 <tr>
                     <td colspan="2"><?php echo htmlspecialchars($p->getFName() . " " . $p->getLName()); ?></td>
@@ -46,8 +50,8 @@ if (!isset($patID)) {
                                    value="patient_page">
                             <input type="hidden" name="pid"
                                    value="<?php echo htmlspecialchars($p->getPatientID()); ?>">
-                            <input type="submit" value="Select">
-
+                            <input type="submit" name="select" value="Select">
+                            <input type="submit" name="delete" value="Delete"
                         </form>
                     </td>
                 </tr>

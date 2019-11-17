@@ -36,18 +36,24 @@ if (!isset($_SESSION['userName'])) {
     $_SESSION['username'] = '';
 }
 if (!isset($_SESSION['fName'])) {
-    $_SESSION['fname'] = '';
+    $_SESSION['fName'] = '';
 }
 if (!isset($_SESSION['lName'])) {
-    $_SESSION['lname'] = '';
+    $_SESSION['lName'] = '';
 }
 if (!isset($_SESSION['type'])) {
     $_SESSION['type'] = '';
 }
+if (!isset($_SESSION['title'])) {
+    $_SESSION['title'] = '';
+}
+
+if (!isset($_SESSION['userFullName'])) {
+    $_SESSION['userFullName'] = '';
+}
 if (!isset($_SESSION['pic'])) {
     $_SESSION['pic'] = '';
 }
-
 
 
 
@@ -90,20 +96,11 @@ switch ($action) {
         }else{
             $ut = "Certified Medication Aide";
         }
-        
-        // varibles used to create user session array
-        $userid = $_SESSION['uid'];
-        $fn = $_SESSION['fName'];
-        $ln = $_SESSION['lName'];
-        $strU = strtoupper($fn. ' '.$ln);
-        $un = $_SESSION['userName'];
-        $t = $_SESSION['type'];
-        $userpic = $_SESSION['pic'];
-        $begDate = date('Y-m-d');
-        $endDate = NULL;
-        array_push($_SESSION['user'], $userid, $fn, $ln, $un, $t, $begDate, $endDate, $userpic);
-
-        $pats = patient_db::selectPatients($userid);
+        $_SESSION['title']= $ut;
+        $strU = strtoupper($_SESSION['fName']. ' '.$_SESSION['lName']);
+        $_SESSION['userFullName'] =$strU;
+        // Get list of user pateints
+        $pats = patient_db::selectPatients($_SESSION['uid']);
 
         //var_dump($pats);
 
@@ -112,6 +109,49 @@ switch ($action) {
         break;
 
 
+     case 'home':
+        // takes the logged in user to their profile page 
+        // do I really need this case/ just reuse the user login????
+        $userid = $_SESSION['uid'];
+        $fn = $_SESSION['fName'];
+        $ln = $_SESSION['lName'];
+        $strU = strtoupper($fn. ' '.$ln);
+        
+        $un = $_SESSION['userName'];
+        $t = $_SESSION['type'];
+        $upic =$_SESSION['pic'];
+       
+        
+       $strl = strtolower($_SESSION['type']);
+        $ut = '';
+        if($strl === 'cna') {
+            $ut = "Certified Nursing Assistant";
+        }else{
+            $ut = "Certified Medication Aide";
+        }
+
+        $ut=$_SESSION['title'];
+        //var_dump($_SESSION['patient']);
+        $uid = user_db::select_userid($userid);
+        $endDate = NULL;
+        $pats = patient_db::selectPatients($userid);
+
+       // var_dump($_SESSION['user']);
+        var_dump($_SESSION['uid']);
+        var_dump($_SESSION['fName']);
+        var_dump($_SESSION['lName']);
+        var_dump($_SESSION['']);
+        var_dump($_SESSION['userName']);
+        var_dump($_SESSION['type']);
+        var_dump($_SESSION['userpic']);
+
+
+
+        
+        
+        include 'view/userProfile_view.php';
+        die();
+        break;
     case 'register':
         // sends user to register page 
         var_dump($action);
@@ -152,10 +192,24 @@ switch ($action) {
     case 'addPatient';
         // add new client info to the database
         // sends them to the patient profile page
-        $f = filter_input(INPUT_POST, 'fnm');
-        $l = filter_input(INPUT_POST, 'lnm');
+       
+            // add validation to data submited
+            $userid =$_SESSION['uid'];
+            $f = ucfirst(filter_input(INPUT_POST, 'fnm'));
+            $l = ucfirst(filter_input(INPUT_POST, 'lnm'));
+            $pdob = filter_input(INPUT_POST, 'dbir');
+            $g = strtoUpper(filter_input(INPUT_POST, 'gen'));
+            $bdt = date('Y-m-d');
+            $dis = filter_input(INPUT_POST, 'disabled');
+            $endDate ='0001-01-01';
+       
+        // sql is adding patient more than once
+        // default image added with sql -> change later???
+        
+        patient_db::insert_patient($userid, $f, $l, $pdob, $g, $bdt, $endDate, $dis);
+        
 
-        include 'view/patientPage';
+        include 'view/userProfile_view.php';
 
         die();
         break;
@@ -163,6 +217,7 @@ switch ($action) {
     case 'patient_page':
         // patient profile page  
         $patientid = filter_input(INPUT_POST, 'pid');
+        $_SESSION['pID'] =$patientid;
         $userid = $_SESSION['uid'];
         $aPatient = patient_db::select_patient($patientid, $userid);
         // get patient address make session varibles to use with update
@@ -239,52 +294,35 @@ switch ($action) {
 
         die();
         break;
-    case 'updatDemo':
+    case 'updateDemo':
 
-        //allows the user to update a patients demographic information
+        // update a patient demographic information
+        // take user back to profile page 
 
-        $patientid = filter_input(INPUT_POST, 'pid');
+        $patientid = $_SESSION['pID'];
         $userid = $_SESSION['uid'];
 
-        $fname = $aPatient->getFName();
-        $lname = $aPatient->getLName();
-        $dob = $aPatient->getDob();
+        $fname = filter_input(INPUT_POST, 'fname');
+        $lname = filter_input(INPUT_POST, 'lname');
+        $dob = filter_input(INPUT_POST, 'adob');
         $adob = date("m-d-Y", strtotime($dob));
-        $sex = $aPatient->getSex();
-        $edate = $aPatient->getEndDate();
+        $sex = filter_input(INPUT_POST, 'sex');
+        $edate = filter_input(INPUT_POST, 'adob');
 
-        patient_db::insert_patient($patientid, $userid);
+        patient_db::update_patient($patientID, $userID, $fname, $lname, 
+                $adob, $sex, $disabled, $deceasedDate, $begDate, $endDate);
 
         // add validation to date format
-        // add validation for sex
+        
 //        var_dump($aPatient);
 //        var_dump($patientid);
 //        var_dump($userid);
-        include 'view/demographicUpdate.php';
-
-        die();
-        break;
-
-    case 'home':
-        // takes the logged in user to their profile page 
-
-        $id = $_SESSION['uid'];
-        $fn = $_SESSION['fName'];
-        $ln = $_SESSION['lName'];
-        $un = $_SESSION['userName'];
-        $t = $_SESSION['type'];
-        $userpic = $_SESSION['pic'];
-
-        //var_dump($_SESSION['patient']);
-        $userid = user_db::select_userid($un);
-        $endDate = NULL;
-        $pats = patient_db::selectPatients($userid);
-
         include 'view/userProfile_view.php';
+
         die();
         break;
 
-    case 'charts':
+   case 'charts':
 
         include 'view/chartsView.php';
 

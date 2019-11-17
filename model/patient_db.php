@@ -2,35 +2,44 @@
 
 class patient_db {
     
-       function insert_patient($patientID, $userID, $fName, $lName, $dob, $sex, $disabled, $deceasedDate, $begDate){
+       function insert_patient($userID, $fName, $lName, $dob, $sex, $disabled, $begDate, $endDate){
         $db = database::getDB();
-        $query = 'insert into user(fname, lname, userName, password, userType, begDate, filePath)'
-                 .'VALUES (:fName, :lName, :userName, :password, :userType, :begDate, :filePath)';
+        $query = 'insert into patient(userID, fName, lName, dob, sex, begDate, endDate, disabled)'
+                 .'VALUES (:userID, :fName, :lName, :dob, :sex, :begDate, :endDate, :disabled)';
         $statement = $db->prepare($query);
+        $statement->bindValue(':userID',$userID);
         $statement->bindValue(':fName',$fName);
         $statement->bindValue(':lName',$lName);
-        $statement->bindValue(':userName',$userName);
-        $statement->bindValue(':password',$password);
-        $statement->bindValue(':userType',$userType);
-        $statement->bindValue(':begDate', $begDate);
-        $statement->bindValue(':filePath', 'images/default avatar.jpg');
+        $statement->bindValue(':dob',$dob);
+        $statement->bindValue(':sex', $sex);
+        $statement->bindValue(':begDate',$begDate);
+        $statement->bindValue(':endDate',$endDate);
+        $statement->bindValue(':disabled',$disabled);
         $statement->execute();
         $statement->closeCursor();
                 
     }
-    
+    //need to fix code for update its not done
     function update_patient($patientID, $userID, $fName, $lName, $dob, $sex, $disabled, $deceasedDate, $begDate, $endDate){
         $db = database::getDB();
-        $query = 'insert into user(fname, lname, userName, password, userType, begDate, filePath)'
-                 .'VALUES (:fName, :lName, :userName, :password, :userType, :begDate, :filePath)';
+        $query = 'UPDATE patient '
+                . 'SET patientID =:patientID, '
+                . 'userID =:userID, fName =:fName, '
+                . 'lName =:lName, dob =:dob, '
+                . 'sex =:sex, disabled =:disabled, '
+                . 'deceasedDate =:deceasedDate, '
+                . 'begDate =:begDate, endDate =:endDate '
+                . ' WHERE patientID = :patientID AND userID =:userID';
         $statement = $db->prepare($query);
+        $statement->bindValue(':patientID',$patientID);
+        $statement->bindValue(':userID',$userID);
         $statement->bindValue(':fName',$fName);
         $statement->bindValue(':lName',$lName);
-        $statement->bindValue(':userName',$userName);
-        $statement->bindValue(':password',$password);
-        $statement->bindValue(':userType',$userType);
-        $statement->bindValue(':begDate', $begDate);
-        $statement->bindValue(':filePath', 'images/default avatar.jpg');
+        $statement->bindValue(':dob',$dob);
+        $statement->bindValue(':sex', $sex);
+        $statement->bindValue(':disabled', $disabled);
+        $statement->bindValue(':begDate',$begDate);
+        $statement->bindValue(':endDate', $endDate);
         $statement->execute();
         $statement->closeCursor();
                 
@@ -59,6 +68,18 @@ class patient_db {
       }else{
             return null;
         }
+    }
+    
+    public static function delete_patient($patientID, $userID){
+        
+        $db = Database::getDB();
+        $query = 'DELETE FROM patient
+              WHERE patientID = :patientID AND userID =:userID';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':patientID', $patientID);
+        $statement->bindValue(':userID', $userID);
+        $statement->execute();
+        $statement->closeCursor();
     }
     
     public function selectPatients($userid){
@@ -120,6 +141,20 @@ class patient_db {
     
     
     // sql to select pateint med by id 
+    public static function insert_patientMed($patientID, $drug, $quantity, $timesPerDay){
+        $db = Database::getDB();
+        $query = 'INSERT INTO patientmed (patientID, drug, quantity, timesPerDay) '
+                . 'VALUES (:patientID, :drug, :quantity, :timesPerDay)';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':patientID', $patientID);
+        $statement->bindValue(':drug', $drug);
+        $statement->bindValue(':quantity', $quantity);
+        $statement->bindValue(':timesPerDay', $timesPerDay);
+        $statement->execute();
+        $statement->closeCursor();
+        
+        
+    }
      public function select_patientMeds($patientid) { 
         
         $db = Database::getDB();
@@ -168,5 +203,7 @@ class patient_db {
             return null;
         }
     }
+    
+    
 
 }
