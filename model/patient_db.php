@@ -170,8 +170,7 @@ class patient_db {
             foreach ($results as $result){
             $meds = new patientMedications($result['medID'], 
                     $result['patientID'], $result['drug'],
-                    $result['quantity'], $result['timesPerDay'], 
-                    $result['medNotes'], $result['begDate'], $result['endDate']);
+                    $result['quantity'], $result['timesPerDay']);
             $ptMeds[]=$meds;
             }
               return $ptMeds;
@@ -195,8 +194,7 @@ class patient_db {
           {
                     $med = new patientMedications($results['medID'], 
                     $results['patientID'], $results['drug'],
-                    $results['quantity'], $results['timesPerDay'], 
-                    $results['medNotes'], $results['begDate'], $results['endDate']);
+                    $results['quantity'], $results['timesPerDay']);
         
               return $med;
       }else{

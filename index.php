@@ -16,19 +16,7 @@ if (!isset($errorType)) {
     $errorType = 0;
 }
 
-$loginuser = array();
-if (!isset($loginUser)) {
-    $loginUser[] = '';
-}
 
-if (!isset($_SESSION['user'])) {
-    $_SESSION['user'] = '';
-}
-$_SESSION['user'] = $loginUser;
-
-if (!isset($_SESSION['patient'])) {
-    $_SESSION['patient'] = '';
-}
 if (!isset($_SESSION['uid'])) {
     $_SESSION['uid'] = '';
 }
@@ -101,6 +89,7 @@ switch ($action) {
         $_SESSION['userFullName'] =$strU;
         // Get list of user pateints
         $pats = patient_db::selectPatients($_SESSION['uid']);
+        
 
         //var_dump($pats);
 
@@ -111,50 +100,24 @@ switch ($action) {
 
      case 'home':
         // takes the logged in user to their profile page 
-        // do I really need this case/ just reuse the user login????
-        $userid = $_SESSION['uid'];
-        $fn = $_SESSION['fName'];
-        $ln = $_SESSION['lName'];
-        $strU = strtoupper($fn. ' '.$ln);
-        
-        $un = $_SESSION['userName'];
-        $t = $_SESSION['type'];
-        $upic =$_SESSION['pic'];
-       
-        
-       $strl = strtolower($_SESSION['type']);
-        $ut = '';
-        if($strl === 'cna') {
-            $ut = "Certified Nursing Assistant";
-        }else{
-            $ut = "Certified Medication Aide";
-        }
-
-        $ut=$_SESSION['title'];
-        //var_dump($_SESSION['patient']);
-        $uid = user_db::select_userid($userid);
-        $endDate = NULL;
-        $pats = patient_db::selectPatients($userid);
+        $pats=array();
+        $pats = patient_db::selectPatients($_SESSION['uid']);
 
        // var_dump($_SESSION['user']);
-        var_dump($_SESSION['uid']);
-        var_dump($_SESSION['fName']);
-        var_dump($_SESSION['lName']);
-        var_dump($_SESSION['']);
-        var_dump($_SESSION['userName']);
-        var_dump($_SESSION['type']);
-        var_dump($_SESSION['userpic']);
-
-
-
-        
+//        var_dump($_SESSION['uid']);
+//        var_dump($_SESSION['fName']);
+//        var_dump($_SESSION['lName']);
+//        var_dump($_SESSION['']);
+//        var_dump($_SESSION['userName']);
+//        var_dump($_SESSION['type']);
+//        var_dump($_SESSION['userpic']);     
         
         include 'view/userProfile_view.php';
         die();
         break;
     case 'register':
         // sends user to register page 
-        var_dump($action);
+        //var_dump($action);
         include 'view/register_view.php';
         die();
         break;
@@ -200,7 +163,7 @@ switch ($action) {
             $pdob = filter_input(INPUT_POST, 'dbir');
             $g = strtoUpper(filter_input(INPUT_POST, 'gen'));
             $bdt = date('Y-m-d');
-            $dis = filter_input(INPUT_POST, 'disabled');
+            $dis = filter_input(INPUT_POST,'disabled');
             $endDate ='0001-01-01';
        
         // sql is adding patient more than once
@@ -216,13 +179,12 @@ switch ($action) {
 
     case 'patient_page':
         // patient profile page  
-        $patientid = filter_input(INPUT_POST, 'pid');
-        $_SESSION['pID'] =$patientid;
+        $_SESSION['pID']= filter_input(INPUT_POST, 'pid');
         $userid = $_SESSION['uid'];
-        $aPatient = patient_db::select_patient($patientid, $userid);
+        $aPatient = patient_db::select_patient($_SESSION['pID'], $userid);
         // get patient address make session varibles to use with update
         // handle when $address is null
-        $address = patient_db::select_patientAddress($patientid);
+        $address = patient_db::select_patientAddress($_SESSION['pID']);
         if (!empty($address)) {
             $number = $address->getNumber();
             $street = ucfirst($address->getStreet());
@@ -240,18 +202,25 @@ switch ($action) {
             $fullstreet = '';
             $email = '';
         }
-        //$patMeds = patient_db::select_patientMeds($patientid);
-//        $meds ="";
-//        If(!empty($patMeds)){
-//            $meds= true;
-//            return $meds;
-//        }else{
-//            $meds = false;
-//            return $meds;
-//            
-//        }
-//        $_SESSION['med']=$meds;
-//        $amed = patient_db::select_patMed($patientid);
+       $meds = patient_db::select_patientMeds($_SESSION['pID']);
+        
+        If(count($meds)>1){
+            $meds=$meds;
+            
+        }elseif(count($meds)==1){
+            $amed = patient_db::select_patMed($_SESSION['pID']);
+            $meds =$amed;
+            
+        }else{
+            $meds[]=NULL;
+//            $drug='';
+//            $quant='';
+//            $timesPday='';
+//            $note='';
+            
+        }
+        
+      
         // caluate age with dob
         // author:  Tim
         // title:  PHP: Calculating a person’s 
@@ -263,9 +232,9 @@ switch ($action) {
         $todaysAge = $today - $dob;
         $age = floor($todaysAge / 31556926);
 
-//        var_dump($aPatient);
-//        var_dump($patientid);
-//        var_dump($userid);
+       var_dump($aPatient);
+       var_dump($meds);
+       var_dump($amed);
         include 'view/patientPage.php';
 
         die();

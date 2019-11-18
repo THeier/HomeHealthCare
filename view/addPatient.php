@@ -19,8 +19,8 @@ if (!isset($gen)) {$gen = '';}
                 Last Name: <input type="text" name="lnm" value="<?php echo htmlspecialchars($lnm); ?>" ><br><br>
                 Date of Birth: <input type="date" name="dbir" value="<?php echo htmlspecialchars($dbir); ?>" ><br><br><br>
                 Disabled: <select name="disabled" style="max-width: 90%" >
-                                   <option value="no">No</option>  
-                                   <option value="yes">Yes</option>
+                                   <option value="No">No</option>  
+                                   <option value="Yes">Yes</option>
                                  
                 </select><br><br>
                 <b>Gender:</b> <br>

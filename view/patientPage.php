@@ -1,14 +1,6 @@
 <?php 
-//
-//if($_SESSION['med'] === false){
-//    
-//    $meds = false;
-//    
-//} else {
-//    $meds = true;
-//}
-
-
+if(!isset($pats)){$pats[]='';}
+if(!isset($meds)){$meds[]='';}
 
 ?>
 <?php include'view/header.php'; ?>
@@ -22,7 +14,7 @@
             Age:&nbsp;<?php echo htmlspecialchars($age); ?><br>
             Date of Birth:&nbsp;<?php echo date("m-d-Y", strtotime($aPatient->getDob())); ?><br>
             Gender: &nbsp;<?php echo htmlspecialchars($aPatient->getSex()); ?><br>
-            Disabled:  &nbsp;<?php echo htmlspecialchars($aPatient->getDisabled()); ?><br>
+            Disabled:  &nbsp;<?php echo htmlspecialchars($aPatient->getDisabled())  ?><br>
             
         </fieldset><br>
         <!-- Conditionally display
@@ -36,14 +28,32 @@
             Email:&nbsp;<?php echo htmlspecialchars($email); ?>  
         </fieldset><br>
         
+        <?php if(empty($meds)): ?>
+            <h4><?php echo 'No Medications Found'; ?></h4>
+            <?php else: ?>
         <fieldset class="field_set">
-            <legend><b>Medications</b></legend>
-            Medication: <?php  ; ?><br>
-            Dosage: <?php  ; ?><br>
-            Number Per Day: <?php  ?><br><br>
-            Note: <input type="text" cols="6" rows="6" value="<?php  ;?>" readonly="true"><br>
+            
+            <legend>Medication</legend>
+            <form>
+                <table class="med" border="1" cellpadding="10%">
+                    <tr>
+                        <th col="4">Med</th>
+                        <th>Quantity</th>
+                        <th>Times Per Day</th> 
+                    </tr><br>
+                    <?php foreach($meds as $m): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($m->getDrug()); ?></td>
+                        <td><?php echo htmlspecialchars($m->getQuantity()); ?></td>
+                        <td><?php echo htmlspecialchars($m->getTimesPerDay()); ?></td>
+                        
+                    </tr>
+             <?php endforeach; ?>       
+            
+            </table>
+            </form>
         </fieldset>
-       
+        <?php endif; ?>   
     </form>
 </section>
 <div id="ptntProfileUpdateBtns">
@@ -55,7 +65,7 @@
                          <input type="hidden" name="action" 
                           value="demographic">
                          <input id="pntbutton" type="hidden" name="pid"
-                                value="<?php echo htmlentities($patientid) ; ?>">
+                                value="<?php echo htmlentities($_SESSION['pID']) ; ?>">
                          <input type="submit" value="Demographics">
                          </form>
                      </td> 
@@ -66,7 +76,7 @@
                          <input type="hidden" name="action" 
                           value="address">
                          <input id="pntbutton" type="hidden" name="pid"
-                                value="<?php echo htmlentities($patientid) ; ?>">
+                                value="<?php echo htmlentities($_SESSION['pID']) ; ?>">
                          <input type="submit" value="Address">
                          </form>
                      </td> 
@@ -77,7 +87,7 @@
                          <input type="hidden" name="action" 
                           value="meds">
                          <input id="pntbutton" type="hidden" name="pid"
-                                value="<?php echo htmlentities($patientid) ; ?>">
+                                value="<?php echo htmlentities($_SESSION['pID']) ; ?>">
                          <input type="submit" value="Medications">
                          </form>
                      </td> 

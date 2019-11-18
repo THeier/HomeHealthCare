@@ -51,7 +51,6 @@ if (!isset($patID)) {
                             <input type="hidden" name="pid"
                                    value="<?php echo htmlspecialchars($p->getPatientID()); ?>">
                             <input type="submit" name="select" value="Select">
-                            <input type="submit" name="delete" value="Delete"
                         </form>
                     </td>
                 </tr>
