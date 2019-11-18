@@ -6,7 +6,7 @@ if (!isset($patID)) {
     $patID = '';
 }
 //if (!isset($strU)) {$strU = '';}
-//if (!isset($$userpic)) {$userpic = '';}
+//if (!isset($pic)) {$pic = '';}
 //if (!isset($ut)) {$ut = '';}
 //if (!isset($un)) {$un = '';}
 //if (!isset($pats)) {$pats = array();}
@@ -22,11 +22,11 @@ if (!isset($patID)) {
     
     <div class="column">
         <div class="card">
-            <h5 class="cardheader"><b><?php echo $_SESSION['userFullName']; ?><b></h5>
-            <img class="card-img-top" src="<?php echo $_SESSION['pic']; ?>" alt="Card image">
+            <h5 class="cardheader"><b><?php echo htmlspecialchars($fullName); ?><b></h5>
+                        <img class="card-img-top" src="<?php echo htmlspecialchars($pic); ?>" alt="Card image">
             <div class="card-body">
-                <h5 class="card-title"><?php echo $_SESSION['title']; ?></h5>
-                <p class="card-text"><?php echo $_SESSION['userName']; ?></p>
+                <h5 class="card-title"><?php echo htmlspecialchars($title); ?></h5>
+                <p class="card-text"><?php echo htmlspecialchars($userName); ?></p>
             </div>
         </div>
 

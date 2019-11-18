@@ -14,9 +14,12 @@ body {
     text-align: center;
     width: auto;
     background-color: white;
-
+  
 }
-
+.mainwrapper{
+    max-width: 400px;
+    
+}
 header {
     width: 100%;
     height:auto;
@@ -28,16 +31,28 @@ header h1 {
     margin: auto;
     width: 800px;
 }
-/*.loginPage{
+#loginh2{
+    margin-left: 130px;
+}
+.loginPage{
     display: inline-block;
-    margin: 10px 25px 100px 400px; 
-    width: 400px;
+   
+    width: 500px;
     text-align: center;
-}*/
+}
+.subBtn{
+    float: right;
+    margin-right: 150px;
+}
+
+.error{
+    color: red;
+    font-weight: bold;
+}
 .loginform{
     display: inline-block;
     margin: 10px 25px 100px 400px; 
-    width: 300px;
+    width: 500px;
     text-align: center;
     
 }
@@ -48,11 +63,10 @@ header h1 {
     padding: 3px 3px 3px 3px;
     
 }
-#loginh2{
-    margin-left: 35px;
-}
+
 #lglb{
-    margin-right: 1px;
+    float: left;
+/*    margin-right: 1px;*/
 }
 #lginput{
     margin-left: 115px;
@@ -185,17 +199,34 @@ li .login{
 br {
     clear: left;
 }
+.regform{
+    float: right;
+    margin: 20px 50px 30px 400px;
+    width: 600px;
+    display: flex;
+    
+      
+}
+label{
+    display: inline-block;
+    float: left;
+    clear: left;
+    width: 150px;
+    text-align: right;
+    margin-right: 20px;
+}
+input{
+    display: inline-block;
+    float: left;
+  }
+select{
+     display: inline-block;
+    float: left;
+    
+}
 
-#reg input{ 
-    float: right;
-    margin-right: 200px;
-}
-#reg select{
-    float: right;
-    margin-right: 175px;
-}
-#reg label{
-    padding-right: 20px; 
+#regh1{
+    margin-left: 40px;
 }
 
 

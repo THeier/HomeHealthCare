@@ -118,9 +118,9 @@ class patient_db {
     public function select_patientAddress($patientid) { 
         
         $db = Database::getDB();
-        $query = 'SELECT * FROM patientaddress WHERE patientid =:PatientID';
+        $query = 'SELECT * FROM patientaddress WHERE patientid =:patientID';
         $statement = $db->prepare($query);
-        $statement->bindValue(':PatientID', $patientid);
+        $statement->bindValue(':patientID', $patientid);
         $statement->execute();
         $results = $statement->fetch();
         $statement->closeCursor();

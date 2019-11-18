@@ -7,53 +7,107 @@
 //set default value for variable for inital page load
 if (!isset($fName)) {$fName = '';}
 if (!isset($lName)) {$lName = '';}
-if (!isset($userName)) {$userName = '';}
+if (!isset($uname)) {$uname = '';}
 if (!isset($password)) {$password = '';}
 if (!isset($type)) {$type = '';}
-if (!isset($RegErr)) {$RegErr = '';}
+
+if (!isset($err['fName'])) {
+    $err['fName'] = "";
+}
+if (!isset($err['lName'])) {
+    $err['lName'] = "";
+}
+if (!isset($err['uName'])) {
+    $err['uName'] = "";
+}
+if (!isset($err['noEmail'])) {
+    $err['noEmail'] = "";
+}
+
+if (!isset($err['email'])) {
+    $err['email'] = "";
+}
+if (!isset($err['invalidEmail'])) {
+    $err['invalidEmail'] = "";
+}
+if (!isset($err['NameTaken'])) {
+    $err['NameTaken'] = "";
+}
+if (!isset($err['emailTaken'])) {
+    $err['emailTaken'] = "";
+}
+if (!isset($err['shortPass'])) {
+    $err['shortPass'] = "";
+}
+if (!isset($err['lcasePass'])) {
+    $err['lcasePass'] = "";
+}
+if (!isset($err['ucasePass'])) {
+    $err['ucasePass'] = "";
+}
+if (!isset($err['digPass'])) {
+    $err['digPass'] = "";
+}
+if (!isset($err['uNamefirstchar'])) {
+    $err['uNamefirstchar'] = "";
+}
+if (!isset($err['lNamefirstchar'])) {
+    $err['lNamefirstchar'] = "";
+}
+if (!isset($err['fNamefirstchar'])) {
+    $err['fNamefirstchar'] = "";
+}
+
+
+
 ?>
 
 <?php include 'view/header.php'; ?>
 <?php include 'view/navigation.php'; ?>
 
-<section>
-    <h1 id='regh1'>Register</h1>
-    <form id="reg" action="index.php" method="post">
+<section class="regform" >
+    <form action="index.php" method="post">
+        <div class="mainwrapper">
+         <h3 id='regh1'>Register</h3>
             <input type="hidden" name="action" value="register_user" />
             <br>
             
             <label>First Name</label>
             <input type="text" name="fName"
                    value="<?php echo htmlspecialchars($fName); ?>"><br>
-                          <?php if (!empty($RegErr)) { ?><br>
-                <span class="err"><?php echo htmlspecialchars($RegErr); ?></span>
-                           <?php } ?>
+                          <label class="err"><?php
+                            echo htmlspecialchars($err['fName']);
+                            echo htmlspecialchars($err['fNamefirstchar']);
+                            ?></label>
             <br>
             
             <label>Last Name</label>
             <input type="text" name="lName"
                    value="<?php echo htmlspecialchars($lName); ?>"><br>
-                          <?php if (!empty($RegErr)) { ?><br>
-                <span class="error"><?php echo htmlspecialchars($RegErr); ?></span>
-                           <?php } ?>
+                          <label class="err"><?php
+                            echo htmlspecialchars($err['lName']);
+                            echo htmlspecialchars($err['lNamefirstchar'])
+                            ?></label><br>
             <br>
             
             <label>Email</label>
-            <input type="text" name="userName"
-                   value="<?php echo htmlspecialchars($userName); ?>"><br>
-                          <?php if (!empty($RegErr)) { ?><br>
-                <span class="error"><?php echo htmlspecialchars($RegErr); ?></span>
-                           <?php } ?>
+            <input type="text" name="email"
+                   value="<?php echo htmlspecialchars($uname); ?>"><br>
+                          <label class="err"><?php echo htmlspecialchars($err['email'])
+                          . htmlspecialchars($err['emailTaken']); ?></label><br>
             <br>
             <label>Password</label>
             <input type="password" name="password">
-                    <?php if (!empty($RegErr)) { ?><br><br>
-                <span class="error"><?php echo htmlspecialchars($RegErr); ?></span>
-                    <?php } ?>
+                     <label class="err"><?php
+                            echo htmlspecialchars($err['shortPass']);
+                            echo htmlspecialchars($err['lcasePass']);
+                            echo htmlspecialchars($err['ucasePass']);
+                            echo htmlspecialchars($err['digPass']);
+                            ?></label><br>
             <br><br> 
             <label>Service Type</label>
             <select name='serviceType'>
-                <option value="Select">Select</option>}  
+                <option value="">Select...</option>}  
                 <option value="cna">Certified Nurse Assistant</option>  
                 <option value="cma">Certified Medication Assistant</option>  
                 <option value="admin">Administrator</option>   
@@ -65,6 +119,7 @@ if (!isset($RegErr)) {$RegErr = '';}
             <label>&nbsp;</label><br>
             <input type="submit" value="Register">
     </form> 
+</div>
 </section>
 
 <?php include 'view/footer.php'; ?>

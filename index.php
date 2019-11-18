@@ -16,22 +16,26 @@ if (!isset($errorType)) {
     $errorType = 0;
 }
 
-
 if (!isset($_SESSION['uid'])) {
     $_SESSION['uid'] = '';
 }
+
 if (!isset($_SESSION['userName'])) {
     $_SESSION['username'] = '';
 }
+
 if (!isset($_SESSION['fName'])) {
     $_SESSION['fName'] = '';
 }
+
 if (!isset($_SESSION['lName'])) {
     $_SESSION['lName'] = '';
 }
+
 if (!isset($_SESSION['type'])) {
     $_SESSION['type'] = '';
 }
+
 if (!isset($_SESSION['title'])) {
     $_SESSION['title'] = '';
 }
@@ -39,6 +43,7 @@ if (!isset($_SESSION['title'])) {
 if (!isset($_SESSION['userFullName'])) {
     $_SESSION['userFullName'] = '';
 }
+
 if (!isset($_SESSION['pic'])) {
     $_SESSION['pic'] = '';
 }
@@ -71,22 +76,27 @@ switch ($action) {
 
         $urName = filter_input(INPUT_POST, 'userName');
         $aUser = user_db::get_userInfo($urName);
+//        $_SESSION['loginUser']=$aUser;
+//        $userPic =$_SESSION['loginUser'];
         $_SESSION['uid'] = $aUser->getUserID();
+        
         $_SESSION['fName'] = $aUser->getFName();
         $_SESSION['lName'] = $aUser->getLName();
         $_SESSION['userName'] = $aUser->getUserName();
+        $userName =$_SESSION['userName'];
         $_SESSION['pic'] = $aUser->getFilePath();
+        $pic =$_SESSION['pic'];
         $_SESSION['type'] = $aUser->getUserType();
         $strl = strtolower($_SESSION['type']);
-        $ut = '';
+        $title = '';
         if($strl === 'cna') {
-            $ut = "Certified Nursing Assistant";
+            $title = "Certified Nursing Assistant";
         }else{
-            $ut = "Certified Medication Aide";
+            $tile = "Certified Medication Aide";
         }
-        $_SESSION['title']= $ut;
-        $strU = strtoupper($_SESSION['fName']. ' '.$_SESSION['lName']);
-        $_SESSION['userFullName'] =$strU;
+        $_SESSION['title']= $title;
+        $fullName = strtoupper($_SESSION['fName']. ' '.$_SESSION['lName']);
+        
         // Get list of user pateints
         $pats = patient_db::selectPatients($_SESSION['uid']);
         
@@ -99,18 +109,15 @@ switch ($action) {
 
 
      case 'home':
-        // takes the logged in user to their profile page 
-        $pats=array();
+        // takes user back to their profile page 
+        $userName =$_SESSION['userName'];
+        $pic =$_SESSION['pic'];
+        $fullName = strtoupper($_SESSION['fName']. ' '.$_SESSION['lName']);
+        $title =$_SESSION['title'];
+              
+         
         $pats = patient_db::selectPatients($_SESSION['uid']);
-
-       // var_dump($_SESSION['user']);
-//        var_dump($_SESSION['uid']);
-//        var_dump($_SESSION['fName']);
-//        var_dump($_SESSION['lName']);
-//        var_dump($_SESSION['']);
-//        var_dump($_SESSION['userName']);
-//        var_dump($_SESSION['type']);
-//        var_dump($_SESSION['userpic']);     
+  
         
         include 'view/userProfile_view.php';
         die();
@@ -124,21 +131,75 @@ switch ($action) {
 
 
     case 'register_user':
+       
         // adds registered user info to database
         // sends user to login page 
         // add validation (page) for user information
         // add user info to database
+        $err =[];
         $begDate = date('y-m-d');
         $fName = filter_input(INPUT_POST, 'fName');
         $lName = filter_input(INPUT_POST, 'lName');
         // email is the user name
-        $userName = filter_input(INPUT_POST, 'userName');
+        $uname = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
         $password = filter_input(INPUT_POST, 'password');
         $userType = filter_input(INPUT_POST, 'serviceType');
         $_SESSION['fName'] = $fName;
-        $_SESSION['userName'] = $userName;
+        $_SESSION['userName'] = $uname;
         $_SESSION['userType'] = $userType;
-        user_db::insert_user($fName, $lName, $userName, $password, $userType, $begDate);
+        
+        // Password Validation
+//        if (preg_match('/^.{10}/', $pass) != 1) {
+//            $err['shortPass'] = "Password must be at least 10 characters.";
+//        }
+//        if (preg_match('/[a-z]/', $pass) != 1) {
+//            $err['lcasePass'] = "Your password must contain a lowercase letter.";
+//        }
+//        if (preg_match('/[A-Z]/', $pass) != 1) {
+//            $err['ucasePass'] = "Your password must contain an Uppercase letter.";
+//        }
+//        if (preg_match('/[0-9]/', $pass) != 1) {
+//            $err['digPass'] = "Your password must contain a digit.";
+//        }
+        
+        // First and Last Name Validation
+        if ($fName == null || $fName == "") {
+            $err['fName'] = "Enter a First Name";
+        }
+        if (preg_match('/^[a-zA-Z]/', $fName) != 1) {
+            $err['fNamefirstchar'] = "First Name must begin with a letter";
+        }
+        if ($lName == null || $lName == "") {
+            $err['lName'] = "Enter a last name";
+        }
+        if (preg_match('/^[a-zA-Z]/', $lName) != 1) {
+            $err['lNamefirstchar'] = "Last Name must begin with a letter";
+        }
+        // Username/Email validation
+        if ($uname == null || $uname == "") {
+            $err['noEmail'] = "Enter an Email";
+        } else if ($uname == false) {
+            $err['invalidEmail'] = "Email is invalid";
+        }
+        if (user_db::search_by_email($uname) === true) {
+            $err['emailTaken'] = "Duplicate email, please try again";
+        }
+        
+        
+     if (empty($err)) {
+            //$options = ['cost' => 12];
+            //$hashpass = password_hash($pass, PASSWORD_BCRYPT, $options);
+            // fix varibles - no phone number 
+            //user_db::insert_users($fName, $lName, $username, $pNumber, $hashpass);
+            user_db::insert_user($fName, $lName, $userName, $password, $userType, $begDate);
+
+            include 'view/login_view.php';
+        } else {
+            include 'view/login_view.php';
+            echo 'Error loggin in try again';
+        }        
+        
+      
 
 
         include 'view/login_view.php';
@@ -182,6 +243,11 @@ switch ($action) {
         $_SESSION['pID']= filter_input(INPUT_POST, 'pid');
         $userid = $_SESSION['uid'];
         $aPatient = patient_db::select_patient($_SESSION['pID'], $userid);
+        $disabled = $aPatient->getDeceasedDate();
+        $today = time();
+        $dob = strtotime($aPatient->getDob());
+        $todaysAge = $today - $dob;
+        $age = floor($todaysAge / 31556926);
         // get patient address make session varibles to use with update
         // handle when $address is null
         $address = patient_db::select_patientAddress($_SESSION['pID']);
@@ -203,8 +269,10 @@ switch ($action) {
             $email = '';
         }
        $meds = patient_db::select_patientMeds($_SESSION['pID']);
-        
-        If(count($meds)>1){
+        if(is_null($meds)){
+            
+            
+        }elseif(count($meds)>1){
             $meds=$meds;
             
         }elseif(count($meds)==1){
@@ -227,14 +295,11 @@ switch ($action) {
         // age from their date of birth. 
         // website: https://thisinterestsme.com/php-calculate-age-date-of-birth/
 
-        $today = time();
-        $dob = strtotime($aPatient->getDob());
-        $todaysAge = $today - $dob;
-        $age = floor($todaysAge / 31556926);
+        
 
        var_dump($aPatient);
        var_dump($meds);
-       var_dump($amed);
+       //var_dump($amed);
         include 'view/patientPage.php';
 
         die();

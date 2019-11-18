@@ -24,27 +24,22 @@ if (!isset($loginErr)) {
     <?php } ?>
     </h2>
 <section class="loginPage">
+    <div class="mainwrapper">
     <form class="loginform" action="index.php" method="post">
             <input type="hidden" name="action" value="login_user" />
-            <h2 id="loginh2"><?php echo htmlspecialchars('Login Page') ?></h2>
-            <br>
-            <label id="lglb">User Name: </label>
-            <input id="login" type="text" name="userName" value='<?php echo htmlspecialchars($userName) ?>'required>
-                   <?php if (!empty($loginErr)) { ?><br>
-                <span class="error"><?php echo htmlspecialchars($loginErr); ?></span>
-                           <?php } ?>
+            <h3 id="loginh2"><?php echo htmlspecialchars('Login Page') ?></h3>
             <br><br>
+            <label >User Name: </label>
+            <input  type="text" name="userName" value='<?php echo htmlspecialchars($userName) ?>'required>
+             <br><br>
 
-            <label id="lglb">Password: </label>
-            <input id="login" type="password" name="pass" required>
-                    <?php if (!empty($loginErr)) { ?><br><br>
-                <span class="error"><?php echo htmlspecialchars($loginErr); ?></span>
-                    <?php } ?>
-            <br><br>
+            <label>Password: </label>
+            <input type="password" name="pass" required>
+             <br><br>
 
-            <label>&nbsp;</label><br>
-            <input id="lginput" type="submit" value="Login">
-    </form> 
+             <input class="subBtn" type="submit" value="Login">
+    </form>
+    </div>
 </section>
 
 <?php include 'view/footer.php'; ?>

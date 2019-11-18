@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <?php 
 if(!isset($pats)){$pats[]='';}
 if(!isset($meds)){$meds[]='';}
@@ -5,6 +6,7 @@ if(!isset($meds)){$meds[]='';}
 ?>
 <?php include'view/header.php'; ?>
 <?php include 'view/navigation.php'; ?>
+<html>
 <section id="patientprofile">
     <form>
 
@@ -14,7 +16,7 @@ if(!isset($meds)){$meds[]='';}
             Age:&nbsp;<?php echo htmlspecialchars($age); ?><br>
             Date of Birth:&nbsp;<?php echo date("m-d-Y", strtotime($aPatient->getDob())); ?><br>
             Gender: &nbsp;<?php echo htmlspecialchars($aPatient->getSex()); ?><br>
-            Disabled:  &nbsp;<?php echo htmlspecialchars($aPatient->getDisabled())  ?><br>
+            Disabled:  &nbsp;<?php echo htmlspecialchars($disabled)  ?><br>
             
         </fieldset><br>
         <!-- Conditionally display
@@ -25,36 +27,39 @@ if(!isset($meds)){$meds[]='';}
             City:&nbsp;<?php echo htmlspecialchars($city)  ; ?><br>
             State:&nbsp;<?php echo htmlspecialchars($st)  ; ?><br>
             Zip Code:&nbsp;<?php echo htmlspecialchars($zip)  ; ?><br>
-            Email:&nbsp;<?php echo htmlspecialchars($email); ?>  
+            Email:&nbsp;<?php echo htmlspecialchars($email); ?> <br><br>
+             <?php if(empty($address)) { ?>
+            <form action="index.php" method="post">
+                <input type="hidden" name="action" value="PatientAddress">
+            <input type="hidden" name="pID" value="<?php echo html_entity_decode($aPatient->getPatientID()) ?>">
+            <input type="submit" name="addAddress" value="Add Address">
+             <?php } ?>
+            </form>
         </fieldset><br>
+    </form>     
         
-        <?php if(empty($meds)): ?>
-            <h4><?php echo 'No Medications Found'; ?></h4>
-            <?php else: ?>
-        <fieldset class="field_set">
             
-            <legend>Medication</legend>
-            <form>
-                <table class="med" border="1" cellpadding="10%">
+            
+    <legend><b>Medication</b></legend>
+            
+                <table class="med">
+                    <?php if($meds != NULL) {
+                                    foreach($meds as $med): ?>
                     <tr>
-                        <th col="4">Med</th>
+                        <th col="2">Med</th>
                         <th>Quantity</th>
                         <th>Times Per Day</th> 
                     </tr><br>
-                    <?php foreach($meds as $m): ?>
                     <tr>
-                        <td><?php echo htmlspecialchars($m->getDrug()); ?></td>
-                        <td><?php echo htmlspecialchars($m->getQuantity()); ?></td>
-                        <td><?php echo htmlspecialchars($m->getTimesPerDay()); ?></td>
+                        <td><?php echo "stuf"; ?></td>
+                        <td><?php ; ?></td>
+                        <td><?php ; ?></td>
                         
                     </tr>
-             <?php endforeach; ?>       
-            
+             <?php endforeach;
+             }else{ ?><tr><td>No Medications found</td></tr><?php } ?>
             </table>
-            </form>
-        </fieldset>
-        <?php endif; ?>   
-    </form>
+                      
 </section>
 <div id="ptntProfileUpdateBtns">
     <table>
@@ -96,5 +101,5 @@ if(!isset($meds)){$meds[]='';}
     
     
 </div>
-
-<?php include 'view/footer.php'; ?>
+</html>
+    </form><?php include 'view/footer.php'; ?>
