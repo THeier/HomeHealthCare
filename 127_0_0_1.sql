@@ -37,7 +37,7 @@ CREATE TABLE `patient` (
   `lName` varchar(50) NOT NULL,
   `dob` date NOT NULL,
   `sex` varchar(1) NOT NULL,
-  `disabled` bit(1) NOT NULL DEFAULT b'0',
+  `disabled` varchar(3),
   `deceasedDate` date DEFAULT NULL,
   `begDate` date NOT NULL,
   `endDate` date DEFAULT NULL
@@ -80,7 +80,10 @@ CREATE TABLE `patientmed` (
   `patientID` int(11) NOT NULL,
   `drug` varchar(100) NOT NULL,
   `quantity` int(1) DEFAULT NULL,
-  `timesPerDay` int(2) NOT NULL
+  `timesPerDay` int(2) NOT NULL,
+   `medNotes` varchar(500),
+  `begDate`  date NOT NULL,
+  `endDate` date NOT NULL,
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
