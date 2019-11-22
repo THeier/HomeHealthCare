@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 
 <?php include'view/header.php'; ?>
-<?php include 'view/navigation.php'; ?>
+
 <html>
     <section>
     <form id="patientprofile">

@@ -3,74 +3,98 @@
     Author     : Tania Heieer
 */
 /* the styles for the HTML elements */
-html {
-    width: 100%;
-/*    background-color: #253451;*/
-}
-body {
+html, body, form{
+   
     font-size: 100%;
+    font: inherit;
     vertical-align: baseline;
-    font-family: Arial, Helvetica, sans-serif;
-    text-align: center;
-    width: auto;
-    background-color: white;
-  
 }
-.mainwrapper{
-    max-width: 400px;
-    
-}
-header {
+
+.header-background{
     width: 100%;
     height:auto;
 }
-header h1 {
+body {
+    background: lightgray;
+    font-family:  sans-serif;
+   
+
+}
+
+li{
+    display: inline;
+    background-color: lightgrey;
+    font-weight: bold;
+    
+    
+}
+.main-layouts {
+    padding: 1em 0 1em;
+}
+.main-agileinfo {
+    width: 55%;
+    margin: 2em auto;
+    background: #ccc;
+    background-size: cover;
+    border-radius: 20px; 
+}
+.agileits-top {
+    padding: .5em;
+}
+h1 {
+    font-size: 2em;
+    text-align: center;
     color: black;
+    font-weight: 80%;
+    letter-spacing: 4px;
+    font-family: sans-serif;
+}
+
+.subs{
+     font-size: 1em;
+    color: #fff;
+    background: #ccc;
+    outline: none;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    padding: 0.9em;
+    width: 100%;
+    margin: 2em 0;
+    letter-spacing: 4px;
 }
 .chart{
     margin: auto;
     width: 800px;
 }
-#loginh2{
-    margin-left: 130px;
+.form{
+     font-size: 0.9em;
+    color: black;
+    font-weight: 100;
+    width: 94.5%;
+    display: block;
+    border: none;
+    padding: 0.8em;
+/*    border: solid 1px rgba(255, 255, 255, 0.37);*/
+    -webkit-transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
+    transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
+    background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 96%, #fff 4%);
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 96%, #fff 4%);
+    background-position: -800px 0;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    color: black;
+    font-family: sans-serif;
+    background-color: white;
+    
 }
-.loginPage{
-    display: inline-block;
-   
-    width: 500px;
-    text-align: center;
-}
-.subBtn{
-    float: right;
-    margin-right: 150px;
-}
+
+
 
 .error{
     color: red;
     font-weight: bold;
 }
-.loginform{
-    display: inline-block;
-    margin: 10px 25px 100px 400px; 
-    width: 500px;
-    text-align: center;
-    
-}
-#login{
-    float: right; 
-    margin-left: 5px;
-    margin-right: 5px;
-    padding: 3px 3px 3px 3px;
-    
-}
 
-#lglb{
-    float: left;
-/*    margin-right: 1px;*/
-}
-#lginput{
-    margin-left: 115px;
-}
 
 .field_set{
     text-align: left;
@@ -78,24 +102,12 @@ header h1 {
     
 }
 #demobtn input{
-    display: inline;
+    display: inline-block;
 }
 
-section {
-    float: left;
-    width: 500px;
-    height: auto;
-}
-.column1{
-  width: 300px;
- 
-}
-.column2{
 
-   
-    width: 300px;
-    margin: 50px;
-}
+
+
 .row{
     clear: both;
 }/*
@@ -111,14 +123,7 @@ footer {
     border-top: 2px solid black;
    
 }
-footer p {
-    text-align: right;
-    font-size: 80%;
-}
-.footerNav a{
-    display: inline;
-    width: auto;
-}
+
 h1 {
     font-size: 150%;
     margin: .5em .2em .25em;
@@ -128,77 +133,23 @@ h2 {
     font-size: 120%;
     margin: .1em 0;
 }
-h1, h2 {
-    color: #BC7B47;
-}
+
 p {
     margin: .5em 0;
 }
 
-.profileNav{
-    
-    margin-right: 250px;
-    width: auto;
-}
-aside{
-    margin: .5em;
-   display: inline;
-}
-ul {
-    list-style-type: none;
-    margin: 10px;
-    padding: 0;
-    overflow: hidden;
-}
-nav{
- border:1px solid #ccc;
-    border-width:1px 0;
-    list-style:none;
-    margin:0;
-    padding:0;
-    text-align:center;
-}
-.nav li{
-    background-color: gray;
-    margin: 5px;
-    display: inline;
-    width: 30px;
-}
-nav a{
-    
-    display:inline-block;
-    padding:10px;
-}
-li {
-    display: block;
-    width: auto;
-    float: right;
-    text-align: center;
-    margin-right: 10px;
-    border: 1px solid #000;
-    
-    
-    
-}
-a {
-    display: block;
-    text-align: center;
-    background-color: navy;
-    padding: 4px;
-    text-decoration: none;
-    color: rgb(208, 133, 4);
-    font-weight: bold;
-}
+
+
+
+
+
 a:hover {
     color: white;
 }
-li .login{
-    margin-left: 100px;
-    width: 60px;
-}
-br {
+
+/*br {
     clear: left;
-}
+}*/
 .regform{
     float: right;
     margin: 20px 50px 30px 400px;
@@ -207,23 +158,7 @@ br {
     
       
 }
-label{
-    display: inline-block;
-    float: left;
-    clear: left;
-    width: 150px;
-    text-align: right;
-    margin-right: 20px;
-}
-input{
-    display: inline-block;
-    float: left;
-  }
-select{
-     display: inline-block;
-    float: left;
-    
-}
+
 
 #regh1{
     margin-left: 40px;
@@ -253,10 +188,10 @@ img{
     margin: 2px;
     padding: 10px;
 }
-.cardh2{
+/*.cardh2{
     margin: 30px;
     text-align: center;
-}
+}*/
 .patientListh2{
     margin-top: .1em;
 }

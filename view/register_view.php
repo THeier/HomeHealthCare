@@ -63,7 +63,7 @@ if (!isset($err['fNamefirstchar'])) {
 ?>
 
 <?php include 'view/header.php'; ?>
-<?php include 'view/navigation.php'; ?>
+
 
 <section class="regform" >
     <form action="index.php" method="post">

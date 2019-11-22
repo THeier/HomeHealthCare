@@ -355,6 +355,22 @@ switch ($action) {
 
         die();
         break;
+    
+    case 'address';
+        
+        include 'view/addClientAddress.php';
+             
+        
+        die();
+        break;
+    
+    case 'UpdateAddress';
+        
+                    
+        
+        die();
+        break;
+    
 
    case 'charts':
 

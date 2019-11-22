@@ -5,7 +5,7 @@ if(!isset($meds)){$meds[]='';}
 
 ?>
 <?php include'view/header.php'; ?>
-<?php include 'view/navigation.php'; ?>
+
 <html>
 <section id="patientprofile">
     <form>

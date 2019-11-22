@@ -8,7 +8,7 @@ if (!isset($gen)) {$gen = '';}
 ?>
 
 <?php include'view/header.php'; ?>
-<?php include 'view/navigation.php'; ?>
+
 <html>
     <section>
         <form id="patientprofile" action="index.php" method="post">

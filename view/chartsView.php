@@ -5,7 +5,7 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <?php include 'view/header.php'; ?>
-<?php include 'view/navigation.php'; ?>
+
 <script src="chart.js"></script>
 <body>
     <div class="chart">

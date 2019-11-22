@@ -15,7 +15,7 @@ if (!isset($patID)) {
 
 
 <?php include 'view/header.php'; ?>
-<?php include 'view/navigation.php'; ?>
+
 
  <h2 class="cardh2"><?php echo "Welcome"; ?></h2>  
 <div class="row">

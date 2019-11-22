@@ -18,28 +18,33 @@ if (!isset($loginErr)) {
 ?>
 
 <?php include 'view/header.php'; ?>
-<?php include 'view/navigation.php'; ?>
- <h2> <?php if ($userName != ''){ ?>
-        <span><?php echo htmlspecialchars('Thank you for registering '.$fName) ?></span>
-    <?php } ?>
-    </h2>
-<section class="loginPage">
-    <div class="mainwrapper">
-    <form class="loginform" action="index.php" method="post">
-            <input type="hidden" name="action" value="login_user" />
-            <h3 id="loginh2"><?php echo htmlspecialchars('Login Page') ?></h3>
-            <br><br>
-            <label >User Name: </label>
-            <input  type="text" name="userName" value='<?php echo htmlspecialchars($userName) ?>'required>
-             <br><br>
 
-            <label>Password: </label>
-            <input type="password" name="pass" required>
-             <br><br>
 
-             <input class="subBtn" type="submit" value="Login">
-    </form>
+<div class="row justify-content-center">
+    <div class="col-6">
+        <h2 form-group> <?php if ($userName != '') { ?>
+                <span><?php echo htmlspecialchars('Thank you for registering ' . $fName) ?></span>
+            <?php } ?>
+        </h2>
+        <form class="form-horizontal" action="index.php" method="post">
+            <div  class="main-agileinfo">
+                <input type="hidden" name="action" value="login_user" />
+                <div class="main-layouts wrapper">
+                <h1>Log In</h1>
+                </div>
+             
+            
+            <div  class="agileits-top">
+                <label>User Name </label>
+                <input class="form" type="text" name="userName" value='<?php echo htmlspecialchars($userName) ?>'required>
+                <br>   
+                <label>Password </label>
+                <input class="form" type="password" name="pass" required>
+                <input class="subs" type="submit" value="Login">
+             </div>
+            
+</div>
+        </form>
     </div>
-</section>
-
+</div>
 <?php include 'view/footer.php'; ?>

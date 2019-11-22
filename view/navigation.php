@@ -5,43 +5,20 @@
 ?>
 
 
-<aside>
-    <!-- These links are for testing only.
-         Remove them from a production application. -->
-    <!--    <h2>Links</h2>-->
-    <ul class="profileNav">
-        <li class="nav">
-            <a href="?action=default">LogOut</a>
-        </li>
-        <li class="nav">
-            <a href="?action=charts">Charts</a>
-        </li>
-        <li class="nav">
-            <a href="?action=addNewPatientPage">Add New Patient</a>
-        </li>
-        <li class="nav">
-             <a href="?action=default">LogOut</a>
-        </li>
-        <li class="nav">
-            <a href="?action=register">Register</a>
-        </li>
-         <li class="nav">
-            <a href="?action=home">Home</a>
-        </li>
 
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Patient Manager</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="?action=home">Home</a></li>
+      <li><a href="?action=addNewPatientPage">Add Patient</a></li>
+      <li><a href="?action=charts">Charts</a></li>
+      <li><a href="?action=default">Logout</a></li>
+      <li><a href="?action=register">Register</a></li>
     </ul>
+  </div>
+</nav>
 
-<!--    <ul>
-        <li>
-            <a href="?action=default">Contact Us</a>
-        </li>
-        <li>
-            <a href="?action=default">About Us</a>
-        </li>
-        <li class="nav">
-            <a href="?action=register">Register</a>
-        </li>
-
-    </ul>-->
-
-</aside>
