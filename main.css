@@ -25,6 +25,7 @@ li{
     display: inline;
     background-color: lightgrey;
     font-weight: bold;
+    margin-right: 2px;
     
     
 }
@@ -34,7 +35,6 @@ li{
 .main-agileinfo {
     width: 55%;
     margin: 2em auto;
-    background: #ccc;
     background-size: cover;
     border-radius: 20px; 
 }
@@ -52,7 +52,7 @@ h1 {
 
 .subs{
      font-size: 1em;
-    color: #fff;
+    color: black;
     background: #ccc;
     outline: none;
     border: 1px solid #ccc;
@@ -66,9 +66,10 @@ h1 {
     margin: auto;
     width: 800px;
 }
-.nav>li>a:hover, .nav>li>a:focus {
+.nav-item{
     background-color: transparent;
 }
+
 .form{
      font-size: 0.9em;
     color: black;
@@ -191,51 +192,13 @@ img{
     margin: 2px;
     padding: 10px;
 }
-/*.cardh2{
-    margin: 30px;
-    text-align: center;
-}*/
-.patientListh2{
-    margin-top: .1em;
-}
-.patientList{
-   border: none;
-   width: 100%;
-   height: 20px;
-   text-align: left;
-   margin-right: 100px;
-    
-}
 
 
 
 
 
 
-#ptntProfileUpdateBtns{
-     margin: 80px 50px 50px 50px;
-     padding: 30px;
-}
-#ptntProfileUpdateBtns input{
-    
-    margin-bottom: 15px;
-    width: 200px;
-    font-weight:  bold;
-    
-}
-#patientprofile{
-    
-    margin: 30px 100px 50px 200px;
-    width: 400px;
-    padding: 30px;
-    
-}
-#patientprofile input{
-    display: inline-block;
-    float: right;  
-    margin-right: 50px;
-    padding: 3px 3px 3px 3px;
-}
+
 
 
 

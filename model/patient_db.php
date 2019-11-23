@@ -139,7 +139,28 @@ class patient_db {
         }
     }
     
+    public function add_patientAddress($patientID){
+        
+        $db = database::getDB();
+        $query = 'insert into patientaddress(patientID, number, street, city, state, zip, email, begDate, endDate)'
+                 .'VALUES (:patientID, :number, :street, :city, :state, :zip, :email, :begDate, :endDate)';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':patientID',$patientID);
+        $statement->bindValue(':number',$number);
+        $statement->bindValue(':street',$street);
+        $statement->bindValue(':city',$city);
+        $statement->bindValue(':state', $state);
+        $statement->bindValue(':zip',$zip);
+        $statement->bindValue(':email',$email);
+        $statement->bindValue(':endDate',$endDate);
+        $statement->bindValue(':begDate',$begDate);
+        $statement->execute();
+        $statement->closeCursor();
+        
+    }
+
     
+
     // sql to select pateint med by id 
     public static function insert_patientMed($patientID, $drug, $quantity, $timesPerDay){
         $db = Database::getDB();

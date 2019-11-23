@@ -32,10 +32,10 @@ if (!isset($loginErr)) {
                 <div class="main-layouts wrapper">           
             <div  class="agileits-top">
                 <label>User Name </label>
-                <input class="form" type="text" name="userName" value='<?php echo htmlspecialchars($userName) ?>'required>
+                <input class="form-control" type="text" name="userName" value='<?php echo htmlspecialchars($userName) ?>'required>
                 <br>   
                 <label>Password </label>
-                <input class="form" type="password" name="pass" required>
+                <input class="form-control" type="password" name="pass" required>
                 <input class="subs" type="submit" value="Login">
              </div>
               </div>

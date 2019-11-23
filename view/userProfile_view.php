@@ -16,12 +16,11 @@ if (!isset($patID)) {
 
 <?php include 'view/header.php'; ?>
 
-
- <h2 class="cardh2"><?php echo "Welcome"; ?></h2>  
-<div class="row">
-    
-    <div class="column">
-        <div class="card">
+<div class="container">
+    <div class="row">
+      <div class="col-sm-4">
+      <h3><?php echo "Welcome"; ?></h3>
+      <div class="card">
             <h5 class="cardheader"><b><?php echo htmlspecialchars($fullName); ?><b></h5>
                         <img class="card-img-top" src="<?php echo htmlspecialchars($pic); ?>" alt="Card image">
             <div class="card-body">
@@ -29,22 +28,21 @@ if (!isset($patID)) {
                 <p class="card-text"><?php echo htmlspecialchars($userName); ?></p>
             </div>
         </div>
-
-    </div>   
-
-    <div class="column2">
-        <?php if(!is_array($pats)): ?>
-        <h3><?php echo 'Add Patients'; ?></h3>
+    </div>
+    <div class="col-lg-20">
+        <div class="table-responsive">
+             <?php if(!is_array($pats)): ?>
+        <h3><?php echo 'Add New Patients'; ?></h3>
             <?php else: ?>
-        <table class="patientList">
+        <table class="table-borderless">
 
             <tr>
-                <th colspan="1">Name</th>
-                <th colspan="2">Action</th>
+                <th style="width: 60%">Name</th>
+                <th style="width: 20%">Action</th>
             </tr><br>
             <?php foreach($pats as $p) : ?>  
                 <tr>
-                    <td colspan="2"><?php echo htmlspecialchars($p->getFName() . " " . $p->getLName()); ?></td>
+                    <td><?php echo htmlspecialchars($p->getFName() . " " . $p->getLName()); ?></td>
                     <td><form action="index.php" method="POST">                
                             <input type="hidden" name="action" 
                                    value="patient_page">
@@ -57,6 +55,28 @@ if (!isset($patID)) {
             <?php endforeach; ?>   
             <?php endif; ?>
         </table>
+            
+            
+        </div>
+      
+    </div>  
+        
+        
+    </div>
+   
+</div>
+
+
+ <h2 ></h2>  
+<div class="row">
+    
+    <div class="column">
+        
+
+    </div>   
+
+    <div class="column2">
+       
     </div>          
 
 

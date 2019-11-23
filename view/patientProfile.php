@@ -34,14 +34,14 @@ if(!isset($meds)){$meds[]='';}
             Email:&nbsp;<?php echo htmlspecialchars($email); ?> <br><br>
              <?php if(empty($address)) { ?>
             <form action="index.php" method="post">
-                <input type="hidden" name="action" value="PatientAddress">
+                <input type="hidden" name="action" value="addAddress">
             <input type="hidden" name="pID" value="<?php echo html_entity_decode($aPatient->getPatientID()) ?>">
             <input type="submit" name="addAddress" value="Add Address">
              <?php } ?>
             </form>
-        </fieldset>
-   <div class="container">
-  <h2>Medications</h2>
+        </fieldset><br>
+
+       <legend>Medications</legend>
  <?php if($meds != NULL) { ?>         
   <table class="table">
     <thead>
@@ -49,30 +49,38 @@ if(!isset($meds)){$meds[]='';}
         <th>Medication</th>
         <th>Dosage</th>
         <th>Per Day</th>
-        <th>Notes</th>
+        <th colspan="3">Notes</th>
         <th>&nbsp;&nbsp;</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-          <?php  foreach($meds as $m) : ?>
+       <tr>
+       <?php  foreach($meds as $m) : ?>
         <td><?php ?></td>
         <td><?php ?></td>
         <td><?php ?></td>
         <td><?php ?></td>
         <td><?php ?></td>
-      </tr>
+        <?php ; ?>
+                     <td><form action="index.php" method="POST">                
+                         <input type="hidden" name="action" 
+                          value="meds">
+                         <input id="pntbutton" type="hidden" name="pid"
+                                value="<?php echo htmlentities($_SESSION['pID']) ; ?>">
+                         <input type="submit" value="Update">
+                         </form>
+                     </td> 
+       </tr>
         <?php endforeach;
              }else{ ?><tr><td>No Medications found</td></tr><?php } ?>
-          
-     <form action="index.php" method="post">
-            <input type="hidden" name="action" value="PatientMed">
+    </tbody>
+  </table>
+   <form action="index.php" method="post">
+            <input type="hidden" name="action" value="addMed">
             <input type="hidden" name="pID" value="<?php echo html_entity_decode($aPatient->getPatientID()) ?>">
             <input type="submit" name="addMed" value="Add Medication">
      </form>
-    </tbody>
-  </table>
-</div>
+
 
     </div>
     <div class="col-sm-4">
@@ -90,6 +98,7 @@ if(!isset($meds)){$meds[]='';}
                          </form>
                      </td> 
                    </tr>
+                   <?php if(!empty($address)) { ?>
                    <tr>
                      <td colspan="2"><?php ; ?></td>
                      <td><form action="index.php" method="POST">                
@@ -101,17 +110,7 @@ if(!isset($meds)){$meds[]='';}
                          </form>
                      </td> 
                    </tr>
-                     <tr>
-                     <td colspan="2"><?php ; ?></td>
-                     <td><form action="index.php" method="POST">                
-                         <input type="hidden" name="action" 
-                          value="meds">
-                         <input id="pntbutton" type="hidden" name="pid"
-                                value="<?php echo htmlentities($_SESSION['pID']) ; ?>">
-                         <input type="submit" value="Medications">
-                         </form>
-                     </td> 
-                   </tr>
+                   <?php }?>
                </table>              
         </div>
     </div>

@@ -81,27 +81,27 @@ if (!isset($err['fNamefirstchar'])) {
                 <input type="hidden" name="action" value="register_user" />
                 <div class="agileits-top">
                     <label>First Name</label>
-                    <input class="form" type="text" name="fName" value="<?php echo htmlspecialchars($fName); ?>">
-                    <span class="err"><?php
+                    <input class="form-control" type="text" name="fName" value="<?php echo htmlspecialchars($fName); ?>">
+                    <span class="error"><?php
                         echo htmlspecialchars($err['fName']);
                         echo htmlspecialchars($err['fNamefirstchar']);
                         ?></span>
 
                     <label>Last Name</label>
-                    <input class="form" type="text" name="lName" value="<?php echo htmlspecialchars($lName); ?>"><br>
-                    <span class="err"><?php
+                    <input class="form-control" type="text" name="lName" value="<?php echo htmlspecialchars($lName); ?>"><br>
+                    <span class="error"><?php
                         echo htmlspecialchars($err['lName']);
                         echo htmlspecialchars($err['lNamefirstchar'])
                         ?></span>
 
                     <label>Email</label>
-                    <input class="form" type="text" name="email" value="<?php echo htmlspecialchars($uname); ?>"><br>
-                    <span class="err"><?php echo htmlspecialchars($err['email'])
+                    <input class="form-control" type="text" name="email" value="<?php echo htmlspecialchars($uname); ?>"><br>
+                    <span class="error"><?php echo htmlspecialchars($err['email'])
                         . htmlspecialchars($err['emailTaken']);
-                        ?></span><br>
+                        ?></span>
                     <label>Password</label>
-                    <input class="form" type="password" name="password">
-                    <span class="err"><?php
+                    <input class="form-control" type="password" name="password"><br>
+                    <span class="error"><?php
                         echo htmlspecialchars($err['shortPass']);
                         echo htmlspecialchars($err['lcasePass']);
                         echo htmlspecialchars($err['ucasePass']);

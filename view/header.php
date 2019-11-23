@@ -1,4 +1,19 @@
 <!DOCTYPE html>
+<?php
+
+    $login = false;
+    $admin = false;
+        if (isset($_SESSION['uid']) && $_SESSION['uid'] !== "" ) 
+        {          
+            $loggedIn = true;
+            
+            if(isset($_SESSION['admin']) && $_SESSION['admin'] == true)
+            {
+                $admin = true;
+            }
+        }
+
+        ?>
 <html lang="en">
     <head>
         <!-- Required meta tags -->
@@ -37,11 +52,16 @@
       <a class="navbar-brand" href="#">Patient Manager</a>
 
     <ul class="navbar-nav">
-        <li class="nav-item"><a class="nav-link" href="?action=home">Home</a></li>
-      <li class="nav-item"><a class="nav-link" href="?header(Location: index.php?action=patient_page)">Add Patient</a></li>
+        <li class="nav-item"><a class="nav-link" href="?action=register">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="?action=register">Log In</a></li>
+        <li class="nav-item"><a class="nav-link" href="?action=register">Register</a></li>
+       
+       <li class="nav-item"><a class="nav-link" href="?action=Home">Home</a></li>
+      <li class="nav-item"><a class="nav-link" href="?action=addNewPatientPage">Add Patient</a></li>
       <li class="nav-item"><a class="nav-link" href="?action=charts">Charts</a></li>
       <li class="nav-item"><a class="nav-link" href="?action=default">Logout</a></li>
-      <li class="nav-item"><a class="nav-link" href="?action=register">Register</a></li>
+      
+      
     </ul>
   </div>
 </nav>

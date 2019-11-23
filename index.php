@@ -106,6 +106,30 @@ switch ($action) {
         include 'view/userProfile_view.php';
         die();
         break;
+        
+         case 'home':
+        // takes the logged in user to their profile page 
+        $pats=array();
+        // takes user back to their profile page 
+        $userName =$_SESSION['userName'];
+        $pic =$_SESSION['pic'];
+        $fullName = strtoupper($_SESSION['fName']. ' '.$_SESSION['lName']);
+        $title =$_SESSION['title'];
+              
+         
+        $pats = patient_db::selectPatients($_SESSION['uid']);
+       // var_dump($_SESSION['user']);
+//        var_dump($_SESSION['uid']);
+//        var_dump($_SESSION['fName']);
+//        var_dump($_SESSION['lName']);
+//        var_dump($_SESSION['']);
+//        var_dump($_SESSION['userName']);
+//        var_dump($_SESSION['type']);
+//        var_dump($_SESSION['userpic']);     
+  
+        
+        include 'view/userProfile_view.php';
+        die();
 
     case 'register':
         // sends user to register page 
@@ -341,9 +365,48 @@ switch ($action) {
         die();
         break;
     
-    case 'address';
+    case 'addAddress';
         
-        include 'view/addClientAddress.php';
+        $valid =true;
+        
+          $pid = $_SESSION['pID'];
+          $num =filter_input(INPUT_POST,'num');
+          $street = filter_input(INPUT_POST, 'street');
+          $city = filter_input(INPUT_POST, 'city');
+          $state =filter_input(INPUT_POST, 'st');
+          if(!isset($email)){
+              $email= NULL;
+          }else{
+            $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);  
+          }
+          
+          $today =date('m-d-Y');
+          $begDate =$today;
+          
+          // add validation
+          if(empty($_POST['num'])){
+              $errNum= 'Enter Number';
+              $valid =false;
+          }
+      
+          if(empty($_POST['st'])){
+              $errSt= 'Enter Street';
+              $valid =false;
+          }
+          if(empty($_POST['city'])){
+              $errCty= 'Enter Number';
+              $valid =false;
+          }
+          if(empty($_POST['zip'])){
+              $errZip= 'Enter Number';
+              $valid =false;
+          }
+        // if valid = false insert address
+        if ($valid) {
+            patient_db::add_patientAddress($pid, $num, $street, $city, $state, $email, $begDate);
+        }
+
+        include 'view/addPntAddress.php';
              
         
         die();
