@@ -108,8 +108,9 @@ switch ($action) {
         break;
         
          case 'home':
+             // should clear out patientid session
         // takes the logged in user to their profile page 
-        $pats=array();
+        
         // takes user back to their profile page 
         $userName =$_SESSION['userName'];
         $pic =$_SESSION['pic'];
@@ -118,6 +119,11 @@ switch ($action) {
               
          
         $pats = patient_db::selectPatients($_SESSION['uid']);
+        
+        if(isset($_SESSION['pID'])){
+            $_SESSION['pID']='';
+            
+        }
        // var_dump($_SESSION['user']);
 //        var_dump($_SESSION['uid']);
 //        var_dump($_SESSION['fName']);
@@ -152,7 +158,7 @@ switch ($action) {
         // email is the user name
         $uname = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
         $password = filter_input(INPUT_POST, 'password');
-        $userType = filter_input(INPUT_POST, 'serviceType');
+        $userType = filter_input(INPUT_POST, 'type');
         $_SESSION['fName'] = $fName;
         $_SESSION['userName'] = $uname;
         $_SESSION['userType'] = $userType;
@@ -200,7 +206,7 @@ switch ($action) {
             //$hashpass = password_hash($pass, PASSWORD_BCRYPT, $options);
             // fix varibles - no phone number 
             //user_db::insert_users($fName, $lName, $username, $pNumber, $hashpass);
-            user_db::insert_user($fName, $lName, $userName, $password, $userType, $begDate);
+            user_db::insert_user($fName, $lName, $uname, $password, $userType, $begDate);
 
             include 'view/login_view.php';
         } else {
@@ -242,7 +248,8 @@ switch ($action) {
         patient_db::insert_patient($userid, $f, $l, $pdob, $g, $bdt, $endDate, $dis);
         
 
-        include 'view/userProfile_view.php';
+       // include 'view/userProfile_view.php';
+        header('Location: index.php?action=home');
 
         die();
         break;
@@ -252,7 +259,7 @@ switch ($action) {
         $_SESSION['pID']= filter_input(INPUT_POST, 'pid');
         $userid = $_SESSION['uid'];
         $aPatient = patient_db::select_patient($_SESSION['pID'], $userid);
-        $disabled = $aPatient->getDeceasedDate();
+        $disabled = $aPatient->getDisabled();
         $today = time();
         $dob = strtotime($aPatient->getDob());
         $todaysAge = $today - $dob;
@@ -341,7 +348,8 @@ switch ($action) {
 
         // update a patient demographic information
         // take user back to profile page 
-
+        $valid =true;
+        
         $patientid = $_SESSION['pID'];
         $userid = $_SESSION['uid'];
 
@@ -351,9 +359,16 @@ switch ($action) {
         $adob = date("m-d-Y", strtotime($dob));
         $sex = filter_input(INPUT_POST, 'sex');
         $edate = filter_input(INPUT_POST, 'adob');
-
-        patient_db::update_patient($patientID, $userID, $fname, $lname, 
+        
+        if(empty($_POST['sex'])){
+              $errGen= 'Enter Number';
+              $valid =false;
+          }
+          If(valid){
+               patient_db::update_patient($patientID, $userID, $fname, $lname, 
                 $adob, $sex, $disabled, $deceasedDate, $begDate, $endDate);
+              
+          }
 
         // add validation to date format
         
@@ -374,6 +389,7 @@ switch ($action) {
           $street = filter_input(INPUT_POST, 'street');
           $city = filter_input(INPUT_POST, 'city');
           $state =filter_input(INPUT_POST, 'st');
+          $zip = filter_input(INPUT_POST, 'zip');
           if(!isset($email)){
               $email= NULL;
           }else{
@@ -382,7 +398,7 @@ switch ($action) {
           
           $today =date('m-d-Y');
           $begDate =$today;
-          
+          $endDate =NULL;
           // add validation
           if(empty($_POST['num'])){
               $errNum= 'Enter Number';
@@ -393,28 +409,27 @@ switch ($action) {
               $errSt= 'Enter Street';
               $valid =false;
           }
-          if(empty($_POST['city'])){
-              $errCty= 'Enter Number';
-              $valid =false;
-          }
+          
           if(empty($_POST['zip'])){
               $errZip= 'Enter Number';
               $valid =false;
           }
         // if valid = false insert address
         if ($valid) {
-            patient_db::add_patientAddress($pid, $num, $street, $city, $state, $email, $begDate);
+            patient_db::add_patientAddress($pid, $num, $street, $city, $state, $zip, $email, $begDate,$endDate);
         }
 
         include 'view/addPntAddress.php';
-             
+        //header('Location: index.php?action=patient_page');   
         
         die();
         break;
     
     case 'UpdateAddress';
-        
-                    
+        $pid= filter_input(INPUT_POST, 'pID');
+        $patient = patient_db::select_patient($_SESSION['pID'], $_SESSION['uid']);
+        $name =$patient->getFName(). ' '.$patient->getLName();
+         include 'view/addPntAddress.php';         
         
         die();
         break;

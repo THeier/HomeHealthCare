@@ -14,13 +14,13 @@ if(!isset($meds)){$meds[]='';}
 <div class="container">
   <div class="row">
     <div class="col-sm-4">
-       <fieldset class="field_set">
+        <fieldset class="field_set">
             <legend><b>Personal Information</b></legend>
             Name:&nbsp;<?php echo htmlspecialchars($aPatient->getFName() . ' ' . $aPatient->getLName()); ?><br>
             Age:&nbsp;<?php echo htmlspecialchars($age); ?><br>
             Date of Birth:&nbsp;<?php echo date("m-d-Y", strtotime($aPatient->getDob())); ?><br>
             Gender: &nbsp;<?php echo htmlspecialchars($aPatient->getSex()); ?><br>
-            Disabled:  &nbsp;<?php echo htmlspecialchars($disabled)  ?><br>
+            Disabled:  &nbsp;<?php echo htmlspecialchars($aPatient->getDisabled());  ?><br>
             
         </fieldset><br>
         <!-- Conditionally display
@@ -33,10 +33,10 @@ if(!isset($meds)){$meds[]='';}
             Zip Code:&nbsp;<?php echo htmlspecialchars($zip)  ; ?><br>
             Email:&nbsp;<?php echo htmlspecialchars($email); ?> <br><br>
              <?php if(empty($address)) { ?>
-            <form action="index.php" method="post">
-                <input type="hidden" name="action" value="addAddress">
+            <form class="form" action="index.php" method="post">
+                <input type="hidden" name="action" value="UpdateAddress">
             <input type="hidden" name="pID" value="<?php echo html_entity_decode($aPatient->getPatientID()) ?>">
-            <input type="submit" name="addAddress" value="Add Address">
+            <input class="subs" type="submit" value="Add Address">
              <?php } ?>
             </form>
         </fieldset><br>

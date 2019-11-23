@@ -101,6 +101,22 @@ class user_db {
         
         return $userId;
     }
+    
+    public static function search_by_email($userName) {
+        $db = Database::getDB();
+
+        $query = 'SELECT * FROM user where userName = :userName';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':userName', $userName);
+        $statement->execute();
+        $results = $statement->fetchAll();
+        if (empty($results)) {
+            return false;
+        } else if ($results[0]['userName'] === $userName) {
+            return true;
+        }
+    }
+    
 }
 
 

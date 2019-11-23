@@ -52,11 +52,11 @@
       <a class="navbar-brand" href="#">Patient Manager</a>
 
     <ul class="navbar-nav">
-        <li class="nav-item"><a class="nav-link" href="?action=register">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="?action=register">Log In</a></li>
+        <li class="nav-item"><a class="nav-link" href="?action=login">About Us</a></li>
+        <li class="nav-item"><a class="nav-link" href="?action=login">Contact Us</a></li>
+        <li class="nav-item"><a class="nav-link" href="?action=login">Log In</a></li>
         <li class="nav-item"><a class="nav-link" href="?action=register">Register</a></li>
-       
-       <li class="nav-item"><a class="nav-link" href="?action=Home">Home</a></li>
+       <li class="nav-item"><a class="nav-link" href="?action=home">Home</a></li>
       <li class="nav-item"><a class="nav-link" href="?action=addNewPatientPage">Add Patient</a></li>
       <li class="nav-item"><a class="nav-link" href="?action=charts">Charts</a></li>
       <li class="nav-item"><a class="nav-link" href="?action=default">Logout</a></li>

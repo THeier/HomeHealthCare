@@ -12,18 +12,18 @@
  * @author Tania Heieer
  */
 class patient {
-   private $patientID, $userID, $fName, $lName, $dob, $sex, $deceasedDate, $begDate, $endDate, $disabled;
-     function __construct($patientID, $userID, $fName, $lName, $dob, $sex, $deceasedDate, $begDate, $endDate, $disabled) {
+   private $patientID, $userID, $fName, $lName, $dob, $sex, $begDate, $endDate, $disabled, $dcsDate;
+     function __construct($patientID, $userID, $fName, $lName, $dob, $sex, $begDate, $endDate, $disabled, $dcsDate) {
        $this->patientID = $patientID;
        $this->userID = $userID;
        $this->fName = $fName;
        $this->lName = $lName;
        $this->dob = $dob;
        $this->sex = $sex;
-       $this->deceasedDate = $deceasedDate;
        $this->begDate = $begDate;
        $this->endDate = $endDate;
        $this->disabled = $disabled;
+       $this->dcsDate = $dcsDate;
    }
 
       function getPatientID() {

@@ -30,19 +30,19 @@ if (!isset($patID)) {
         </div>
     </div>
     <div class="col-lg-20">
-        <div class="table-responsive">
+        <div>
              <?php if(!is_array($pats)): ?>
         <h3><?php echo 'Add New Patients'; ?></h3>
             <?php else: ?>
-        <table class="table-borderless">
+        <table class="table">
 
             <tr>
-                <th style="width: 60%">Name</th>
+                <th style="width: 80%">Name</th>
                 <th style="width: 20%">Action</th>
             </tr><br>
             <?php foreach($pats as $p) : ?>  
                 <tr>
-                    <td><?php echo htmlspecialchars($p->getFName() . " " . $p->getLName()); ?></td>
+                    <td style="margin: 15px"><?php echo htmlspecialchars($p->getFName() . " " . $p->getLName()); ?></td>
                     <td><form action="index.php" method="POST">                
                             <input type="hidden" name="action" 
                                    value="patient_page">

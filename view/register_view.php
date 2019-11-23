@@ -6,9 +6,7 @@
  */-->
 <?php
 //set default value for variable for inital page load
-if (!isset($fName)) {
-    $fName = '';
-}
+if (!isset($fName)) {$fName = '';}
 if (!isset($lName)) {
     $lName = '';
 }
@@ -109,14 +107,12 @@ if (!isset($err['fNamefirstchar'])) {
                         ?></span>
 
                     <div class="dropdown">
-                        <button type="button" class="btn bg-light dropdown-toggle" data-toggle="dropdown">
-                            Provider Type
-                        </button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" value="cna">Certified Nurse Assistant</a>
-                            <a class="dropdown-item" value="cma">Certified Medication Assistant</a>
-                            <a class="dropdown-item" value="admin">Administrator</a>
-                        </div>
+                        <select name="type">
+                            <option value="cna">Certified Nurse Assistant</option>
+                            <option value="cma">Certified Medication Assistant</option>
+                            <option value="cma">Certified Medication Assistant</option>
+                            <option value="admin">Administrator</option>
+                        </select>
                     </div>
                     <label>&nbsp;</label><br>
                     <input class="subs" type="submit" value="Register">   

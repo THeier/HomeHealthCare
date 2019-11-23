@@ -60,8 +60,8 @@ class patient_db {
         if (!empty($results)) 
           {
             $pats = new patient($results['patientID'], $results['userID'], $results['fName'],
-                    $results['lName'], $results['dob'], $results['sex'], $results['disabled'], 
-                    $results['deceasedDate'], $results['begDate'], $results['endDate']);
+                    $results['lName'], $results['dob'], $results['sex'], $results['begDate'], 
+                    $results['endDate'], $results['disabled'], $results['dcsDate']);
             
             
               return $pats;
@@ -99,8 +99,8 @@ class patient_db {
             $pt = new patient ($result['patientID'], 
                     $result['userID'], $result['fName'], 
                     $result['lName'], $result['dob'], $result['sex'], 
-                    $result['disabled'], $result['deceasedDate'], 
-                    $result['begDate'], $result['endDate']);
+                    $result['begDate'], $result['endDate'],
+                    $result['disabled'], $result['dcsDate']);
             $pats[]= $pt;
             
           }
@@ -139,7 +139,7 @@ class patient_db {
         }
     }
     
-    public function add_patientAddress($patientID){
+    public function add_patientAddress($patientID, $number, $street, $city, $state, $zip, $email, $begDate, $endDate){
         
         $db = database::getDB();
         $query = 'insert into patientaddress(patientID, number, street, city, state, zip, email, begDate, endDate)'
@@ -152,8 +152,8 @@ class patient_db {
         $statement->bindValue(':state', $state);
         $statement->bindValue(':zip',$zip);
         $statement->bindValue(':email',$email);
-        $statement->bindValue(':endDate',$endDate);
         $statement->bindValue(':begDate',$begDate);
+        $statement->bindValue(':endDate',$endDate);
         $statement->execute();
         $statement->closeCursor();
         

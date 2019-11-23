@@ -11,11 +11,11 @@ and open the template in the editor.
   <div class="form-row">
     <div class="form-group col-md-6">
       <label for="inputFName">First Name</label>
-      <input type="text" class="form-control" id="inputFName" placeholder="First Name">
+      <input type="text" class="form-control" id="inputFName" name="fname">
     </div>
     <div class="form-group col-md-6">
-      <label for="inputLName">L</label>
-      <input type="text" class="form-control" id="inputPassword4" placeholder="Last Name">
+      <label for="inputLName">Last Name</label>
+      <input type="text" class="form-control" id="inputPassword4" name="lname">
     </div>
   </div>
   <div class="form-group">
