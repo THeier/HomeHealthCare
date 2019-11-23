@@ -107,21 +107,6 @@ switch ($action) {
         die();
         break;
 
-
-     case 'home':
-        // takes user back to their profile page 
-        $userName =$_SESSION['userName'];
-        $pic =$_SESSION['pic'];
-        $fullName = strtoupper($_SESSION['fName']. ' '.$_SESSION['lName']);
-        $title =$_SESSION['title'];
-              
-         
-        $pats = patient_db::selectPatients($_SESSION['uid']);
-  
-        
-        include 'view/userProfile_view.php';
-        die();
-        break;
     case 'register':
         // sends user to register page 
         //var_dump($action);
@@ -297,11 +282,11 @@ switch ($action) {
 
         
 
-       var_dump($aPatient);
-       var_dump($meds);
+       //var_dump($aPatient);
+       //var_dump($meds);
        //var_dump($amed);
-        include 'view/patientPage.php';
-
+       // include 'view/patientPage.php';
+        include 'view/patientProfile.php';
         die();
         break;
 

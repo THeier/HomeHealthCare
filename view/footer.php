@@ -1,15 +1,15 @@
    
 <footer class="page-footer font-small blue">
 
-    <ul>
-        <li>
-            <a href="?action=default">Contact Us</a>
+    <ul class="nav justify-content-center" style="background-color: transparent">
+        <li class="nav-item">
+            <a class="nav-link" href="?action=default">Contact Us</a>
         </li>         
-        <li>
-            <a href="?action=default">About Us</a>
+        <li class="nav-item">
+            <a class="nav-link" href="?action=default">About Us</a>
         </li>
-        <li>
-            <a href="register_view.php">Register</a>
+        <li class="nav-item">
+            <a class="nav-item" href="register_view.php">Register</a>
         </li>
 
     </ul>

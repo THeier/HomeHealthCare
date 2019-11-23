@@ -66,6 +66,9 @@ h1 {
     margin: auto;
     width: 800px;
 }
+.nav>li>a:hover, .nav>li>a:focus {
+    background-color: transparent;
+}
 .form{
      font-size: 0.9em;
     color: black;

@@ -38,7 +38,7 @@
 
     <ul class="navbar-nav">
         <li class="nav-item"><a class="nav-link" href="?action=home">Home</a></li>
-      <li class="nav-item"><a class="nav-link" href="?action=addNewPatientPage">Add Patient</a></li>
+      <li class="nav-item"><a class="nav-link" href="?header(Location: index.php?action=patient_page)">Add Patient</a></li>
       <li class="nav-item"><a class="nav-link" href="?action=charts">Charts</a></li>
       <li class="nav-item"><a class="nav-link" href="?action=default">Logout</a></li>
       <li class="nav-item"><a class="nav-link" href="?action=register">Register</a></li>
