@@ -29,11 +29,7 @@ if (!isset($loginErr)) {
         <form class="form-horizontal" action="index.php" method="post">
             <div  class="main-agileinfo">
                 <input type="hidden" name="action" value="login_user" />
-                <div class="main-layouts wrapper">
-                <h1>Log In</h1>
-                </div>
-             
-            
+                <div class="main-layouts wrapper">           
             <div  class="agileits-top">
                 <label>User Name </label>
                 <input class="form" type="text" name="userName" value='<?php echo htmlspecialchars($userName) ?>'required>
@@ -42,7 +38,7 @@ if (!isset($loginErr)) {
                 <input class="form" type="password" name="pass" required>
                 <input class="subs" type="submit" value="Login">
              </div>
-            
+              </div>
 </div>
         </form>
     </div>

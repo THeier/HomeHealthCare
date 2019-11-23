@@ -98,7 +98,7 @@ h1 {
     font-weight: bold;
 }
 
-
+/*
 .field_set{
     text-align: left;
     margin-bottom: 10px;
@@ -106,26 +106,26 @@ h1 {
 }
 #demobtn input{
     display: inline-block;
-}
+}*/
 
 
 
-
+/*
 .row{
     clear: both;
-}/*
+}
  Clear floats after the columns 
-*/
+
 .row :after {
   content: "";
   display: table;
   clear: both;
 }
-footer {
+*/footer {
     clear: both;
     border-top: 2px solid black;
    
-}
+}/*
 
 h1 {
     font-size: 150%;
@@ -153,7 +153,7 @@ a:hover {
 /*br {
     clear: left;
 }*/
-.regform{
+/*.regform{
     float: right;
     margin: 20px 50px 30px 400px;
     width: 600px;
@@ -165,7 +165,7 @@ a:hover {
 
 #regh1{
     margin-left: 40px;
-}
+}*/
 
 
 img{
@@ -206,51 +206,11 @@ img{
    margin-right: 100px;
     
 }
-table td{
-    padding: .1em;
-    width: 0px;
-    overflow: hidden;
-    
-}
-table th{
-    margin-bottom: 2px;
-    text-align: left;
-}
 
 
-dl {
-  width: 60%;
-  overflow: hidden;
-  background: #ff0;
-  padding: 0;
-  margin: 0;
-  margin-bottom: .5em;
-  margin-top: .5em;
-  margin-left: 2px;
-}
-dt {
-  float: left;
-  width: 40%;
-  /* adjust the width; make sure the total of both is 100% */
-  background: #ccc;
-  padding: 0;
-  margin: 0;
-/*  margin-bottom: .1em;
-  margin-top: .1em;*/
-}
-dd {
-  float: left;
-  width: 20%;
-  /* adjust the width; make sure the total of both is 100% */
-  background: #dd0;
-  padding: 0;
-  margin: 0;
-}
-.patientInfo{
-    margin-top: 20px;
-    margin-left: 20px;
-}
-.col3{ visibility: collapse }
+
+
+
 
 #ptntProfileUpdateBtns{
      margin: 80px 50px 50px 50px;
@@ -276,14 +236,6 @@ dd {
     margin-right: 50px;
     padding: 3px 3px 3px 3px;
 }
-#ptntProfilediv{
-    margin: 40px 80px 80px 80px;
-    padding: 30px;
-    
-}
-#pntbutton{
-    padding:  40px;
-}
-td{
-    margin-bottom: 15px;
-}
+
+
+

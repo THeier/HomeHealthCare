@@ -34,7 +34,7 @@
 <nav class="navbar navbar-expand-sm bg-light ">
   <div class="container-fluid">
     
-      <a class="navbar-brand" href="#">Client Manager</a>
+      <a class="navbar-brand" href="#">Patient Manager</a>
 
     <ul class="navbar-nav">
         <li class="nav-item"><a class="nav-link" href="?action=home">Home</a></li>
