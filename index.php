@@ -435,7 +435,7 @@ switch ($action) {
         
         die();
         break;
-    
+  // Patient address case  
     case 'UpdateAddressPage';
         // update patient address page  
         $patientid= $_SESSION['pID'];
@@ -448,9 +448,13 @@ switch ($action) {
         $city =$patientAddress->getCity();
         $st =$patientAddress->getState();
         $zip =$patientAddress->getZip();
+        $endDate =$patientAddress->getEndDate();
         $email =$patientAddress->getEmail();
         if(is_null($email)){
             $email='';
+        }
+        if(is_null($endDate)){
+            $endDate='';
         }
          include 'view/addressUpdate.php';         
          var_dump($patientid);
@@ -472,7 +476,7 @@ switch ($action) {
         $bdate=filter_input(INPUT_POST, 'begDate');
         
         if(valid){
-            patient_db::update_patientAddress($pid, $n, $str, $city, $st, $zip, $bdate, );
+            patient_db::update_patientAddress($pid, $n, $str, $city, $st, $zip, $bdate, $e);
         }
         
         include 'view/home.php';
@@ -480,9 +484,12 @@ switch ($action) {
         die();
         break;
 
-   case 'charts':
+   case 'addMedication':
+       
+       $pid = filter_input(INPUT_POST, 'pID');
+       var_dump($pid);
 
-        include 'view/chartsView.php';
+        include 'view/addMedication.php';
 
         die();
         break;

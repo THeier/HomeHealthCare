@@ -4,67 +4,72 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
+<?php
+if (!isset($errNum)) {$errNum = '';}
+if (!isset($errSt)) {$errSt = '';}
+if (!isset($errCty)) {$errCty = '';}
+if (!isset($errZip)) {$errZip = '';}
+if (!isset($name)) {$name = '';}
 
+?>
 <?php include'view/header.php'; ?>
 
 <html>
-    <div class="container">
-        <div class="row justify-content-center">
-            <form class="form" action="index.php" method="POST">
-                <input type="hidden" name="action" value="updateAddress" />
-
-                <legend>Update Address</legend>
-
-                <label>Client ID:</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo htmlspecialchars($patientid); ?><br>
-                <label>Client Name:</label> <?php echo $name; ?><br>
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label>Number:</label>
-                        <input class="form-control" type="text" name="num" value="<?php echo htmlspecialchars($num); ?>" ><br>
-                        <label>Street:</label>
-                        <input class="form-control" type="text" name="street" value="<?php echo htmlspecialchars($street); ?>"><br>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-2">
-                        <label>City:</label>
-                        <input class="form-control" type="text" name="city" value="<?php echo htmlspecialchars($city); ?>"><br>
-                        <label>State:</label>
-                        <input class="form-control" type="text" name="st" value="<?php echo htmlspecialchars($st); ?>"><br>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-2">
-                        <label>Zip Code:</label>
-                        <input class="form-control" type="text" name="zip" value="<?php echo htmlspecialchars($zip); ?>"><br>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label>Email:</label>
-                        <input class="form-control" type="text" name="email" value="<?php echo htmlspecialchars($email); ?>"><br>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-2">
-                        <label>End Date:</label>
-                        <input class="form-control" type="date" name="endDate"><br>
-
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <input type="hidden" name="begdate" value="<?php echo $patientAddress->getBegDate(); ?>">
-                        <input class="subs" type="submit" value="Update Address">
-                    </div>
-                </div>
-
-            </form>
-
+    <form class="form" action="index.php" method="POST">
+        <div class="form-row">
+            <h6><?php echo $name; ?></h6><br><br>
         </div>
-
-    </div>  
-
-
+        <div class="form-row">
+                    <label>Client ID:</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo htmlspecialchars($patientid); ?><br>
+                </div>
+        <div class="form-row">
+            <input type="hidden" name="action" value="addAddress" />
+            <div class="form-group col-md-2">
+          
+                <label>Number</label>
+                <input type="text" class="form-control" id="inputNumber" name="num" value="<?php echo htmlspecialchars($num); ?>">
+                <span class="error"><?php echo $errNum;?></span>
+            </div>
+            <div class="form-group col-md-2">
+                
+                <label>Street</label>
+                <input type="text" class="form-control" id="inputStreet" name="street"value="<?php echo htmlspecialchars($street); ?>">
+                <span class="error"><?php echo $errSt;?></span>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-2">
+                <label for="inputCity">City</label>
+                <input type="text" class="form-control" id="inputCity" name="city" value="<?php echo htmlspecialchars($city); ?>">
+                
+            </div>
+            <div class="form-group col-md-2">
+                <label for="inputState">State</label>
+                <input type="text" id="inputState" class="form-control" name="st" value="<?php echo htmlspecialchars($st); ?>">
+                <span class="error"><?php echo $errCty;?></span>  
+             </div>
+            <div class="form-group col-md-2">
+                <label for="inputZip">Zip</label>
+                <input type="text" class="form-control" id="inputZip" name="zip" value="<?php echo htmlspecialchars($zip); ?>">
+                <span class="error"><?php echo $errZip;?></span> 
+            </div>
+        </div>
+        <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="email">Email address:</label>
+            <input type="email" class="form-control" id="email" value="<?php echo htmlspecialchars($email); ?>"><br>
+        </div>
+        </div> 
+        <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="endDate">End Date:</label>
+            <input type="date" class="form-control" id="endDate" placeholder="Date" value="<?php echo htmlspecialchars($endDate); ?>"><br>
+        </div>
+        </div>   
+    </div>
+    <button type="submit" class="btn btn-primary">Add Address</button>
+</form>
 </html>
 
+
+<?php include 'view/footer.php'; ?>

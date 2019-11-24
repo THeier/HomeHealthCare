@@ -76,7 +76,7 @@ if(!isset($meds)){$meds[]='';}
     </tbody>
   </table>
    <form action="index.php" method="post">
-            <input type="hidden" name="action" value="addMed">
+            <input type="hidden" name="action" value="addMedication">
             <input type="hidden" name="pID" value="<?php echo html_entity_decode($aPatient->getPatientID()) ?>">
             <input type="submit" name="addMed" value="Add Medication">
      </form>
