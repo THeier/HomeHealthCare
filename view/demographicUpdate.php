@@ -22,7 +22,6 @@ if (!isset($errFN)) {
                 <input type="hidden" name="action" value="updateDemo" />
                     <legend>Demographics</legend>
                     <label>Client ID:</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo htmlspecialchars($patientid); ?><br>
-                    
                     <label>First Name:</label>  
                     <input class="form-control" type="text" name="fname" value="<?php echo htmlspecialchars($fname); ?>" >
                     <span class="error"><?php echo '$errFN'; ?></span><br>

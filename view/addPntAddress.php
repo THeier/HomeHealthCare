@@ -9,6 +9,7 @@ if (!isset($errNum)) {$errNum = '';}
 if (!isset($errSt)) {$errSt = '';}
 if (!isset($errCty)) {$errCty = '';}
 if (!isset($errZip)) {$errZip = '';}
+if (!isset($name)) {$name = '';}
 
 ?>
 <?php include'view/header.php'; ?>
@@ -40,7 +41,7 @@ if (!isset($errZip)) {$errZip = '';}
             </div>
             <div class="form-group col-md-2">
                 <label for="inputState">State</label>
-                <select id="inputState" class="form-control">
+                <select id="inputState" class="form-control" name="st">
                     <option selected>Choose...</option>
                     <option selected>NE</option>
                 </select>
@@ -52,7 +53,7 @@ if (!isset($errZip)) {$errZip = '';}
             </div>
         </div>
         <div class="form-row">
-        <div class="form-group col-md-2">
+        <div class="form-group col-md-4">
             <label for="email">Email address:</label>
             <input type="email" class="form-control" id="email"><br>
         </div>

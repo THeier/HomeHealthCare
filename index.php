@@ -210,8 +210,8 @@ switch ($action) {
 
             include 'view/login_view.php';
         } else {
-            include 'view/login_view.php';
-            echo 'Error loggin in try again';
+            include 'view/register_view.php';
+            
         }        
         
       
@@ -379,9 +379,21 @@ switch ($action) {
 
         die();
         break;
-    
-    case 'addAddress';
+    case 'addAddressPage';
+        //add new address for patient page
         
+        $pid= filter_input(INPUT_POST, 'pID');
+        $patient = patient_db::select_patient($_SESSION['pID'], $_SESSION['uid']);
+        $name =$patient->getFName(). ' '.$patient->getLName();
+        
+        include 'view/addPntAddress.php';         
+        var_dump($pid);
+        
+        die();
+        break;
+       
+    case 'addAddress';
+        // add new patient address details to the database
         $valid =true;
         
           $pid = $_SESSION['pID'];
@@ -390,10 +402,9 @@ switch ($action) {
           $city = filter_input(INPUT_POST, 'city');
           $state =filter_input(INPUT_POST, 'st');
           $zip = filter_input(INPUT_POST, 'zip');
-          if(!isset($email)){
+          $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);  
+          if(is_null($email)){
               $email= NULL;
-          }else{
-            $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);  
           }
           
           $today =date('m-d-Y');
@@ -405,7 +416,7 @@ switch ($action) {
               $valid =false;
           }
       
-          if(empty($_POST['st'])){
+          if(empty($_POST['street'])){
               $errSt= 'Enter Street';
               $valid =false;
           }
@@ -419,21 +430,55 @@ switch ($action) {
             patient_db::add_patientAddress($pid, $num, $street, $city, $state, $zip, $email, $begDate,$endDate);
         }
 
-        include 'view/addPntAddress.php';
-        //header('Location: index.php?action=patient_page');   
+        
+        header('Location: index.php?action=home');   
         
         die();
         break;
     
-    case 'UpdateAddress';
-        $pid= filter_input(INPUT_POST, 'pID');
+    case 'UpdateAddressPage';
+        // update patient address page  
+        $patientid= $_SESSION['pID'];
+        $userid =$_SESSION['uid'];
+        $patientAddress = patient_db::select_patientAddress($patientid, $userid);
         $patient = patient_db::select_patient($_SESSION['pID'], $_SESSION['uid']);
         $name =$patient->getFName(). ' '.$patient->getLName();
-         include 'view/addPntAddress.php';         
-        
+        $num =$patientAddress->getNumber();
+        $street = $patientAddress->getStreet();
+        $city =$patientAddress->getCity();
+        $st =$patientAddress->getState();
+        $zip =$patientAddress->getZip();
+        $email =$patientAddress->getEmail();
+        if(is_null($email)){
+            $email='';
+        }
+         include 'view/addressUpdate.php';         
+         var_dump($patientid);
         die();
         break;
     
+    case 'updateAddress';
+        // update patient address
+        //add validation 
+        $valid=true;
+        
+        $pid =$_SESSION['pID'];
+        $n = filter_input(INPUT_POST, 'num');
+        $str = filter_input(INPUT_POST, 'st');
+        $city =filter_input(INPUT_POST, 'city');
+        $st =filter_input(INPUT_POST, 'st');
+        $zip =filter_input(INPUT_POST, 'zip');
+        $e =filter_input(INPUT_POST, 'endDate');
+        $bdate=filter_input(INPUT_POST, 'begDate');
+        
+        if(valid){
+            patient_db::update_patientAddress($pid, $n, $str, $city, $st, $zip, $bdate, );
+        }
+        
+        include 'view/home.php';
+        
+        die();
+        break;
 
    case 'charts':
 

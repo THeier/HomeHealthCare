@@ -34,7 +34,7 @@ if(!isset($meds)){$meds[]='';}
             Email:&nbsp;<?php echo htmlspecialchars($email); ?> <br><br>
              <?php if(empty($address)) { ?>
             <form class="form" action="index.php" method="post">
-                <input type="hidden" name="action" value="UpdateAddress">
+                <input type="hidden" name="action" value="addAddressPage">
             <input type="hidden" name="pID" value="<?php echo html_entity_decode($aPatient->getPatientID()) ?>">
             <input class="subs" type="submit" value="Add Address">
              <?php } ?>
@@ -103,8 +103,9 @@ if(!isset($meds)){$meds[]='';}
                      <td colspan="2"><?php ; ?></td>
                      <td><form action="index.php" method="POST">                
                          <input type="hidden" name="action" 
-                          value="address">
-                         <input id="pntbutton" type="hidden" name="pid"
+                          value="UpdateAddressPage">
+                          <input type="hidden" name="pID" value="<?php echo html_entity_decode($aPatient->getPatientID()) ?>">
+                         <input type="hidden" name="pid"
                                 value="<?php echo htmlentities($_SESSION['pID']) ; ?>">
                          <input type="submit" value="Update Address">
                          </form>

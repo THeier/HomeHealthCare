@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 16, 2019 at 06:35 PM
+-- Generation Time: Nov 24, 2019 at 01:26 AM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.2
 
@@ -37,21 +37,33 @@ CREATE TABLE `patient` (
   `lName` varchar(50) NOT NULL,
   `dob` date NOT NULL,
   `sex` varchar(1) NOT NULL,
-  `disabled` varchar(3),
-  `deceasedDate` date DEFAULT NULL,
   `begDate` date NOT NULL,
-  `endDate` date DEFAULT NULL
+  `endDate` date DEFAULT NULL,
+  `disabled` varchar(3) DEFAULT NULL,
+  `dcsDate` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `patient`
 --
 
-INSERT INTO `patient` (`patientID`, `userID`, `fName`, `lName`, `dob`, `sex`, `disabled`, `deceasedDate`, `begDate`, `endDate`) VALUES
-(1, 1, 'Edward', 'Jones', '1939-09-01', 'M', b'0', NULL, '2019-10-02', NULL),
-(2, 1, 'Ethel', 'Howard', '1930-01-02', 'F', b'0', NULL, '2019-08-01', NULL),
-(3, 1, 'Nancy', 'Smith', '1937-10-01', 'F', b'0', NULL, '2019-10-02', NULL),
-(4, 1, 'Ethel', 'Maynard', '1930-11-06', 'F', b'0', NULL, '2019-07-01', NULL);
+INSERT INTO `patient` (`patientID`, `userID`, `fName`, `lName`, `dob`, `sex`, `begDate`, `endDate`, `disabled`, `dcsDate`) VALUES
+(1, 1, 'Edward', 'Jones', '1939-09-01', 'M', '2019-10-02', '0000-00-00', 'No', NULL),
+(2, 1, 'Ethel', 'Howard', '1930-01-02', 'F', '2019-08-01', '0000-00-00', 'No', NULL),
+(3, 1, 'Nancy', 'Smith', '1937-10-01', 'F', '2019-10-02', '0000-00-00', 'No', NULL),
+(4, 1, 'Ethel', 'Maynard', '1930-11-06', 'F', '2019-07-01', '0000-00-00', 'No', NULL),
+(9, 4, 'Jim', 'Shorts', '1930-12-05', 'M', '0001-01-01', '0000-00-00', 'No', NULL),
+(10, 4, 'Heather', 'Jones', '1940-11-15', 'F', '0001-01-01', '0000-00-00', 'No', NULL),
+(13, 4, 'Gayle', 'Smith', '1945-03-15', 'M', '0001-01-01', '0000-00-00', 'Yes', NULL),
+(15, 4, 'Lisa', 'Ling', '1920-02-16', 'F', '0001-01-01', '0000-00-00', 'Yes', NULL),
+(20, 1, 'Tania', 'Heier', '1934-12-13', 'M', '0001-01-01', '0000-00-00', 'No', NULL),
+(24, 1, 'Mark', 'Hart', '1933-01-01', 'M', '0001-01-01', '0000-00-00', 'Yes', NULL),
+(25, 4, 'Jason', 'Homes', '1920-10-11', 'M', '0001-01-01', '0000-00-00', 'Yes', NULL),
+(32, 8, 'Holly', 'Wood', '1933-01-14', 'F', '0001-01-01', '0000-00-00', 'No', NULL),
+(34, 1, 'Joe', 'Harmond', '1950-11-12', 'M', '0001-01-01', '0000-00-00', 'Yes', NULL),
+(35, 1, 'Logan', 'More', '1943-11-12', 'F', '0001-01-01', '0000-00-00', 'No', NULL),
+(36, 14, 'Jerry', 'Garcia', '1930-10-12', '', '0001-01-01', '0000-00-00', 'Yes', NULL),
+(38, 4, 'Tania', 'Hall', '1930-10-10', '', '0001-01-01', '0000-00-00', 'No', NULL);
 
 -- --------------------------------------------------------
 
@@ -62,12 +74,22 @@ INSERT INTO `patient` (`patientID`, `userID`, `fName`, `lName`, `dob`, `sex`, `d
 CREATE TABLE `patientaddress` (
   `addressID` int(11) NOT NULL,
   `patientID` int(11) NOT NULL,
-  `Number` varchar(50) NOT NULL,
+  `number` varchar(50) NOT NULL,
   `street` varchar(150) NOT NULL,
   `city` varchar(50) NOT NULL,
   `state` varchar(2) DEFAULT NULL,
-  `zip` int(5) DEFAULT NULL
+  `zip` int(5) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `begDate` date NOT NULL,
+  `endDate` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `patientaddress`
+--
+
+INSERT INTO `patientaddress` (`addressID`, `patientID`, `number`, `street`, `city`, `state`, `zip`, `email`, `begDate`, `endDate`) VALUES
+(1, 9, '250', 'G Street', 'Lincoln ', 'NE', 68509, NULL, '0000-00-00', NULL);
 
 -- --------------------------------------------------------
 
@@ -80,11 +102,15 @@ CREATE TABLE `patientmed` (
   `patientID` int(11) NOT NULL,
   `drug` varchar(100) NOT NULL,
   `quantity` int(1) DEFAULT NULL,
-  `timesPerDay` int(2) NOT NULL,
-   `medNotes` varchar(500),
-  `begDate`  date NOT NULL,
-  `endDate` date NOT NULL,
+  `timesPerDay` int(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `patientmed`
+--
+
+INSERT INTO `patientmed` (`medID`, `patientID`, `drug`, `quantity`, `timesPerDay`) VALUES
+(1, 1, 'Baby Aspirin', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -112,7 +138,8 @@ INSERT INTO `user` (`userID`, `fName`, `lName`, `userName`, `password`, `userTyp
 (1, 'Joe', 'Jones', 'joe@abc.com', 'pass', 'cna', '2019-10-14', NULL, 'images/default avatar.jpg'),
 (4, 'jane', 'doe', 'janedoe@abc.com', 'pass', 'pas', '2019-10-14', NULL, 'images/default avatar.jpg'),
 (8, 'Tania', 'Heier', 'theier@abc.com', 'pass', 'cma', '2019-10-14', NULL, 'images/default avatar.jpg'),
-(13, 'jim', 'jim', 'jim@abc.com', 'pass', 'cma', '2019-10-21', NULL, 'images/default avatar.jpg');
+(13, 'jim', 'jim', 'jim@abc.com', 'pass', 'cma', '2019-10-21', NULL, 'images/default avatar.jpg'),
+(14, 'Tania', 'Heier', 'joe1@abc.com', 'pass', 'cna', '2019-11-23', NULL, 'images/default avatar.jpg');
 
 -- --------------------------------------------------------
 
@@ -174,13 +201,19 @@ ALTER TABLE `userbio`
 -- AUTO_INCREMENT for table `patient`
 --
 ALTER TABLE `patient`
-  MODIFY `patientID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `patientID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+
+--
+-- AUTO_INCREMENT for table `patientaddress`
+--
+ALTER TABLE `patientaddress`
+  MODIFY `addressID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Constraints for dumped tables
@@ -196,7 +229,7 @@ ALTER TABLE `patient`
 -- Constraints for table `patientaddress`
 --
 ALTER TABLE `patientaddress`
-  ADD CONSTRAINT `patientaddress_ibfk_1` FOREIGN KEY (`patientID`) REFERENCES `patient` (`patientID`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `patientaddress_ibfk_1` FOREIGN KEY (`patientID`) REFERENCES `patient` (`patientID`);
 
 --
 -- Constraints for table `patientmed`

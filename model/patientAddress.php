@@ -12,9 +12,9 @@
  * @author Tania Heieer
  */
 class patientAddress {
-    private $addressID, $patientID, $number, $street, $city, $state, $zip, $email;
+    private $addressID, $patientID, $number, $street, $city, $state, $zip, $email, $begDate, $endDate;
     
-    function __construct($addressID, $patientID, $number, $street, $city, $state, $zip, $email) {
+    function __construct($addressID, $patientID, $number, $street, $city, $state, $zip, $email, $begDate, $endDate) {
         $this->addressID = $addressID;
         $this->patientID = $patientID;
         $this->number = $number;
@@ -23,9 +23,27 @@ class patientAddress {
         $this->state = $state;
         $this->zip = $zip;
         $this->email = $email;
+        $this->begDate =$begDate;
+        $this->endDate =$endDate;
+        
     }
-    
-    function getAddressID() {
+    function getBegDate() {
+        return $this->begDate;
+    }
+
+    function getEndDate() {
+        return $this->endDate;
+    }
+
+    function setBegDate($begDate) {
+        $this->begDate = $begDate;
+    }
+
+    function setEndDate($endDate) {
+        $this->endDate = $endDate;
+    }
+
+        function getAddressID() {
         return $this->addressID;
     }
 

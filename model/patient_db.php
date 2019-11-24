@@ -115,12 +115,12 @@ class patient_db {
     }
     // sql to select patient address by id
    
-    public function select_patientAddress($patientid) { 
+    public function select_patientAddress($patientID) { 
         
         $db = Database::getDB();
-        $query = 'SELECT * FROM patientaddress WHERE patientid =:patientID';
+        $query = 'SELECT * FROM patientaddress WHERE patientID =:patientID';
         $statement = $db->prepare($query);
-        $statement->bindValue(':patientID', $patientid);
+        $statement->bindValue(':patientID', $patientID);
         $statement->execute();
         $results = $statement->fetch();
         $statement->closeCursor();
@@ -131,7 +131,7 @@ class patient_db {
                     $results['patientID'], $results['number'],
                     $results['street'], $results['city'], 
                     $results['state'], $results['zip'], 
-                    $results['email']);
+                    $results['email'], $results['begDate'], $results['endDate']);
           
               return $patAdd;
       }else{
@@ -159,7 +159,30 @@ class patient_db {
         
     }
 
-    
+    // update patient address
+    function update_patientAddress($patientID, $number, $street, $city, $state, $zip, $email, $begDate, $endDate){
+        $db = database::getDB();
+        $query = 'UPDATE patientaddress '
+                . 'SET patientID =:patientID, '
+                . 'number =:number, street =:street, '
+                . 'city =:city, state =:state, '
+                . 'zip =:zip, email =:email, '
+                . 'begDate =:begDate, endDate =:endDate '
+                . ' WHERE patientID = :patientID';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':patientID',$patientID);
+        $statement->bindValue(':userID',$userID);
+        $statement->bindValue(':fName',$fName);
+        $statement->bindValue(':lName',$lName);
+        $statement->bindValue(':dob',$dob);
+        $statement->bindValue(':sex', $sex);
+        $statement->bindValue(':disabled', $disabled);
+        $statement->bindValue(':begDate',$begDate);
+        $statement->bindValue(':endDate', $endDate);
+        $statement->execute();
+        $statement->closeCursor();
+                
+    }
 
     // sql to select pateint med by id 
     public static function insert_patientMed($patientID, $drug, $quantity, $timesPerDay){
