@@ -57,13 +57,13 @@ if (!isset($name)) {$name = '';}
         <div class="form-row">
         <div class="form-group col-md-4">
             <label for="email">Email address:</label>
-            <input type="email" class="form-control" id="email" value="<?php echo htmlspecialchars($email); ?>"><br>
+            <input type="email" class="form-control" id="email" name="email" value="<?php echo htmlspecialchars($email); ?>"><br>
         </div>
         </div> 
         <div class="form-row">
         <div class="form-group col-md-4">
             <label for="endDate">End Date:</label>
-            <input type="date" class="form-control" id="endDate" placeholder="Date" value="<?php echo htmlspecialchars($endDate); ?>"><br>
+            <input type="date" class="form-control" id="endDate" name="endDate" placeholder="Date" value="<?php echo htmlspecialchars($endDate); ?>"><br>
         </div>
         </div>   
     </div>

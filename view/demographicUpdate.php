@@ -16,7 +16,7 @@ if (!isset($errFN)) {
 
 <html>
     <div class="container">
-        <div class="row justify-content-center">
+        <div class="row ">
             <div class="form-group row">
             <form class="form" action="index.php" method="POST">
                 <input type="hidden" name="action" value="updateDemo" />
@@ -24,23 +24,26 @@ if (!isset($errFN)) {
                     <label>Client ID:</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo htmlspecialchars($patientid); ?><br>
                     <label>First Name:</label>  
                     <input class="form-control" type="text" name="fname" value="<?php echo htmlspecialchars($fname); ?>" >
-                    <span class="error"><?php echo '$errFN'; ?></span><br>
+                    <span class="error"><?php ?></span><br>
                     <label>Last Name:</label>
                     <input class="form-control"class="form-control" type="text" name="lname" value="<?php echo htmlspecialchars($lname); ?>" >
-                    <span class="error"><?php echo '$errLN'; ?></span><br>
+                    <span class="error"><?php  ?></span><br>
                     <label>Date of Birth:</label>
                     <input class="form-control" type="text" name="adob" value="<?php echo htmlspecialchars($adob); ?>">
-                    <span class="error"><?php echo '$errBD'; ?></span><br>
+                    <span class="error"><?php  ?></span><br>
+                    <label>Disabled:</label>
+                    <input class="form-control" type="text" name="dis" value="<?php echo htmlspecialchars($dis); ?>">
+                    <span class="error"><?php  ?></span><br>
                     <label>Gender:</label>
                     <input class="form-control" type="text" name="sex" value="<?php echo htmlspecialchars($sex); ?>">
-                    <span class="error"><?php echo '$errGen'; ?></span><br>
+                    <span class="error"><?php  ?></span><br>
                     <label>Deceased Date:</label>
-                    <input class="form-control" type="date" name="ddate" >
-                    <span class="error"><?php echo '$errDD'; ?></span><br>
+                    <input class="form-control" type="date" name="ddate"value="<?php echo htmlspecialchars($ddate); ?>" >
+                    <span class="error"><?php ?></span><br>
                     <label>End Date:</label>
                     <input class="form-control" type="date" name="endDate" value="<?php ?>">
                     <br>
-                    <button class="btn-primary" type="submit">Update Demographics"</button>
+                    <button class="btn btn-primary" type="submit">Update Demographics</button>
             </form>
             </div>
         </div>

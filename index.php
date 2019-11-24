@@ -255,18 +255,21 @@ switch ($action) {
         break;
 
     case 'patient_page':
-        // patient profile page  
+        
+        // Page to view patient information  
+        
         $_SESSION['pID']= filter_input(INPUT_POST, 'pid');
         $userid = $_SESSION['uid'];
         $aPatient = patient_db::select_patient($_SESSION['pID'], $userid);
         $disabled = $aPatient->getDisabled();
+        $curDate =date('Y-m-d');
         $today = time();
         $dob = strtotime($aPatient->getDob());
         $todaysAge = $today - $dob;
         $age = floor($todaysAge / 31556926);
         // get patient address make session varibles to use with update
         // handle when $address is null
-        $address = patient_db::select_patientAddress($_SESSION['pID']);
+        $address = patient_db::select_patientAddress($_SESSION['pID'], $curDate);
         if (!empty($address)) {
             $number = $address->getNumber();
             $street = ucfirst($address->getStreet());
@@ -313,7 +316,7 @@ switch ($action) {
 
         
 
-       //var_dump($aPatient);
+       var_dump($address);
        //var_dump($meds);
        //var_dump($amed);
        // include 'view/patientPage.php';
@@ -323,7 +326,7 @@ switch ($action) {
 
     case 'demographic':
 
-        //allows the user to update a patients demographic information
+        // Page to update a patients demographic information
 
         $patientid = filter_input(INPUT_POST, 'pid');
         $userid = $_SESSION['uid'];
@@ -334,6 +337,12 @@ switch ($action) {
         $adob = date("m-d-Y", strtotime($dob));
         $sex = $aPatient->getSex();
         $edate = $aPatient->getEndDate();
+        $dis =$aPatient->getDisabled();
+        $ddate =$aPatient->getDeceasedDate();
+        
+        if(empty($ddate)){
+            $ddate='';
+        }
 
         // add validation to date format
         // add validation for sex
@@ -344,13 +353,14 @@ switch ($action) {
 
         die();
         break;
+    
     case 'updateDemo':
 
-        // update a patient demographic information
+        // insert updated patient demographic information
         // take user back to profile page 
         $valid =true;
         
-        $patientid = $_SESSION['pID'];
+        $pid = $_SESSION['pID'];
         $userid = $_SESSION['uid'];
 
         $fname = filter_input(INPUT_POST, 'fname');
@@ -360,14 +370,34 @@ switch ($action) {
         $sex = filter_input(INPUT_POST, 'sex');
         $edate = filter_input(INPUT_POST, 'adob');
         
+        
+        if(empty($fname)){
+            $errFN ='First Name Required';
+            $valid =false;
+        }
+        if(empty($lnamename)){
+            $errLN ='Last Name Required';
+            $valid =false;
+        }
+        if(empty($dob)){
+            $errBD ='Birth Date Required';
+            $valid =false;
+        }
+        if(empty($sex)){
+            $errGen ='Gender Required';
+            $valid =false;
+        }
         if(empty($_POST['sex'])){
               $errGen= 'Enter Number';
               $valid =false;
           }
+          
           If(valid){
-               patient_db::update_patient($patientID, $userID, $fname, $lname, 
+               patient_db::update_patient($pid, $userid, $fname, $lname, 
                 $adob, $sex, $disabled, $deceasedDate, $begDate, $endDate);
               
+          }else{
+              include 'view/addPatient.php';
           }
 
         // add validation to date format
@@ -379,8 +409,10 @@ switch ($action) {
 
         die();
         break;
+        
     case 'addAddressPage';
-        //add new address for patient page
+        
+        // Page to add new address for patient
         
         $pid= filter_input(INPUT_POST, 'pID');
         $patient = patient_db::select_patient($_SESSION['pID'], $_SESSION['uid']);
@@ -393,7 +425,8 @@ switch ($action) {
         break;
        
     case 'addAddress';
-        // add new patient address details to the database
+        
+        // Insert new Address for oatient
         $valid =true;
         
           $pid = $_SESSION['pID'];
@@ -407,9 +440,9 @@ switch ($action) {
               $email= NULL;
           }
           
-          $today =date('m-d-Y');
-          $begDate =$today;
-          $endDate =NULL;
+          $currentDate =date('Y-m-d');
+          $begDate =$currentDate;
+          $endDate ='01-01-2001';
           // add validation
           if(empty($_POST['num'])){
               $errNum= 'Enter Number';
@@ -435,12 +468,16 @@ switch ($action) {
         
         die();
         break;
-  // Patient address case  
+  // Patient address case 
+        
     case 'UpdateAddressPage';
-        // update patient address page  
+        
+        // Page to update patient address 
+        
         $patientid= $_SESSION['pID'];
         $userid =$_SESSION['uid'];
-        $patientAddress = patient_db::select_patientAddress($patientid, $userid);
+        $curDate =date('Y-m-d');
+        $patientAddress = patient_db::select_patientAddress($patientid, $curDate);
         $patient = patient_db::select_patient($_SESSION['pID'], $_SESSION['uid']);
         $name =$patient->getFName(). ' '.$patient->getLName();
         $num =$patientAddress->getNumber();
@@ -449,11 +486,15 @@ switch ($action) {
         $st =$patientAddress->getState();
         $zip =$patientAddress->getZip();
         $endDate =$patientAddress->getEndDate();
+        $adate=date('0000-00-00');
+        if($endDate ==='01'){
+            
+        }
         $email =$patientAddress->getEmail();
         if(is_null($email)){
             $email='';
         }
-        if(is_null($endDate)){
+        if(is_null($endDate) || strtotime($endDate) === strtotime($adate)){
             $endDate='';
         }
          include 'view/addressUpdate.php';         
@@ -472,6 +513,7 @@ switch ($action) {
         $city =filter_input(INPUT_POST, 'city');
         $st =filter_input(INPUT_POST, 'st');
         $zip =filter_input(INPUT_POST, 'zip');
+        $email = filter_input(INPUT_POST, 'email');
         $e =filter_input(INPUT_POST, 'endDate');
         $bdate=filter_input(INPUT_POST, 'begDate');
         

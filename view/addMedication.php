@@ -12,6 +12,9 @@ and open the template in the editor.
           <br>  <h6><?php echo 'Some Name';?></h6><br>
         </div>
         <div class="form-row">
+          <br>  <h6><?php echo 'Some Name';?></h6><br>
+        </div>
+        <div class="form-row">
             <label>Client ID:</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php ?><br>
         </div>
      

@@ -22,7 +22,7 @@ if (!isset($gen)) {
                 <form class="form" action="index.php" method="post">
                     <input type="hidden" name="action" value="addPatient" />
                     <fieldset class="field_set">
-                        <legend><b>Add New Patient</b></legend>
+                        <legend>Add New Patient</legend>
                         First Name:  <input class="form-control" type="text" name="fnm">
                         Last Name: <input class="form-control" type="text" name="lnm">
                         Date of Birth: <input class="form-control" type="date" name="dbir"><br>
@@ -47,7 +47,7 @@ if (!isset($gen)) {
                         </div>
                         <!--                add validation message when not selected-->
                     </fieldset><br>
-                    <input class="subs" type="submit" value="Add Patient">
+                    <button class="btn btn-primary" type="submit">Add Patient</button>
                 </form>
             </div>
         </div>

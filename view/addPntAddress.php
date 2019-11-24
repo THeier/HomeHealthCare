@@ -55,7 +55,7 @@ if (!isset($name)) {$name = '';}
         <div class="form-row">
         <div class="form-group col-md-4">
             <label for="email">Email address:</label>
-            <input type="email" class="form-control" id="email"><br>
+            <input type="email" class="form-control" id="email" name="email"><br>
         </div>
         </div>    
     </div>
