@@ -26,6 +26,14 @@ class patient {
        $this->dcsDate = $dcsDate;
    }
 
+   function getDcsDate() {
+       return $this->dcsDate;
+   }
+
+   function setDcsDate($dcsDate) {
+       $this->dcsDate = $dcsDate;
+   }
+
       function getPatientID() {
        return $this->patientID;
    }
@@ -52,10 +60,6 @@ class patient {
 
    function getDisabled() {
        return $this->disabled;
-   }
-
-   function getDeceasedDate() {
-       return $this->deceasedDate;
    }
 
    function getBegDate() {
@@ -92,10 +96,6 @@ class patient {
 
    function setDisabled($disabled) {
        $this->disabled = $disabled;
-   }
-
-   function setDeceasedDate($deceasedDate) {
-       $this->deceasedDate = $deceasedDate;
    }
 
    function setBegDate($begDate) {

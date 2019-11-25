@@ -16,7 +16,8 @@ if (!isset($name)) {$name = '';}
 <html>
     <form class="form" action="index.php" method="POST">
         <div class="form-row">
-            <h6><?php echo $name; ?></h6><br><br>
+            <legend>Add New Address for <?php echo $name; ?> </legend>
+            
         </div>
         <div class="form-row">
             <input type="hidden" name="action" value="addAddress" />

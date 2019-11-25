@@ -1,3 +1,5 @@
+
+
 <?php
 
 require_once ('model/database.php');
@@ -228,6 +230,7 @@ switch ($action) {
         die();
         break;
 
+// Patient --->>
     case 'addPatient';
         // add new client info to the database
         // sends them to the patient profile page
@@ -271,6 +274,7 @@ switch ($action) {
         // handle when $address is null
         $address = patient_db::select_patientAddress($_SESSION['pID'], $curDate);
         if (!empty($address)) {
+            $addressid =$address->getAddressID();
             $number = $address->getNumber();
             $street = ucfirst($address->getStreet());
             $city = ucfirst($address->getCity());
@@ -279,6 +283,7 @@ switch ($action) {
             $fullstreet = $number . ' ' . $street;
             $email = $address->getEmail();
         } else {
+            $addressid='';
             $number = '';
             $street = '';
             $city = '';
@@ -288,25 +293,17 @@ switch ($action) {
             $email = '';
         }
        $meds = patient_db::select_patientMeds($_SESSION['pID']);
+       $medication=array();
+       
         if(is_null($meds)){
             
+            $meds = $medication;
             
-        }elseif(count($meds)>1){
-            $meds=$meds;
-            
-        }elseif(count($meds)==1){
-            $amed = patient_db::select_patMed($_SESSION['pID']);
-            $meds =$amed;
             
         }else{
-            $meds[]=NULL;
-//            $drug='';
-//            $quant='';
-//            $timesPday='';
-//            $note='';
+            $meds=$medication;
             
         }
-        
       
         // caluate age with dob
         // author:  Tim
@@ -338,7 +335,7 @@ switch ($action) {
         $sex = $aPatient->getSex();
         $edate = $aPatient->getEndDate();
         $dis =$aPatient->getDisabled();
-        $ddate =$aPatient->getDeceasedDate();
+        $ddate =$aPatient->getDcsDate();
         
         if(empty($ddate)){
             $ddate='';
@@ -409,7 +406,8 @@ switch ($action) {
 
         die();
         break;
-        
+    
+// Patient Address --->        
     case 'addAddressPage';
         
         // Page to add new address for patient
@@ -476,8 +474,9 @@ switch ($action) {
         
         $patientid= $_SESSION['pID'];
         $userid =$_SESSION['uid'];
+        $addressid= filter_input(INPUT_POST, 'addressid');
         $curDate =date('Y-m-d');
-        $patientAddress = patient_db::select_patientAddress($patientid, $curDate);
+        $patientAddress = patient_db::select_patientAddress($addressid, $patientid, $curDate);
         $patient = patient_db::select_patient($_SESSION['pID'], $_SESSION['uid']);
         $name =$patient->getFName(). ' '.$patient->getLName();
         $num =$patientAddress->getNumber();

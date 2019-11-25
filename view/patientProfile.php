@@ -31,7 +31,7 @@ if(!isset($meds)){$meds[]='';}
             City:&nbsp;<?php echo htmlspecialchars($city)  ; ?><br>
             State:&nbsp;<?php echo htmlspecialchars($st)  ; ?><br>
             Zip Code:&nbsp;<?php echo htmlspecialchars($zip)  ; ?><br>
-            Email:&nbsp;<?php echo htmlspecialchars($email); ?> <br><br>
+            Email:&nbsp;<?php echo htmlspecialchars($email); ?> 
              <?php if(empty($address)) { ?>
             <form class="form" action="index.php" method="post">
                 <input type="hidden" name="action" value="addAddressPage">
@@ -78,14 +78,19 @@ if(!isset($meds)){$meds[]='';}
    <form action="index.php" method="post">
             <input type="hidden" name="action" value="addMedication">
             <input type="hidden" name="pID" value="<?php echo html_entity_decode($aPatient->getPatientID()) ?>">
-            <input type="submit" name="addMed" value="Add Medication">
+            <input class="subs" type="submit" value="Add Medication">
      </form>
-
+       <div class="col-sm-6">
+           
+       </div>
 
     </div>
     <div class="col-sm-4">
         <div class="container">
-            <h3>Update</h3>
+            <div class="form-row">
+                <h3>Update</h3>
+            </div>
+            
             <table class="table table-borderless">
                 <tr>
                      <td colspan="2"><?php ; ?></td>
@@ -105,6 +110,7 @@ if(!isset($meds)){$meds[]='';}
                          <input type="hidden" name="action" 
                           value="UpdateAddressPage">
                           <input type="hidden" name="pID" value="<?php echo html_entity_decode($aPatient->getPatientID()) ?>">
+                          <input type="hidden" name="addressid" value="<?php echo htmlspecialchars($addressid); ?>">
                          <input type="hidden" name="pid"
                                 value="<?php echo htmlentities($_SESSION['pID']) ; ?>">
                          <input type="submit" value="Update Address">

@@ -53,10 +53,6 @@ if (!isset($gen)) {
         </div>
     </div>
 
-
-
-
-
-
 </html>
+<?php include 'view/footer.php'; ?>
 
