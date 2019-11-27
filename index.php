@@ -350,7 +350,7 @@ switch ($action) {
 
         // insert updated patient demographic information
         // take user back to profile page 
-        $valid =true;
+        //$valid =true;
         
         $pid = $_SESSION['pID'];
         $userid = $_SESSION['uid'];
@@ -417,7 +417,7 @@ switch ($action) {
         die();
         break;
        
-    case 'addAddress';
+    case 'addNewAddress';
         
         // Insert new Address for oatient
         $valid =true;
@@ -469,9 +469,9 @@ switch ($action) {
         
         $patientid= $_SESSION['pID'];
         $userid =$_SESSION['uid'];
-        $addressid= filter_input(INPUT_POST, 'addressid');
+        $idAndBegDate= filter_input(INPUT_POST, 'addressid');
         $curDate =date('Y-m-d');
-        $patientAddress = patient_db::select_patientAddress($addressid, $patientid, $curDate);
+        $patientAddress = patient_db::select_patientAddress($patientid, $curDate);
         $patient = patient_db::select_patient($_SESSION['pID'], $_SESSION['uid']);
         $name =$patient->getFName(). ' '.$patient->getLName();
         $num =$patientAddress->getNumber();
@@ -480,6 +480,7 @@ switch ($action) {
         $st =$patientAddress->getState();
         $zip =$patientAddress->getZip();
         $endDate =$patientAddress->getEndDate();
+        
         $adate=date('0000-00-00');
         if($endDate ==='01'){
             
@@ -499,23 +500,22 @@ switch ($action) {
     case 'updateAddress';
         // update patient address
         //add validation 
-        $valid=true;
-        
+       // $valid=true;
         $pid =$_SESSION['pID'];
         $n = filter_input(INPUT_POST, 'num');
-        $str = filter_input(INPUT_POST, 'st');
+        $str = filter_input(INPUT_POST, 'street');
         $city =filter_input(INPUT_POST, 'city');
         $st =filter_input(INPUT_POST, 'st');
         $zip =filter_input(INPUT_POST, 'zip');
         $email = filter_input(INPUT_POST, 'email');
-        $e =filter_input(INPUT_POST, 'endDate');
+        $endDate =filter_input(INPUT_POST, 'endDate');
         $bdate=filter_input(INPUT_POST, 'begDate');
+        $curDate =date('Y-m-d');
+        $addressid = patient_db::select_patientAddressID($pid, $curDate);
+        patient_db::update_patientAddress($pid, $n, $str, $city, $st, $zip, $email, $bdate, $endDate);
         
-        if(valid){
-            patient_db::update_patientAddress($pid, $n, $str, $city, $st, $zip, $bdate, $e);
-        }
-        
-        include 'view/home.php';
+       
+        header('Location: index.php?action=home');
         
         die();
         break;
@@ -539,6 +539,7 @@ switch ($action) {
         break;
     case 'adminPatientPage':
         
+        $allPats= patient_db::select_allPatients();
         
         include 'admin/adminPage.php';
         

@@ -52,7 +52,19 @@ h1 {
     letter-spacing: 4px;
     font-family: sans-serif;
 }
-
+.adminSubs{
+     font-size: 1em;
+    color: black;
+    background: #ccc;
+    outline: none;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    padding: 0.9em;
+    width: 100%;
+    height: 100px;
+    margin: 2em 0;
+    letter-spacing: 4px;
+}
 .subs{
      font-size: 1em;
     color: black;
@@ -93,9 +105,7 @@ h1 {
     background-color: white;
     
 }
-th td{
-    cell-padding: 15px;
-}
+
 
 select {
     -webkit-appearance: button;
@@ -107,11 +117,11 @@ select {
     -webkit-padding-start: 2px;
     -moz-padding-start: 2px;
     background-color: #F07575; /* Fallback color if gradients are not supported */
-    background-image: url(../images/select-arrow.png), -webkit-linear-gradient(top, #E5E5E5, #F4F4F4); /* For Chrome and Safari */
-    background-image: url(../images/select-arrow.png), -moz-linear-gradient(top, #E5E5E5, #F4F4F4); /* For old Firefox (3.6 to 15) */
-    background-image: url(../images/select-arrow.png), -ms-linear-gradient(top, #E5E5E5, #F4F4F4); /* For pre-releases of Internet Explorer  10*/
-    background-image: url(../images/select-arrow.png), -o-linear-gradient(top, #E5E5E5, #F4F4F4); /* For old Opera (11.1 to 12.0) */
-    background-image: url(../images/select-arrow.png), linear-gradient(to bottom, #E5E5E5, #F4F4F4); /* Standard syntax; must be last */
+/*    background-image: url(../images/select-arrow.png), -webkit-linear-gradient(top, #E5E5E5, #F4F4F4);  For Chrome and Safari 
+    background-image: url(../images/select-arrow.png), -moz-linear-gradient(top, #E5E5E5, #F4F4F4);  For old Firefox (3.6 to 15) 
+    background-image: url(../images/select-arrow.png), -ms-linear-gradient(top, #E5E5E5, #F4F4F4);  For pre-releases of Internet Explorer  10
+    background-image: url(../images/select-arrow.png), -o-linear-gradient(top, #E5E5E5, #F4F4F4);  For old Opera (11.1 to 12.0) 
+    background-image: url(../images/select-arrow.png), linear-gradient(to bottom, #E5E5E5, #F4F4F4);  Standard syntax; must be last */
     background-position: center right;
     background-repeat: no-repeat;
     border: 1px solid #AAA;
@@ -136,55 +146,25 @@ select {
     margin: 0 auto;
     width: 80%;
 }
+.adminButtonContainer{
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+}
 .ButtonContainer{
     margin: 0 auto;
     width: 100%;
     text-align: center;
 }
-
-/*
-.field_set{
-    text-align: left;
-    margin-bottom: 10px;
-    
+.pt-3-half {
+padding-top: 1.4rem;
 }
-#demobtn input{
-    display: inline-block;
-}*/
 
-
-
-/*
-.row{
-    clear: both;
-}
- Clear floats after the columns 
-
-.row :after {
-  content: "";
-  display: table;
-  clear: both;
-}
-*/footer {
+footer {
     clear: both;
     border-top: 2px solid black;
    
-}/*
-
-h1 {
-    font-size: 150%;
-    margin: .5em .2em .25em;
-    
 }
-h2 {
-    font-size: 120%;
-    margin: .1em 0;
-}
-
-p {
-    margin: .5em 0;
-}
-
 
 
 
@@ -193,24 +173,6 @@ p {
 a:hover {
     color: white;
 }
-
-/*br {
-    clear: left;
-}*/
-/*.regform{
-    float: right;
-    margin: 20px 50px 30px 400px;
-    width: 600px;
-    display: flex;
-    
-      
-}
-
-
-#regh1{
-    margin-left: 40px;
-}*/
-
 
 img{
     width: 100px;

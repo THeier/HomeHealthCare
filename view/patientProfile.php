@@ -26,7 +26,8 @@ if(!isset($meds)){$meds[]='';}
         -- these last two sections -->
         <fieldset class="field_set">
             <legend>Address</legend>
-            Street:&nbsp;<?php echo htmlspecialchars($number) ; ?><br>
+            Number:&nbsp;<?php echo htmlspecialchars($number) ; ?><br>
+            Street:&nbsp;<?php echo htmlspecialchars($street) ; ?><br>
             City:&nbsp;<?php echo htmlspecialchars($city)  ; ?><br>
             State:&nbsp;<?php echo htmlspecialchars($st)  ; ?><br>
             Zip Code:&nbsp;<?php echo htmlspecialchars($zip)  ; ?><br>
@@ -45,10 +46,10 @@ if(!isset($meds)){$meds[]='';}
   <table class="table">
     <thead>
       <tr>
-        <th>Medication</th>
-        <th>Dosage</th>
-        <th>Per Day</th>
-        <th colspan="3">Notes</th>
+          <th colspan="1">Medication</th>
+          <th colspan="1">Dosage</th>
+          <th colspan="2">Per Day</th>
+        <th colspan="2">Notes</th>
         <th>&nbsp;&nbsp;</th>
       </tr>
     </thead>
@@ -59,10 +60,10 @@ if(!isset($meds)){$meds[]='';}
        <tr>
            
        <?php  foreach($meds as $m) : ?>
-           <td><?php echo htmlspecialchars($m->getQuanity());; ?></td>
+           <td><?php echo htmlspecialchars($m->getDrug());; ?></td>
         <td><?php echo htmlspecialchars($m->getQuanity()); ?></td>
         <td><?php echo htmlspecialchars($m->getTimesPerDay()); ?></td>
-        <td><?php echo htmlspecialchars($m->getmedNote()); ?></td>
+        <td colspan="2"><?php echo htmlspecialchars($m->getmedNote()); ?></td>
         </tr>
         <?php endforeach;   ?>
       

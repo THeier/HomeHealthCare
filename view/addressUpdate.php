@@ -16,6 +16,7 @@ if (!isset($name)) {$name = '';}
 
 <html>
     <form class="form" action="index.php" method="POST">
+         <input type="hidden" name="action" value="updateAddress" />
         <div class="form-row">
             <h6><?php echo $name; ?></h6><br><br>
         </div>
@@ -23,7 +24,7 @@ if (!isset($name)) {$name = '';}
                     <label>Client ID:</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo htmlspecialchars($patientid); ?><br>
                 </div>
         <div class="form-row">
-            <input type="hidden" name="action" value="addAddress" />
+            <input type="hidden" name="action" value="updateAddress" />
             <div class="form-group col-md-2">
           
                 <label>Number</label>
@@ -67,7 +68,8 @@ if (!isset($name)) {$name = '';}
         </div>
         </div>   
     </div>
-    <button type="submit" class="btn btn-primary">Add Address</button>
+    <input type="hidden" name="begDate" value="<?php echo htmlspecialchars($patientAddress->getBegDate());  ?>"/>
+    <button type="submit" class="btn btn-primary">Update Address</button>
 </form>
 </html>
 

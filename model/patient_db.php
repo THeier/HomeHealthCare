@@ -70,7 +70,28 @@ class patient_db {
         }
     }
     
-    public static function delete_patient($patientID, $userID){
+    public static function select_allPatients(){
+        $db = Database::getDB();
+        $query = 'SELECT * FROM patient';
+        $statement =$db->prepare($query);
+        $statement->execute();
+        $results = $statement->fetchAll();
+        $statement->closeCursor();
+         if (!empty($results)) 
+          {
+            $pats = new patient($results['patientID'], $results['userID'], $results['fName'],
+                    $results['lName'], $results['dob'], $results['sex'], $results['begDate'], 
+                    $results['endDate'], $results['disabled'], $results['dcsDate']);
+            $p[]=$pats;
+            
+              return $p;
+      }else{
+            return null;
+        }
+        
+    }
+
+        public static function delete_patient($patientID, $userID){
         
         $db = Database::getDB();
         $query = 'DELETE FROM patient
@@ -174,21 +195,38 @@ class patient_db {
                 . 'city =:city, state =:state, '
                 . 'zip =:zip, email =:email, '
                 . 'begDate =:begDate, endDate =:endDate '
-                . ' WHERE patientID = :patientID';
+                 .'WHERE patientID = :patientID' ;
         $statement = $db->prepare($query);
         $statement->bindValue(':patientID',$patientID);
-        $statement->bindValue(':userID',$userID);
-        $statement->bindValue(':fName',$fName);
-        $statement->bindValue(':lName',$lName);
-        $statement->bindValue(':dob',$dob);
-        $statement->bindValue(':sex', $sex);
-        $statement->bindValue(':disabled', $disabled);
+        $statement->bindValue(':number',$number);
+        $statement->bindValue(':street',$street);
+        $statement->bindValue(':city',$city);
+        $statement->bindValue(':state',$state);
+        $statement->bindValue(':zip', $zip);
+        $statement->bindValue(':email', $email);
         $statement->bindValue(':begDate',$begDate);
         $statement->bindValue(':endDate', $endDate);
         $statement->execute();
         $statement->closeCursor();
                 
     }
+    
+    function select_patientAddressID($patientID,$endDate){
+        
+        $db = Database::getDB();
+        $query = 'SELECT * FROM patientaddress WHERE patientid =:patientID AND endDate =:endDate';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':patientID', $patientID);
+        $statement->bindValue(':endDate', $endDate);
+        $statement->execute();
+        $row = $statement->fetch();
+        $statement->closeCursor();
+        $id = $row['addressID'];
+         
+         return $id;
+        
+    }
+
     // ALL PATIENT MED SQL
     // sql to select pateint med by id 
     public static function insert_patientMed($patientID, $drug, $quantity, $timesPerDay){
@@ -208,9 +246,9 @@ class patient_db {
      public function select_patientMeds($patientid) { 
         
         $db = Database::getDB();
-        $query = 'SELECT * FROM patientmed WHERE patientid =:PatientID';
+        $query = 'SELECT * FROM patientmed WHERE patientid =:patientID';
         $statement = $db->prepare($query);
-        $statement->bindValue(':PatientID', $patientid);
+        $statement->bindValue(':patientID', $patientid);
         $statement->execute();
         $results = $statement->fetchAll();
         $statement->closeCursor();

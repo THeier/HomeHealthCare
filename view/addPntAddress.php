@@ -15,12 +15,13 @@ if (!isset($name)) {$name = '';}
 <?php include'view/header.php'; ?>
 <html>
     <form class="form" action="index.php" method="POST">
+         <input type="hidden" name="action" value="addNewAddress" />
         <div class="form-row">
             <legend>Add New Address for <?php echo $name; ?> </legend>
             
         </div>
         <div class="form-row">
-            <input type="hidden" name="action" value="addAddress" />
+            <input type="hidden" name="action" value="addNewAddress" />
             <div class="form-group col-md-2">
           
                 <label>Number</label>
