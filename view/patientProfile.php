@@ -7,15 +7,14 @@ and open the template in the editor.
 <?php 
 if(!isset($pats)){$pats[]='';}
 if(!isset($meds)){$meds[]='';}
-
 ?>
 <?php include 'view/header.php'; ?>
 <html>
 <div class="container">
   <div class="row">
-    <div class="col-sm-4">
+    <div class="col-sm-6">
         <fieldset class="field_set">
-            <legend><b>Personal Information</b></legend>
+            <legend>Personal Information</legend>
             Name:&nbsp;<?php echo htmlspecialchars($aPatient->getFName() . ' ' . $aPatient->getLName()); ?><br>
             Age:&nbsp;<?php echo htmlspecialchars($age); ?><br>
             Date of Birth:&nbsp;<?php echo date("m-d-Y", strtotime($aPatient->getDob())); ?><br>
@@ -26,8 +25,8 @@ if(!isset($meds)){$meds[]='';}
         <!-- Conditionally display
         -- these last two sections -->
         <fieldset class="field_set">
-            <legend><b>Address</b></legend>
-            Street:&nbsp;<?php echo htmlspecialchars($fullstreet) ; ?><br>
+            <legend>Address</legend>
+            Street:&nbsp;<?php echo htmlspecialchars($number) ; ?><br>
             City:&nbsp;<?php echo htmlspecialchars($city)  ; ?><br>
             State:&nbsp;<?php echo htmlspecialchars($st)  ; ?><br>
             Zip Code:&nbsp;<?php echo htmlspecialchars($zip)  ; ?><br>
@@ -42,7 +41,7 @@ if(!isset($meds)){$meds[]='';}
         </fieldset><br>
 
        <legend>Medications</legend>
- <?php if($meds != NULL) { ?>         
+        
   <table class="table">
     <thead>
       <tr>
@@ -54,43 +53,43 @@ if(!isset($meds)){$meds[]='';}
       </tr>
     </thead>
     <tbody>
+        <?php if(is_null($meds)) {  ?>
+        <p>No Medications found</p>
+    <?php }else ?>
        <tr>
+           
        <?php  foreach($meds as $m) : ?>
-        <td><?php ?></td>
-        <td><?php ?></td>
-        <td><?php ?></td>
-        <td><?php ?></td>
-        <td><?php ?></td>
-        <?php ; ?>
-                     <td><form action="index.php" method="POST">                
-                         <input type="hidden" name="action" 
-                          value="meds">
-                         <input id="pntbutton" type="hidden" name="pid"
-                                value="<?php echo htmlentities($_SESSION['pID']) ; ?>">
-                         <input type="submit" value="Update">
-                         </form>
-                     </td> 
-       </tr>
-        <?php endforeach;
-             }else{ ?><tr><td>No Medications found</td></tr><?php } ?>
-    </tbody>
+           <td><?php echo htmlspecialchars($m->getQuanity());; ?></td>
+        <td><?php echo htmlspecialchars($m->getQuanity()); ?></td>
+        <td><?php echo htmlspecialchars($m->getTimesPerDay()); ?></td>
+        <td><?php echo htmlspecialchars($m->getmedNote()); ?></td>
+        </tr>
+        <?php endforeach;   ?>
+      
+    </tbody>    
   </table>
-   <form action="index.php" method="post">
+    <?php if(!is_null($meds)) { ?>     
+       <form action="index.php" method="post">
+            <input type="hidden" name="action" value="updateMedication">
+            <input type="hidden" name="pID" value="<?php echo html_entity_decode($aPatient->getPatientID()) ?>">
+            <input class="subs" type="submit" value="Update Medication">
+     </form>
+    <?php };?>
+    <form action="index.php" method="post">
             <input type="hidden" name="action" value="addMedication">
             <input type="hidden" name="pID" value="<?php echo html_entity_decode($aPatient->getPatientID()) ?>">
             <input class="subs" type="submit" value="Add Medication">
-     </form>
-       <div class="col-sm-6">
+     </form>   
+       
            
-       </div>
+    
 
     </div>
-    <div class="col-sm-4">
-        <div class="container">
-            <div class="form-row">
-                <h3>Update</h3>
-            </div>
-            
+          <div class="row">
+    <div class="col-lg-20">
+    
+            <legend>Update Patient Information</legend>
+      
             <table class="table table-borderless">
                 <tr>
                      <td colspan="2"><?php ; ?></td>

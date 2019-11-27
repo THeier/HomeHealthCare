@@ -118,12 +118,12 @@ class patient_db {
     // ALL ADDRESS SQL
     // sql to select patient address by id --> WHERE THE END DATE IS LESS THAN OR EQUAL TO CURRENT DATE
    
-    public function select_patientAddress($addressID,$endDate) { 
+    public function select_patientAddress($patientID,$endDate) { 
         
         $db = Database::getDB();
-        $query = 'SELECT * FROM patientaddress WHERE addressID =:addressID AND endDate <=:endDate';
+        $query = 'SELECT * FROM patientaddress WHERE patientID =:patientID AND endDate <=:endDate';
         $statement = $db->prepare($query);
-        $statement->bindValue(':addressID', $addressID);
+        $statement->bindValue(':patientID', $patientID);
         $statement->bindValue(':endDate', $endDate);
         $statement->execute();
         $results = $statement->fetch();
@@ -142,6 +142,8 @@ class patient_db {
             return null;
         }
     }
+    
+    
     
     public function add_patientAddress($patientID, $number, $street, $city, $state, $zip, $email, $begDate, $endDate){
         
@@ -218,7 +220,7 @@ class patient_db {
             foreach ($results as $result){
             $meds = new patientMedications($result['medID'], 
                     $result['patientID'], $result['drug'],
-                    $result['quantity'], $result['timesPerDay']);
+                    $result['quantity'], $result['timesPerDay'], $result['medNote'], $result['begDate'], $result['endDate']);
             $ptMeds[]=$meds;
             }
               return $ptMeds;

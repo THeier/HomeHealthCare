@@ -20,6 +20,9 @@ body {
    
 
 }
+legend{
+    font-weight: bold;
+}
 
 li{
     display: inline;
@@ -58,7 +61,7 @@ h1 {
     border: 1px solid #ccc;
     cursor: pointer;
     padding: 0.9em;
-    width: 100%;
+    width: 60%;
     margin: 2em 0;
     letter-spacing: 4px;
 }
@@ -128,6 +131,15 @@ select {
 .error{
     color: red;
     font-weight: bold;
+}
+.adminConsole{
+    margin: 0 auto;
+    width: 80%;
+}
+.ButtonContainer{
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
 }
 
 /*

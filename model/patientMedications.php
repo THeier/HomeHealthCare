@@ -7,17 +7,17 @@
  */
 class patientMedications {
    
-    private $medID, $patientID, $drug, $quanity, $timesPerDay;
+    private $medID, $patientID, $drug, $quanity, $timesPerDay, $medNote, $begDate, $endDate;
     
-    function __construct($medID, $patientID, $drug, $quanity, $timesPerDay) {
+    function __construct($medID, $patientID, $drug, $quanity, $timesPerDay, $medNote, $begDate, $endDate) {
         $this->medID = $medID;
         $this->patientID = $patientID;
         $this->drug = $drug;
         $this->quanity = $quanity;
         $this->timesPerDay = $timesPerDay;
-        //$this->medNotes = $medNotes;
-//        $this->begDate =$begDate;
-//        $this->endDate =$endDate;
+        $this->medNote = $medNote;
+        $this->begDate =$begDate;
+        $this->endDate =$endDate;
         
     }
     function getMedID() {
@@ -60,13 +60,13 @@ class patientMedications {
         $this->timesPerDay = $timesPerDay;
     }
 
-//    function getMedNotes() {
-//        return $this->medNotes;
-//    }
+    function getMedNote() {
+        return $this->medNote;
+    }
 
-//    function setMedNotes($medNotes) {
-//        $this->medNotes = $medNotes;
-//    }
+    function setMedNote($medNote) {
+        $this->medNotes = $medNote;
+    }
     function getBegDate() {
         return $this->begDate;
     }

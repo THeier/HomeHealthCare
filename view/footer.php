@@ -11,11 +11,13 @@
         <li class="nav-item">
             <a class="nav-link" href="?action=default">About Us</a>
         </li>
-        
+        <li class="nav-item">
+            <a class="nav-link" href="?action=adminHome">Admin</a>
+        </li>
 
     </ul>
 <br>
-    <div class="footer-copyright text-center py-3">&copy; <?php echo date("Y"); ?> Client Manager
+    <div class="footer-copyright text-center py-3">&copy; <?php echo date("Y"); ?> Patient Manager
 
     </div>
 

@@ -1,4 +1,8 @@
-
+<!-- calculate age with dob
+      author:  Tim
+      title:  PHP: Calculating a person’s 
+      age from their date of birth. 
+      website: https://thisinterestsme.com/php-calculate-age-date-of-birth/-->
 
 <?php
 
@@ -270,8 +274,7 @@ switch ($action) {
         $dob = strtotime($aPatient->getDob());
         $todaysAge = $today - $dob;
         $age = floor($todaysAge / 31556926);
-        // get patient address make session varibles to use with update
-        // handle when $address is null
+  
         $address = patient_db::select_patientAddress($_SESSION['pID'], $curDate);
         if (!empty($address)) {
             $addressid =$address->getAddressID();
@@ -282,6 +285,7 @@ switch ($action) {
             $zip = $address->getZip();
             $fullstreet = $number . ' ' . $street;
             $email = $address->getEmail();
+            
         } else {
             $addressid='';
             $number = '';
@@ -292,28 +296,19 @@ switch ($action) {
             $fullstreet = '';
             $email = '';
         }
-       $meds = patient_db::select_patientMeds($_SESSION['pID']);
-       $medication=array();
-       
-        if(is_null($meds)){
-            
-            $meds = $medication;
-            
-            
-        }else{
-            $meds=$medication;
-            
-        }
-      
-        // caluate age with dob
-        // author:  Tim
-        // title:  PHP: Calculating a person’s 
-        // age from their date of birth. 
-        // website: https://thisinterestsme.com/php-calculate-age-date-of-birth/
-
         
+        $patID =$_SESSION['pID'];
+        
+        $meds = patient_db::select_patientMeds($patID);
+        $_SESSION['meds']=$meds;
+//       $medication=array();
+        $valid =true;
+        if(empty($meds)){
+            $nomeds =array();
+            $meds=$nomeds;
+        }     
 
-       var_dump($address);
+      // var_dump($address);
        //var_dump($meds);
        //var_dump($amed);
        // include 'view/patientPage.php';
@@ -535,7 +530,28 @@ switch ($action) {
         die();
         break;
 
-
+    case 'adminHome':
+        
+        
+        include 'admin/adminPage.php';
+        
+        die();
+        break;
+    case 'adminPatientPage':
+        
+        
+        include 'admin/adminPage.php';
+        
+        die();
+        break;
+    
+    case 'adminUserPage':
+        
+        
+        include 'admin/adminPage.php';
+        
+        die();
+        break;
     default :
 
         $_SESSION = array();
