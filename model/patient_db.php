@@ -20,15 +20,12 @@ class patient_db {
                 
     }
     //need to fix code for update its not done
-    function update_patient($patientID, $userID, $fName, $lName, $dob, $sex, $disabled, $deceasedDate, $begDate, $endDate){
+    function update_patient($patientID, $userID, $fName, $lName, $dob, $sex, $endDate, $begDate, $disabled, $dcsDate ){
         $db = database::getDB();
-        $query = 'UPDATE patient '
-                . 'SET patientID =:patientID, '
+        $query = 'UPDATE patient SET patientID =:patientID, '
                 . 'userID =:userID, fName =:fName, '
                 . 'lName =:lName, dob =:dob, '
-                . 'sex =:sex, disabled =:disabled, '
-                . 'deceasedDate =:deceasedDate, '
-                . 'begDate =:begDate, endDate =:endDate '
+                . 'sex =:sex, endDate =:endDate, begDate =:begDate, disabled =:disabled, dcsDate =:dcsDate'
                 . ' WHERE patientID = :patientID AND userID =:userID';
         $statement = $db->prepare($query);
         $statement->bindValue(':patientID',$patientID);
@@ -37,9 +34,11 @@ class patient_db {
         $statement->bindValue(':lName',$lName);
         $statement->bindValue(':dob',$dob);
         $statement->bindValue(':sex', $sex);
-        $statement->bindValue(':disabled', $disabled);
-        $statement->bindValue(':begDate',$begDate);
         $statement->bindValue(':endDate', $endDate);
+        $statement->bindValue(':begDate',$begDate);
+        $statement->bindValue(':disabled', $disabled);
+        $statement->bindValue(':dcsDate',$dcsDate);
+       
         $statement->execute();
         $statement->closeCursor();
                 

@@ -3,7 +3,9 @@
       title:  PHP: Calculating a person’s 
       age from their date of birth. 
       website: https://thisinterestsme.com/php-calculate-age-date-of-birth/-->
-
+<!--date validation function is from this site 
+author: Glavic`
+https://stackoverflow.com/questions/19271381/correctly-determine-if-date-string-is-a-valid-date-in-that-format-->
 <?php
 
 require_once ('model/database.php');
@@ -114,38 +116,27 @@ switch ($action) {
         break;
         
          case 'home':
-             // should clear out patientid session
+         
         // takes the logged in user to their profile page 
         
-        // takes user back to their profile page 
         $userName =$_SESSION['userName'];
         $pic =$_SESSION['pic'];
         $fullName = strtoupper($_SESSION['fName']. ' '.$_SESSION['lName']);
         $title =$_SESSION['title'];
-              
-         
+                
         $pats = patient_db::selectPatients($_SESSION['uid']);
         
         if(isset($_SESSION['pID'])){
-            $_SESSION['pID']='';
+            unset($_SESSION['pID']);
             
         }
-       // var_dump($_SESSION['user']);
-//        var_dump($_SESSION['uid']);
-//        var_dump($_SESSION['fName']);
-//        var_dump($_SESSION['lName']);
-//        var_dump($_SESSION['']);
-//        var_dump($_SESSION['userName']);
-//        var_dump($_SESSION['type']);
-//        var_dump($_SESSION['userpic']);     
-  
         
         include 'view/userProfile_view.php';
         die();
 
     case 'register':
         // sends user to register page 
-        //var_dump($action);
+        
         include 'view/register_view.php';
         die();
         break;
@@ -157,7 +148,7 @@ switch ($action) {
         // sends user to login page 
         // add validation (page) for user information
         // add user info to database
-        $err =[];
+    
         $begDate = date('y-m-d');
         $fName = filter_input(INPUT_POST, 'fName');
         $lName = filter_input(INPUT_POST, 'lName');
@@ -171,43 +162,54 @@ switch ($action) {
         
         // Password Validation
 //        if (preg_match('/^.{10}/', $pass) != 1) {
-//            $err['shortPass'] = "Password must be at least 10 characters.";
+//            $errshortPass = "Password must be at least 10 characters.";
+//            $valid =false;
 //        }
 //        if (preg_match('/[a-z]/', $pass) != 1) {
-//            $err['lcasePass'] = "Your password must contain a lowercase letter.";
+//            $errlcasePass = "Your password must contain a lowercase letter.";
+//            $valid =false;
 //        }
 //        if (preg_match('/[A-Z]/', $pass) != 1) {
-//            $err['ucasePass'] = "Your password must contain an Uppercase letter.";
+//            $errucasePass = "Your password must contain an Uppercase letter.";
+//            $valid =false;
 //        }
 //        if (preg_match('/[0-9]/', $pass) != 1) {
-//            $err['digPass'] = "Your password must contain a digit.";
+//            $errdigPass = "Your password must contain a digit.";
+//            $valid =false;
 //        }
         
         // First and Last Name Validation
         if ($fName == null || $fName == "") {
-            $err['fName'] = "Enter a First Name";
+            $errfName = "Enter a First Name";
+            $valid =false;
         }
         if (preg_match('/^[a-zA-Z]/', $fName) != 1) {
-            $err['fNamefirstchar'] = "First Name must begin with a letter";
+            $errfNamefirstchar = "First Name must begin with a letter";
+            $valid =false;
         }
         if ($lName == null || $lName == "") {
-            $err['lName'] = "Enter a last name";
+            $errlName = "Enter a last name";
+            $valid =false;
         }
         if (preg_match('/^[a-zA-Z]/', $lName) != 1) {
-            $err['lNamefirstchar'] = "Last Name must begin with a letter";
+            $errlNamefirstchar = "Last Name must begin with a letter";
+            $valid =false;
         }
         // Username/Email validation
         if ($uname == null || $uname == "") {
-            $err['noEmail'] = "Enter an Email";
+            $errnoEmail = "Enter an Email";
+            $valid =false;
         } else if ($uname == false) {
-            $err['invalidEmail'] = "Email is invalid";
+            $errinvalidEmail = "Email is invalid";
+            $valid =false;
         }
         if (user_db::search_by_email($uname) === true) {
-            $err['emailTaken'] = "Duplicate email, please try again";
+            $erremailTaken = "Duplicate email, please try again";
+            $valid =false;
         }
         
         
-     if (empty($err)) {
+     if ($valid){
             //$options = ['cost' => 12];
             //$hashpass = password_hash($pass, PASSWORD_BCRYPT, $options);
             // fix varibles - no phone number 
@@ -220,10 +222,7 @@ switch ($action) {
             
         }        
         
-      
-
-
-        include 'view/login_view.php';
+        // include 'view/login_view.php';
         die();
         break;
 
@@ -249,8 +248,24 @@ switch ($action) {
             $dis = filter_input(INPUT_POST,'disabled');
             $endDate ='0001-01-01';
        
-        // sql is adding patient more than once
-        // default image added with sql -> change later???
+       if ($fName == null || $fName == "") {
+            $errfName = "Enter a First Name";
+        }
+        if (preg_match('/^[a-zA-Z]/', $fName) != 1) {
+            $errfNamefirstchar = "First Name must begin with a letter";
+        }
+        if ($lName == null || $lName == "") {
+            $errlName = "Enter a last name";
+        }
+        if (preg_match('/^[a-zA-Z]/', $lName) != 1) {
+            $errlNamefirstchar = "Last Name must begin with a letter";
+        }
+        // validate option is selected
+        if (empty($dis)) {
+            $errDis = "Selection required";
+        } else if ($uname == false) {
+            $errinvalidEmail = "Email is invalid";
+        } // default image added with sql -> change later???
         
         patient_db::insert_patient($userid, $f, $l, $pdob, $g, $bdt, $endDate, $dis);
         
@@ -336,11 +351,6 @@ switch ($action) {
             $ddate='';
         }
 
-        // add validation to date format
-        // add validation for sex
-//        var_dump($aPatient);
-//        var_dump($patientid);
-//        var_dump($userid);
         include 'view/demographicUpdate.php';
 
         die();
@@ -350,17 +360,18 @@ switch ($action) {
 
         // insert updated patient demographic information
         // take user back to profile page 
-        //$valid =true;
-        
+        $valid=true; 
         $pid = $_SESSION['pID'];
         $userid = $_SESSION['uid'];
-
         $fname = filter_input(INPUT_POST, 'fname');
         $lname = filter_input(INPUT_POST, 'lname');
         $dob = filter_input(INPUT_POST, 'adob');
-        $adob = date("m-d-Y", strtotime($dob));
+        //$adob = date("m-d-Y", strtotime($dob));
         $sex = filter_input(INPUT_POST, 'sex');
-        $edate = filter_input(INPUT_POST, 'adob');
+        $disabled = filter_input(INPUT_POST, 'dis');
+        $endDate = filter_input(INPUT_POST, 'endDate');
+        $dcsDate =filter_input(INPUT_POST,'ddate');
+        $begDate = filter_input(INPUT_POST, 'begDates');
         
         
         if(empty($fname)){
@@ -379,14 +390,30 @@ switch ($action) {
             $errGen ='Gender Required';
             $valid =false;
         }
-        if(empty($_POST['sex'])){
-              $errGen= 'Enter Number';
+        
+        if(empty(strtolower($dis))){
+              $errDis= 'Yes or No answer required';
+              $valid =false;
+          }elseif($dis !='yes' || $dis != 'no' ){
+              
+              $errDis= 'Yes or No answer required';
               $valid =false;
           }
           
+          // Validation for date fields 
+          // validates the end date need to 
+          // validate its not greater than current date
+          $date =$edate;
+          function validateDate($date, $format = 'Y-m-d')
+        {
+            $d = DateTime::createFromFormat($format, $date);
+            // The Y ( 4 digits year ) returns TRUE for any integer with any number of digits so changing the comparison from == to === fixes the issue.
+                return $d && $d->format($format) === $date;
+            }
+          
           If(valid){
                patient_db::update_patient($pid, $userid, $fname, $lname, 
-                $adob, $sex, $disabled, $deceasedDate, $begDate, $endDate);
+                $dob, $sex, $endDate, $begDate, $disabled, $dcsDate);
               
           }else{
               include 'view/addPatient.php';
@@ -397,8 +424,8 @@ switch ($action) {
 //        var_dump($aPatient);
 //        var_dump($patientid);
 //        var_dump($userid);
-        include 'view/userProfile_view.php';
-
+       // include 'view/userProfile_view.php';
+        header('Location: index.php?action=home');
         die();
         break;
     
@@ -521,8 +548,16 @@ switch ($action) {
         break;
 
    case 'addMedication':
-       
+       $today =date('Y-m-d');
        $pid = filter_input(INPUT_POST, 'pID');
+       $drug= filter_input(INPUT_POST, 'med');
+       $quantity= (int)filter_input(INPUT_POST, 'qty');
+       $timesPerDay= (int)filter_input(INPUT_POST, 'tpd');
+       $medNote= filter_input(INPUT_POST, 'med');
+       $begDate =$today;
+       $endDate = '01-01-0001';
+       patient_db::insert_patientMed($pid, $$drug, $quantity, $timesPerDay,$medNote, $begDate, $endDate);
+       
        var_dump($pid);
 
         include 'view/addMedication.php';

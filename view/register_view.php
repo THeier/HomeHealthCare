@@ -20,51 +20,51 @@ if (!isset($type)) {
     $type = '';
 }
 
-if (!isset($err['fName'])) {
-    $err['fName'] = "";
+if (!isset($errfName)) {
+    $errfName = "";
 }
-if (!isset($err['lName'])) {
-    $err['lName'] = "";
+if (!isset($errlName)) {
+    $errlName = "";
 }
-if (!isset($err['uName'])) {
-    $err['uName'] = "";
+if (!isset($erruName)) {
+    $erruName = "";
 }
-if (!isset($err['noEmail'])) {
-    $err['noEmail'] = "";
+if (!isset($errnoEmail)) {
+    $errnoEmail = "";
 }
 
-if (!isset($err['email'])) {
-    $err['email'] = "";
+if (!isset($erremail)) {
+    $erremail = "";
 }
-if (!isset($err['invalidEmail'])) {
-    $err['invalidEmail'] = "";
+if (!isset($errinvalidEmail)) {
+    $errinvalidEmail = "";
 }
-if (!isset($err['NameTaken'])) {
-    $err['NameTaken'] = "";
+if (!isset($errNameTaken)) {
+    $errNameTaken = "";
 }
-if (!isset($err['emailTaken'])) {
-    $err['emailTaken'] = "";
+if (!isset($erremailTaken)) {
+    $erremailTaken = "";
 }
-if (!isset($err['shortPass'])) {
-    $err['shortPass'] = "";
+if (!isset($errshortPass)) {
+    $errshortPass = "";
 }
-if (!isset($err['lcasePass'])) {
-    $err['lcasePass'] = "";
+if (!isset($errlcasePass)) {
+    $errlcasePass = "";
 }
-if (!isset($err['ucasePass'])) {
-    $err['ucasePass'] = "";
+if (!isset($errucasePass)) {
+    $errucasePass = "";
 }
-if (!isset($err['digPass'])) {
-    $err['digPass'] = "";
+if (!isset($errdigPass)) {
+    $errdigPass = "";
 }
-if (!isset($err['uNamefirstchar'])) {
-    $err['uNamefirstchar'] = "";
+if (!isset($erruNamefirstchar)) {
+    $erruNamefirstchar = "";
 }
-if (!isset($err['lNamefirstchar'])) {
-    $err['lNamefirstchar'] = "";
+if (!isset($errlNamefirstchar)) {
+    $errlNamefirstchar = "";
 }
-if (!isset($err['fNamefirstchar'])) {
-    $err['fNamefirstchar'] = "";
+if (!isset($errfNamefirstchar)) {
+    $errfNamefirstchar = "";
 }
 ?>
 
@@ -81,29 +81,29 @@ if (!isset($err['fNamefirstchar'])) {
                     <label>First Name</label>
                     <input class="form-control" type="text" name="fName" value="<?php echo htmlspecialchars($fName); ?>">
                     <span class="error"><?php
-                        echo htmlspecialchars($err['fName']);
-                        echo htmlspecialchars($err['fNamefirstchar']);
+                        echo htmlspecialchars($errfName);
+                        echo htmlspecialchars($errfNamefirstchar);
                         ?></span>
 
                     <label>Last Name</label>
                     <input class="form-control" type="text" name="lName" value="<?php echo htmlspecialchars($lName); ?>"><br>
                     <span class="error"><?php
-                        echo htmlspecialchars($err['lName']);
-                        echo htmlspecialchars($err['lNamefirstchar'])
+                        echo htmlspecialchars($errlName);
+                        echo htmlspecialchars($errlNamefirstchar)
                         ?></span>
 
                     <label>Email</label>
                     <input class="form-control" type="text" name="email" value="<?php echo htmlspecialchars($uname); ?>"><br>
-                    <span class="error"><?php echo htmlspecialchars($err['email'])
-                        . htmlspecialchars($err['emailTaken']);
+                    <span class="error"><?php echo htmlspecialchars($erremail)
+                        . htmlspecialchars($erremailTaken);
                         ?></span>
                     <label>Password</label>
                     <input class="form-control" type="password" name="password"><br>
                     <span class="error"><?php
-                        echo htmlspecialchars($err['shortPass']);
-                        echo htmlspecialchars($err['lcasePass']);
-                        echo htmlspecialchars($err['ucasePass']);
-                        echo htmlspecialchars($err['digPass']);
+                        echo htmlspecialchars($errshortPass);
+                        echo htmlspecialchars($errlcasePass);
+                        echo htmlspecialchars($errucasePass);
+                        echo htmlspecialchars($errdigPass);
                         ?></span>
 
                     <div class="dropdown">

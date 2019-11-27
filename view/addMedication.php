@@ -8,6 +8,7 @@ and open the template in the editor.
 <html>
 
     <form class="form" action="index.php" method="POST">
+        <input type="hidden" name="action" value="addMedication" />
         <div class="form-row">
             <br>  <h6><?php echo 'Some Name'; ?></h6><br>
         </div>
@@ -36,7 +37,7 @@ and open the template in the editor.
         <div class="row">
             <div class="form-group col-md-6">
                 <label for="notes">Notes:</label>
-                <textarea class="form-control" rows="5" id="comment"></textarea>
+                <textarea class="form-control" rows="5" id="comment" name="note"></textarea>
             </div><br>
         </div>
         <button class="btn btn-primary" type="submit">Add Medication</button> 

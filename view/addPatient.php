@@ -30,7 +30,8 @@ if (!isset($gen)) {
                             <option value="No">No</option>  
                             <option value="Yes">Yes</option>
 
-                        </select><br><br>
+                        </select>
+                        <span class="error"><?php echo $errDis ;?></span><br><br>
                         
                         <h6>Gender</h6>
 

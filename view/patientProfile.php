@@ -69,7 +69,7 @@ if(!isset($meds)){$meds[]='';}
       
     </tbody>    
   </table>
-    <?php if(!is_null($meds)) { ?>     
+    <?php if(is_null($meds)) { ?>     
        <form action="index.php" method="post">
             <input type="hidden" name="action" value="updateMedication">
             <input type="hidden" name="pID" value="<?php echo html_entity_decode($aPatient->getPatientID()) ?>">

@@ -9,6 +9,18 @@ and open the template in the editor.
 if (!isset($errFN)) {
     $errFN = "";
 }
+if (!isset($errLN)) {
+    $errLN = "";
+}
+if (!isset($errBD)) {
+    $errBD = "";
+}
+if (!isset($errGen)) {
+    $errGen = "";
+}
+if (!isset($errFN)) {
+    $errFN = "";
+}
 
 ?>
 
@@ -26,7 +38,7 @@ if (!isset($errFN)) {
                     <div class="form-group col-md-2">
                         <label>First Name:</label>  
                         <input class="form-control" type="text" name="fname" value="<?php echo htmlspecialchars($fname); ?>" >
-                        <span class="error"><?php ?></span><br>
+                        <span class="error"><?php echo $errFN; ?></span><br>
                     </div>
                     <div class="form-group col-md-2">
                         <label>Last Name:</label>
@@ -75,13 +87,14 @@ if (!isset($errFN)) {
                 </div>
                 </div>
                     
-                    
-                    
-                    
-                    
-                   
-                    <br>
+                 <br>
                     <button class="btn btn-primary" type="submit">Update Demographics</button>
+                    <form class="form" action="index.php" method="POST">
+                        <input type="hidden" name="action" value="" />
+                        <input type="hidden" name="pID" value="patient_page" />
+                        <button class="btn btn-primary" type="submit">Cancel</button>
+                    </form>
+                    
             </form>
   
 </html>
