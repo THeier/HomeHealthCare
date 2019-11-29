@@ -21,6 +21,7 @@ and open the template in the editor.
             <div class="form-group col-md-2">
                 <label for="inputMed">Name</label>
                 <input type="text" class="form-control" id="inputMed" name="med" >
+                <span class="error"><?php ?></span>
 
             </div>
             <div class="form-group col-md-2">

@@ -240,34 +240,54 @@ switch ($action) {
        
             // add validation to data submited
             $userid =$_SESSION['uid'];
-            $f = ucfirst(filter_input(INPUT_POST, 'fnm'));
-            $l = ucfirst(filter_input(INPUT_POST, 'lnm'));
+            $fName = ucfirst(filter_input(INPUT_POST, 'fnm'));
+            $lName = ucfirst(filter_input(INPUT_POST, 'lnm'));
             $pdob = filter_input(INPUT_POST, 'dbir');
             $g = strtoUpper(filter_input(INPUT_POST, 'gen'));
             $bdt = date('Y-m-d');
             $dis = filter_input(INPUT_POST,'disabled');
             $endDate ='0001-01-01';
+            $today =date('Y-m-d');
        
+       // Validate Patient first and last name
        if ($fName == null || $fName == "") {
             $errfName = "Enter a First Name";
+            $valid =false;
         }
         if (preg_match('/^[a-zA-Z]/', $fName) != 1) {
             $errfNamefirstchar = "First Name must begin with a letter";
+            $valid =false;
         }
         if ($lName == null || $lName == "") {
             $errlName = "Enter a last name";
+            $valid =false;
         }
         if (preg_match('/^[a-zA-Z]/', $lName) != 1) {
             $errlNamefirstchar = "Last Name must begin with a letter";
+            $valid =false;
         }
         // validate option is selected
+        
+        
+        // Validate yes or no entered for disabled
         if (empty($dis)) {
             $errDis = "Selection required";
-        } else if ($uname == false) {
-            $errinvalidEmail = "Email is invalid";
-        } // default image added with sql -> change later???
+            $valid =false;
+        } 
         
-        patient_db::insert_patient($userid, $f, $l, $pdob, $g, $bdt, $endDate, $dis);
+        // Validate patient date of birth is added and is a validate date
+        if(empty($pdob)){
+           $errPDOB = "Date of Birth Required";
+           $valid =false;
+        }
+        
+        
+
+            // default image added with sql -> change later???
+        if(valid){
+           patient_db::insert_patient($userid, $fName, $lName, $pdob, $g, $bdt, $endDate, $dis); 
+        }
+        
         
 
        // include 'view/userProfile_view.php';
@@ -558,6 +578,11 @@ switch ($action) {
        $endDate = '01-01-0001';
        patient_db::insert_patientMed($pid, $$drug, $quantity, $timesPerDay,$medNote, $begDate, $endDate);
        
+       // Validate drug name added
+       // Validate quantity and times per day added and within range
+       
+       
+       
        var_dump($pid);
 
         include 'view/addMedication.php';
@@ -573,14 +598,21 @@ switch ($action) {
         die();
         break;
     case 'adminPatientPage':
-        
+        // View all patients page
         $allPats= patient_db::select_allPatients();
+        
+        include 'admin/adminPatientView.php';
+        
+        die();
+        break;
+    case 'adminDelPatient':
+        // View all patients page
+       
         
         include 'admin/adminPage.php';
         
         die();
         break;
-    
     case 'adminUserPage':
         
         

@@ -48,7 +48,7 @@ if (!isset($patID)) {
                                    value="patient_page">
                             <input type="hidden" name="pid"
                                    value="<?php echo htmlspecialchars($p->getPatientID()); ?>">
-                            <input type="submit" name="select" value="Select">
+                            <button class="btn btn-primary" type="submit" name="select">Select</button>
                         </form>
                     </td>
                 </tr>

@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <?php
-if (!isset($fnm)) {
-    $fnm = '';
+if (!isset($errfName)) {
+    $errfName = "";
 }
-if (!isset($lnm)) {
-    $lnm = '';
+if (!isset($errlName)) {
+    $errlName = "";
 }
-if (!isset($dbir)) {
-    $dbir = '';
+if (!isset($errfNamefirstchar)) {
+    $errfNamefirstchar = "";
 }
-if (!isset($gen)) {
-    $gen = '';
+if (!isset($errlNamefirstchar)) {
+    $errlNamefirstchar = "";
+}
+if (!isset($errDis)) {
+    $errDis = "";
 }
 ?>
 
 <?php include'view/header.php'; ?>
 <html>
-    <div class="container">
+   <div class="container">
         <div class="row">
             <div class="col-sm-4">
                 <form class="form" action="index.php" method="post">
@@ -24,7 +27,11 @@ if (!isset($gen)) {
                     <fieldset class="field_set">
                         <legend>Add New Patient</legend>
                         First Name:  <input class="form-control" type="text" name="fnm">
+                        <span class="error"><?php echo htmlspecialchars($errfName); ?></span><br>
+                        <span class="error"><?php echo htmlspecialchars($errfNamefirstchar); ?></span>
                         Last Name: <input class="form-control" type="text" name="lnm">
+                        <span class="error"><?php echo htmlspecialchars($errlName); ?></span>
+                        <span class="error"><?php echo htmlspecialchars($errlNamefirstchar); ?></span>
                         Date of Birth: <input class="form-control" type="date" name="dbir"><br>
                         Disabled: <select name="disabled" style="max-width: 90%" >
                             <option value="No">No</option>  
@@ -46,7 +53,7 @@ if (!isset($gen)) {
                                 <input type="checkbox" class="form-check-input" value="female">Female
                             </label>
                         </div>
-                        <!--                add validation message when not selected-->
+                        <!-- add validation message when not selected-->
                     </fieldset><br>
                     <button class="btn btn-primary" type="submit">Add Patient</button>
                 </form>

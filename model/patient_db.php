@@ -76,14 +76,16 @@ class patient_db {
         $statement->execute();
         $results = $statement->fetchAll();
         $statement->closeCursor();
+       
+        
          if (!empty($results)) 
-          {
-            $pats = new patient($results['patientID'], $results['userID'], $results['fName'],
+          { 
+              $p = new patient($results['patientID'], $results['userID'], $results['fName'],
                     $results['lName'], $results['dob'], $results['sex'], $results['begDate'], 
                     $results['endDate'], $results['disabled'], $results['dcsDate']);
-            $p[]=$pats;
-            
-              return $p;
+            $allpats[]=$p;
+          
+              return $allpats;
       }else{
             return null;
         }

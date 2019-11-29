@@ -90,7 +90,7 @@ class patient {
        $this->dob = $dob;
    }
    
-   function setSex() {
+   function setSex($sex) {
        return $this->sex;
    }
 
@@ -101,6 +101,10 @@ class patient {
    function setBegDate($begDate) {
        $this->begDate = $begDate;
    }
+   function setEndDate($endDate) {
+       $this->endDate = $endDate;
+   }
+
 
       
 }

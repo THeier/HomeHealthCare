@@ -14,25 +14,26 @@ and open the template in the editor.
 ?>
 <div class="row justify-content-center">
     <h3 class="error"><?php ?></h3>
-    <h2>ADMINISTRATORS CONSOLE</h2>
+    <h2>ADMINISTRATOR CONSOLE</h2>
     <br>
     <br>
 </div>
 <div class="adminConsole">
-<form>
-    <div class="form-row">
+   <div class="form-row">
         <div class="col">
             <div class="adminContainer">
                 <form class="form" action="index.php" method="post">
                 <input type="hidden" name="action" value="adminUserPage">
                 <input class="adminSubs" type="submit" value="View Users">
+                </form>
             </div>
         </div>
         <div class="col">
             <div class="adminContainer">
-            <form class="form" action="index.php" method="post">
+            <form class="form" action="index.php" method="POST">
                 <input type="hidden" name="action" value="adminPatientPage">
                 <input class="adminSubs" type="submit" value="View Patients">
+            </form>
             </div>
         </div>
         <div class="col">
@@ -40,10 +41,10 @@ and open the template in the editor.
             <form class="form" action="index.php" method="post">
                 <input type="hidden" name="action" value="">
                 <input class="adminSubs" type="submit" value="View Charts">
-            </div>
+            </form>
+                </div>
         </div>
     </div>
-</form>
 </div>
 <?php include 'view/footer.php'; ?>
 </html>

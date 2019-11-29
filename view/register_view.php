@@ -6,7 +6,9 @@
  */-->
 <?php
 //set default value for variable for inital page load
-if (!isset($fName)) {$fName = '';}
+if (!isset($fName)) {
+    $fName = '';
+}
 if (!isset($lName)) {
     $lName = '';
 }
@@ -70,60 +72,66 @@ if (!isset($errfNamefirstchar)) {
 
 <?php include 'view/header.php'; ?>
 
+<html>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="form-row">
+                <h3>Register</h3> <br> 
+                <form class="form" action="index.php" method="post">
 
-<div class="row justify-content-center">
-    <div class="col-4">
-        <h3 class="form-group">Register</h3>
-        <form class="form-horizontal" action="index.php" method="post">
-            <div class="main-layouts wrapper">
-                <input type="hidden" name="action" value="register_user" />
-                <div class="agileits-top">
+                    <input type="hidden" name="action" value="register_user" />
+
                     <label>First Name</label>
                     <input class="form-control" type="text" name="fName" value="<?php echo htmlspecialchars($fName); ?>">
-                    <span class="error"><?php
-                        echo htmlspecialchars($errfName);
-                        echo htmlspecialchars($errfNamefirstchar);
-                        ?></span>
-
+                    <span class="error"><?php echo htmlspecialchars($errfName); ?></span><br>
+                    <span class="error"><?php echo htmlspecialchars($errfNamefirstchar); ?></span><br><br>
                     <label>Last Name</label>
-                    <input class="form-control" type="text" name="lName" value="<?php echo htmlspecialchars($lName); ?>"><br>
+                    <input class="form-control" type="text" name="lName" value="<?php echo htmlspecialchars($lName); ?>">
                     <span class="error"><?php
                         echo htmlspecialchars($errlName);
-                        echo htmlspecialchars($errlNamefirstchar)
+                        echo '<br>';
+                        echo htmlspecialchars($errlNamefirstchar);
+                        echo '<br><br>';
                         ?></span>
 
                     <label>Email</label>
                     <input class="form-control" type="text" name="email" value="<?php echo htmlspecialchars($uname); ?>"><br>
-                    <span class="error"><?php echo htmlspecialchars($erremail)
-                        . htmlspecialchars($erremailTaken);
+                    <span class="error"><?php
+                        echo htmlspecialchars($erremail);
+                        echo '<br>';
+                        htmlspecialchars($erremailTaken);
                         ?></span>
                     <label>Password</label>
                     <input class="form-control" type="password" name="password"><br>
-                    <span class="error"><?php
-                        echo htmlspecialchars($errshortPass);
-                        echo htmlspecialchars($errlcasePass);
-                        echo htmlspecialchars($errucasePass);
-                        echo htmlspecialchars($errdigPass);
-                        ?></span>
+                    <span class="error"><?php echo htmlspecialchars($errshortPass); ?></span>
+                    <span class="error"><?php echo htmlspecialchars($errlcasePass); ?></span>
+                    <span class="error"><?php echo htmlspecialchars($errucasePass); ?></span>
+                    <span class="error"><?php echo htmlspecialchars($errdigPass); ?></span><br>
 
-                    <div class="dropdown">
-                        <select name="type">
+                   
+                        <select class="custom-select custom-select-sm" name="type" required="true">
+                            <option>Select...</option>
                             <option value="cna">Certified Nurse Assistant</option>
                             <option value="cma">Certified Medication Assistant</option>
-                            <option value="cma">Certified Medication Assistant</option>
+                            <option value="cma">Other (PAS/CHORE)</option>
                             <option value="admin">Administrator</option>
                         </select>
-                    </div>
+                   
                     <label>&nbsp;</label><br>
                     <input class="subs" type="submit" value="Register">   
 
-                </div>           
-        </form> 
+                    </div>           
+                </form>   
 
-    </div>
-</div>
-</div>  
 
+            </div>      
+
+
+        </div>   
+
+
+
+</html>
 
 <?php include 'view/footer.php'; ?>
 
