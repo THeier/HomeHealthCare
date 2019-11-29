@@ -53,16 +53,14 @@ class user_db {
       $statement->execute();
       $results =  $statement->fetchAll();
       $statement->closeCursor();
-      $fakePassword = "we don't want to pass this around";
-      
+            
       if(!empty($results))
       {
-        foreach($results as $result)
-        {
-            $u = new user($result['userName'], $fakePassword);
-            $u->setUserId($result['userId']);
+          foreach ($results as $result){
+            $u = new user($result['userID'], $result['fName'], $result['lName'], 
+                $result['userName'], $result['userType'], $result['begDate'], $result['endDate'], $result['filePath']);
             $users[] = $u;
-        }
+      }
         return $users;
       }
       else

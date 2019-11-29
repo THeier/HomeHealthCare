@@ -13,15 +13,18 @@
  */
 class user {
     
-    private $userID, $fName, $lName, $userName, $userType, $filePath;
+    private $userID, $fName, $lName, $userName, $userType, $begDate, $endDate, $filePath;
     
-    function __construct($userID, $fName, $lName, $userName, $userType, $filePath) {
+    function __construct($userID, $fName, $lName, $userName, $userType, $begDate, $endDate,  $filePath) {
         $this->userID =$userID;
         $this->fName = $fName;
         $this->lName = $lName;
         $this->userName = $userName;
         $this->userType = $userType;
+        $this->begDate =$begDate;
+        $this->endDate =$endDate;
         $this->filePath =$filePath;
+        
     }
 
     function getUserID() {
@@ -77,5 +80,21 @@ class user {
         
        
     }
-    
+    function getBegDate() {
+        return $this->begDate;
+    }
+
+    function getEndDate() {
+        return $this->endDate;
+    }
+
+    function setBegDate($begDate) {
+        $this->begDate = $begDate;
+    }
+
+    function setEndDate($endDate) {
+        $this->endDate = $endDate;
+    }
+
+
 }

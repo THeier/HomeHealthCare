@@ -71,27 +71,30 @@ class patient_db {
     
     public static function select_allPatients(){
         $db = Database::getDB();
-        $query = 'SELECT * FROM patient';
+        $query = 'SELECT * FROM patient ORDER BY userID';
         $statement =$db->prepare($query);
         $statement->execute();
         $results = $statement->fetchAll();
         $statement->closeCursor();
-       
-        
-         if (!empty($results)) 
-          { 
-              $p = new patient($results['patientID'], $results['userID'], $results['fName'],
-                    $results['lName'], $results['dob'], $results['sex'], $results['begDate'], 
-                    $results['endDate'], $results['disabled'], $results['dcsDate']);
-            $allpats[]=$p;
-          
-              return $allpats;
-      }else{
-            return null;
+               
+         if(!empty($results))
+        {     
+          foreach ($results as $result){                  
+            $p = new patient ($result['patientID'], 
+                    $result['userID'], $result['fName'], 
+                    $result['lName'], $result['dob'], $result['sex'], 
+                    $result['begDate'], $result['endDate'],
+                    $result['disabled'], $result['dcsDate']);
+            $allPats[]= $p;
+            
+          }
+            return $allPats;
+            
+        }else {
+            return NULL;
         }
-        
     }
-
+    
         public static function delete_patient($patientID, $userID){
         
         $db = Database::getDB();

@@ -39,7 +39,7 @@ and open the template in the editor.
         <div class="col">
             <div class="adminContainer">
             <form class="form" action="index.php" method="post">
-                <input type="hidden" name="action" value="">
+                <input type="hidden" name="action" value="adminUserPage">
                 <input class="adminSubs" type="submit" value="View Charts">
             </form>
                 </div>

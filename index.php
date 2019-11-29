@@ -591,32 +591,33 @@ switch ($action) {
         break;
 
     case 'adminHome':
-        
+        // Admin home page
         
         include 'admin/adminPage.php';
         
         die();
         break;
+    
     case 'adminPatientPage':
         // View all patients page
         $allPats= patient_db::select_allPatients();
-        
         include 'admin/adminPatientView.php';
         
         die();
         break;
     case 'adminDelPatient':
-        // View all patients page
-       
+        // Admin view all patients page
+       $allUsers = user_db::get_all_users();
         
         include 'admin/adminPage.php';
         
         die();
         break;
     case 'adminUserPage':
+        // Admin view all users page
+        $allUsers = user_db::get_all_users();
         
-        
-        include 'admin/adminPage.php';
+        include 'admin/adminUserView.php';
         
         die();
         break;

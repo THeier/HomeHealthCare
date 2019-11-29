@@ -3,11 +3,17 @@
 To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
+table:
+Website: https://mdbootstrap.com/docs/jquery/tables/editable/#!
+
 -->
+<?php include 'view/header.php'; ?>
 <html>
+    <div class="container" style="height: auto;">
+        <div class="row col-lg-20">
     <!-- Editable table -->
-<div class="card">
-  <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Editable table</h3>
+<div class="card2">
+  <h3 class="card-header text-center font-weight-bold text-uppercase">Patient Table</h3>
   <div class="card-body">
     <div id="table" class="table-editable">
       <span class="table-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i
@@ -30,11 +36,11 @@ and open the template in the editor.
         <!-- This is our clonable table line -->
         <?php foreach($allPats as $p) :?>
           <tr class="hide">
-              <td class="pt-3-half" contenteditable="true"><?php echo htmlspecialchars($p->getUserID()); ?></td>
-            <td class="pt-3-half" contenteditable="true"><?php  ?></td>
-            <td class="pt-3-half" contenteditable="true"><?php echo htmlspecialchars($p->getFName());  ?></td>
-            <td class="pt-3-half" contenteditable="true"><?php echo htmlspecialchars($p->geLName());  ?></td>
-            <td class="pt-3-half" contenteditable="true"><?php echo htmlspecialchars($p->getDob());  ?></td>
+            <td class="pt-3-half" contenteditable="true"><?php echo htmlspecialchars($p->getUserID()); ?></td>
+            <td class="pt-3-half" contenteditable="true"><?php echo htmlspecialchars($p->getUserID()); ?></td>
+            <td class="pt-3-half" contenteditable="true"><?php echo htmlspecialchars(ucfirst($p->getFName()));  ?></td>
+            <td class="pt-3-half" contenteditable="true"><?php echo htmlspecialchars(ucfirst($p->getLName()));  ?></td>
+            <td class="pt-3-half" contenteditable="true"><?php echo date('m-d-Y',strtotime($p->getDob()));  ?></td>
             <td class="pt-3-half" contenteditable="true"><?php echo htmlspecialchars($p->getSex());  ?></td>
             <td class="pt-3-half" contenteditable="true"><?php echo htmlspecialchars($p->getDisabled());  ?></td>
             <td class="pt-3-half">
@@ -46,7 +52,7 @@ and open the template in the editor.
             <td>
                 <form action="index.php" method="POST">
                     <input type="hidden" name="action" value="adminDelPatient">
-                    <input type="hidden" name="pid" value="<?php echo htmlspecialchars($p->getPatientID()); ?>"
+                    <input type="hidden" name="pid" value="<?php echo htmlspecialchars($p->getUserID()); ?>"
               <span class="table-remove"><button type="button"
                     class="btn btn-danger btn-rounded btn-sm my-0" name="remove">Remove</button></span>
                   </form>
@@ -54,7 +60,7 @@ and open the template in the editor.
             <td>
               <form action="index.php" method="POST">
                     <input type="hidden" name="action" value="updateDemo">
-                    <input type="hidden" name="pid" value="<?php echo htmlspecialchars($p->getPatientID()); ?>"
+                    <input type="hidden" name="pid" value="<?php echo htmlspecialchars($p->getUserID()); ?>"
               <span class="table-edit"><button type="button"
                     class="btn btn-secondary btn-rounded btn-sm my-0" name="edit">Edit</button></span>
                                                
@@ -65,7 +71,14 @@ and open the template in the editor.
         </tbody>
       </table>
     </div>
+ 
   </div>
 </div>
+     </div>
 <!-- Editable table -->
+    </div>
+</div>
+<?php include 'view/footer.php'; ?>
 </html>
+
+

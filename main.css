@@ -149,12 +149,17 @@ img{
     
 }
 .card {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px 0 rgba(5, 0, 0, 0.8);
   max-height: 600px;
   max-width: 200px;
   margin: 15px;
   margin-left: 100px;
   text-align: center;
+}
+.card2{
+    border: 1px solid lightsteelblue;
+    box-shadow: 0 4px 8px 0 rgba(0, 5, 0, 0.2);
+
 }
 .cardheader{
     margin: 25px;
@@ -167,7 +172,10 @@ img{
     padding: 10px;
 }
 
-
+.card2{
+    margin-top: 30px;
+    margin-bottom: 25px;
+}
 
 
 
