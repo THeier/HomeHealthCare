@@ -4,17 +4,36 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
+<?php 
+if(!isset($errDrug)){
+    $errDrug='';
+}
+
+if(!isset($errQty)){
+    $errQty='';
+}
+if(!isset($errTPD)){
+    $errTPD='';
+}
+if(!isset($errQtyAmt)){
+    $errQtyAmt='';
+}
+if(!isset($errTPDAmt)){
+    $errTPDAmt='';
+}
+
+?>
 <?php include'view/header.php'; ?>
 <html>
 
     <form class="form" action="index.php" method="POST">
         <input type="hidden" name="action" value="addMedication" />
         <div class="form-row">
-            <br>  <h6><?php echo $patientFullName; ?></h6><br>
+            <br>  <label><?php echo 'Update Medication for ' .$_SESSION['PatientFN']; ?></label><br>
         </div>
 
         <div class="form-row">
-            <label>Client ID:</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $_SESSION['pID']; ?><br>
+            <label>Patient ID:</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $_SESSION['pID']; ?><br>
         </div>
 
         <div class="form-row">
@@ -43,7 +62,11 @@ and open the template in the editor.
                 <textarea class="form-control" rows="5" id="comment" name="note"></textarea>
             </div><br>
         </div>
+        <form class="form" action="index.php" method="POST">
+                        <input type="hidden" name="action" value="patient_page" />
+                        <input type="hidden" name="pID" value="<?php echo $_SESSION['pID']; ?>"/>
         <button class="btn btn-primary" type="submit">Add Medication</button> 
+        </form>
     </form>
     <form class="form" action="index.php" method="POST">
                         <input type="hidden" name="action" value="patient_page" />

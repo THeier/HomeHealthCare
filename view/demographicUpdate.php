@@ -21,7 +21,16 @@ if (!isset($errGen)) {
 if (!isset($errFN)) {
     $errFN = "";
 }
+if (!isset($errDis)) {
+    $errDis = "";
+}
+if (!isset($errNotValidDate)) {
+    $errNotValidDate = "";
+}
 
+if (!isset($errFutureDate)) {
+    $errFutureDate = "";
+}
 ?>
 
 <?php include'view/header.php'; ?>
@@ -79,6 +88,8 @@ if (!isset($errFN)) {
                 <div class="form-group col-md-2">
                      <label>End Date:</label>
                     <input class="form-control" type="date" name="endDate" value="<?php echo htmlspecialchars($edate); ?>">
+                     <span class="error"><?php ?></span><br> 
+                     <span class="error"><?php ?></span><br> 
                 </div>
                 </div>
                 <div class="form-row">
@@ -92,8 +103,8 @@ if (!isset($errFN)) {
                                         
             </form>
              <form class="form" action="index.php" method="POST">
-                        <input type="hidden" name="action" value="patient_page" />
-                        <input type="hidden" name="pID" value="<?php echo $_SESSION['pID']; ?>"/>
-                        <button class="btn btn-primary" type="submit">Cancel</button>
-                    </form>
+                <input type="hidden" name="action" value="patient_page" />
+                <input type="hidden" name="pID" value="<?php echo $_SESSION['pID']; ?>"/>
+                <button class="btn btn-primary" type="submit">Cancel</button>
+             </form>
 </html>

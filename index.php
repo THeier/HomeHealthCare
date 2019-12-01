@@ -20,9 +20,9 @@ require_once('model/user.php');
 
 
 session_start();
-if (!isset($errorType)) {
-    $errorType = 0;
-}
+//if (!isset($valid)) {
+//    $valid = true;
+//}
 
 if (!isset($_SESSION['uid'])) {
     $_SESSION['uid'] = '';
@@ -316,7 +316,12 @@ switch ($action) {
         $_SESSION['pID']= filter_input(INPUT_POST, 'pid');
         $userid = $_SESSION['uid'];
         $aPatient = patient_db::select_patient($_SESSION['pID'], $userid);
-        $disabled = $aPatient->getDisabled();
+        $dsabld = NULL;
+        if(empty($dsabld)){
+            $disabled ='';
+        } else {
+            $disabled =$dsabld;
+        }
         $curDate =date('Y-m-d');
         $today = time();
         $dob = strtotime($aPatient->getDob());
@@ -370,7 +375,7 @@ switch ($action) {
 
     case 'demographic':
 
-        // Page to update a patients demographic information
+        // Page to update a patient demographic information
 
         $patientid = filter_input(INPUT_POST, 'pid');
         $userid = $_SESSION['uid'];
@@ -380,9 +385,14 @@ switch ($action) {
         $dob = $aPatient->getDob();
         $adob = date("m-d-Y", strtotime($dob));
         $sex = $aPatient->getSex();
-        $edate = $aPatient->getEndDate();
+        $enddate = $aPatient->getEndDate();
         $dis =$aPatient->getDisabled();
         $ddate =$aPatient->getDcsDate();
+        $edate ='';
+        
+        if($edate ==='9999-12-12'){
+            $endDate ='';
+        }
         
         if(empty($ddate)){
             $ddate='';
@@ -409,53 +419,78 @@ switch ($action) {
         $endDate = filter_input(INPUT_POST, 'endDate');
         $dcsDate =filter_input(INPUT_POST,'ddate');
         $begDate = filter_input(INPUT_POST, 'begDates');
+        $today = date('Y-m-d');
         
-        
-        if(empty($fname)){
-            $errFN ='First Name Required';
+        if($fname == null || $fname == ""){
+             $errFN ='First Name Required';
             $valid =false;
+            
         }
-        if(empty($lnamename)){
+
+        if($lname ==nul || $lname ==""){
             $errLN ='Last Name Required';
             $valid =false;
         }
-        if(empty($dob)){
+        if($dob ==null || $dob ==""){
             $errBD ='Birth Date Required';
             $valid =false;
         }
-        if(empty($sex)){
+        if($sex ==null || $sex ==""){
             $errGen ='Gender Required';
             $valid =false;
         }
         
-        if(empty(strtolower($dis))){
-              $errDis= 'Yes or No answer required';
-              $valid =false;
-          }elseif($dis !='yes' || $dis != 'no' ){
-              
+        if($disabled ==null || $disabled ==''){
               $errDis= 'Yes or No answer required';
               $valid =false;
           }
           
+        if(strtolower($disabled) !='yes' || strtolower($disabled) != 'no' ){
+              
+              $errDis= 'Yes or No answer required';
+              $valid =false;
+          } 
+            
+     
+            
+          
           // Validation for date fields 
           // validates the end date need to 
           // validate its not greater than current date
-          $date =$edate;
-          function validateDate($date, $format = 'Y-m-d')
-        {
-            $d = DateTime::createFromFormat($format, $date);
-            // The Y ( 4 digits year ) returns TRUE for any integer with any number of digits so changing the comparison from == to === fixes the issue.
-                return $d && $d->format($format) === $date;
+          //$date =$edate;
+          if(empty($endDate)){
+              $endDate ='9999-12-12';
+          }else{
+              if($endDate > $today){
+                  $errFutureDate ="Cannot be a future date";
+                  $valid =false;
+                   
+              }
+              
+          }
+                 
+          If (!empty($endDate)) {
+
+            function checkisAValidDate($endDate) {
+                if (preg_match("/^(((((1[26]|2[048])00)|[12]\d([2468][048]|[13579][26]|0[48]))-((((0[13578]|1[02])-(0[1-9]|[12]\d|3[01]))|((0[469]|11)-(0[1-9]|[12]\d|30)))|(02-(0[1-9]|[12]\d))))|((([12]\d([02468][1235679]|[13579][01345789]))|((1[1345789]|2[1235679])00))-((((0[13578]|1[02])-(0[1-9]|[12]\d|3[01]))|((0[469]|11)-(0[1-9]|[12]\d|30)))|(02-(0[1-9]|1\d|2[0-8])))))$/", $endDate)) {
+                    return $endDate;
+                } else {
+                    $errNotValidDate = "Must be a valid date";
+                    $valid = false;
+                }
             }
+
+        }
+          
           
           If(valid){
                patient_db::update_patient($pid, $userid, $fname, $lname, 
                 $dob, $sex, $endDate, $begDate, $disabled, $dcsDate);
               
           }else{
-              include 'view/addPatient.php';
+              
+              include 'view/demographicUpdate.php';
           }
-
         // add validation to date format
         
 //        var_dump($aPatient);
@@ -603,7 +638,7 @@ switch ($action) {
          
        // Validate drug name added
        // Validate quantity and times per day added and within range
-       $valid =true;
+    
        $today =date('Y-m-d');
        $drug= filter_input(INPUT_POST, 'med');
        $quantity= (int)filter_input(INPUT_POST, 'qty');
@@ -643,13 +678,13 @@ switch ($action) {
            }
        }
        
-       If($valid){
+       If(valid != false){
            patient_db::insert_patientMed($_SESSION['pID'], $drug, $quantity, $timesPerDay,$medNote, $begDate, $endDate);
        }
        
         
        
-       header('Location: index.php?action=patient_page'); 
+       include 'view/patientProfile.php';
         die();
         break;
         

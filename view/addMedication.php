@@ -4,22 +4,22 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<?php 
-if(!isset($errDrug)){
-    $errDrug='';
+<?php
+if (!isset($errDrug)) {
+    $errDrug = '';
 }
 
-if(!isset($errQty)){
-    $errQty='';
+if (!isset($errQty)) {
+    $errQty = '';
 }
-if(!isset($errTPD)){
-    $errTPD='';
+if (!isset($errTPD)) {
+    $errTPD = '';
 }
-if(!isset($errQtyAmt)){
-    $errQtyAmt='';
+if (!isset($errQtyAmt)) {
+    $errQtyAmt = '';
 }
-if(!isset($errTPDAmt)){
-    $errTPDAmt='';
+if (!isset($errTPDAmt)) {
+    $errTPDAmt = '';
 }
 ?>
 <?php include'view/header.php'; ?>
@@ -28,7 +28,7 @@ if(!isset($errTPDAmt)){
     <form class="form" action="index.php" method="POST">
         <input type="hidden" name="action" value="addMedication" />
         <div class="form-row">
-            <br>  <h6><?php echo 'Add Medication for ' .$_SESSION['PatientFN']; ?></h6><br>
+            <br>  <h6><?php echo 'Add Medication for ' . $_SESSION['PatientFN']; ?></h6><br>
         </div>
 
         <div class="form-row">
@@ -61,20 +61,12 @@ if(!isset($errTPDAmt)){
                 <textarea class="form-control" rows="5" id="comment" name="note"></textarea>
             </div>
         </div>
-           <div class="form-row" >    
-        <form class="form-group col-md-2" action="index.php" method="POST">
-                        <input type="hidden" name="action" value="patient_page" />
-                        <input type="hidden" name="pID" value="<?php echo $_SESSION['pID']; ?>"/>
-        <button class="btn btn-primary" type="submit">Add Medication</button> 
-        </form>
-        <form class="form-group col-md-2" action="index.php" method="POST">
-                        <input type="hidden" name="action" value="patient_page" />
-                        <input type="hidden" name="pID" value="<?php echo $_SESSION['pID']; ?>"/>
-                        <button class="btn btn-primary" type="submit">Cancel</button>
-                       </form>
-                </div> 
+          <form class="form-group col-md-2" action="index.php" method="POST">
+                <input type="hidden" name="action" value="addMedication" />
+                <input type="hidden" name="pID" value="<?php echo $_SESSION['pID']; ?>"/>
+                <button class="btn btn-primary" type="submit">Add Medication</button> 
+            </form>
+         
     </form>
-    
-
-</html>
-    <?php include 'view/footer.php'; ?>
+  </html>
+<?php include 'view/footer.php'; ?>
