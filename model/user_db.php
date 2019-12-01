@@ -40,22 +40,25 @@ class user_db {
         $row =  $statement->fetch();
         $statement->closeCursor();
         $u = new user($row['userID'], $row['fName'], $row['lName'], 
-                $row['userName'], $row['userType'], $row['filePath']);
+                $row['userName'], $row['userType'], $row['begDate'], $row['endDate'], $row['filePath']);
         
         return $u;
     }
 
-
-    public static function get_all_users(){
+// get all users except admin
+    public static function get_all_users($userType){
       $db = Database::getDB();
-      $query = 'SELECT * from user';
+      $query = 'SELECT * from user WHERE userType !=:userType';
       $statement = $db->prepare($query);
+      $statement->bindValue(':userType', $userType);
       $statement->execute();
       $results =  $statement->fetchAll();
       $statement->closeCursor();
+      
+      $countofArray = count($results);
             
-      if(!empty($results))
-      {
+      if(!empty($results)&& $countofArray >1){
+          
           foreach ($results as $result){
             $u = new user($result['userID'], $result['fName'], $result['lName'], 
                 $result['userName'], $result['userType'], $result['begDate'], $result['endDate'], $result['filePath']);
@@ -63,6 +66,10 @@ class user_db {
       }
         return $users;
       }
+      elseif (array_count_values($results)==1) 
+      {
+            $users[]= $results;
+      }      
       else
       {
           return null;

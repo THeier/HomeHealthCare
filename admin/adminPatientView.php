@@ -33,7 +33,7 @@ Website: https://mdbootstrap.com/docs/jquery/tables/editable/#!
             <th class="text-center">Edit</th>
           </tr>
         </thead>
-        <!-- This is our clonable table line -->
+        
         <?php foreach($allPats as $p) :?>
           <tr class="hide">
             <td class="pt-3-half" contenteditable="true"><?php echo htmlspecialchars($p->getUserID()); ?></td>

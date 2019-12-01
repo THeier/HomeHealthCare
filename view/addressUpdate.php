@@ -18,10 +18,10 @@ if (!isset($name)) {$name = '';}
     <form class="form" action="index.php" method="POST">
          <input type="hidden" name="action" value="updateAddress" />
         <div class="form-row">
-            <h6><?php echo $name; ?></h6><br><br>
+            <h6><?php echo $_SESSION['PatientFN']; ?></h6><br><br>
         </div>
         <div class="form-row">
-                    <label>Client ID:</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo htmlspecialchars($patientid); ?><br>
+                    <label>Patient ID:</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo htmlspecialchars($patientid); ?><br>
                 </div>
         <div class="form-row">
             <input type="hidden" name="action" value="updateAddress" />
@@ -71,6 +71,11 @@ if (!isset($name)) {$name = '';}
     <input type="hidden" name="begDate" value="<?php echo htmlspecialchars($patientAddress->getBegDate());  ?>"/>
     <button type="submit" class="btn btn-primary">Update Address</button>
 </form>
+    <form class="form" action="index.php" method="POST">
+                        <input type="hidden" name="action" value="patient_page" />
+                        <input type="hidden" name="pID" value="<?php echo $_SESSION['pID']; ?>"/>
+                        <button class="btn btn-primary" type="submit">Cancel</button>
+                    </form>
 </html>
 
 

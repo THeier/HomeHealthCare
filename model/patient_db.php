@@ -109,12 +109,13 @@ class patient_db {
     
     // update to only select those currently active
     
-    public function selectPatients($userid){
+    public function selectPatients($userid, $endDate){
        
         $db = Database::getDB();
-        $query = 'SELECT * FROM patient WHERE userid =:userID';
+        $query = 'SELECT * FROM patient WHERE userid =:userID AND endDate >=:endDate';
         $statement = $db->prepare($query);
         $statement->bindValue(':userID', $userid);
+        $statement->bindValue(':endDate', $endDate);
         $statement->execute();
         $results = $statement->fetchAll();
         $statement->closeCursor();

@@ -63,5 +63,10 @@ if (!isset($name)) {$name = '';}
     </div>
     <button type="submit" class="btn btn-primary">Add Address</button>
 </form>
+    <form class="form" action="index.php" method="POST">
+                        <input type="hidden" name="action" value="patient_page" />
+                        <input type="hidden" name="pID" value="<?php echo $_SESSION['pID']; ?>"/>
+                        <button class="btn btn-primary" type="submit">Cancel</button>
+                    </form>
 </html>
 <?php include 'view/footer.php'; ?>

@@ -19,7 +19,7 @@ if(!isset($meds)){$meds[]='';}
             Age:&nbsp;<?php echo htmlspecialchars($age); ?><br>
             Date of Birth:&nbsp;<?php echo date("m-d-Y", strtotime($aPatient->getDob())); ?><br>
             Gender: &nbsp;<?php echo htmlspecialchars($aPatient->getSex()); ?><br>
-            Disabled:  &nbsp;<?php echo htmlspecialchars($aPatient->getDisabled());  ?><br>
+            Disabled:  &nbsp;<?php echo htmlspecialchars($disabled);  ?><br>
             
         </fieldset><br>
         <!-- Conditionally display
@@ -69,17 +69,17 @@ if(!isset($meds)){$meds[]='';}
       
     </tbody>    
   </table>
-    <?php if(is_null($meds)) { ?>     
+    <?php if(!empty($meds)) { ?>     
        <form action="index.php" method="post">
             <input type="hidden" name="action" value="updateMedication">
             <input type="hidden" name="pID" value="<?php echo html_entity_decode($aPatient->getPatientID()) ?>">
-            <input class="subs" type="submit" value="Update Medication">
+            <input class="subs1" type="submit" value="Update Medication">
      </form>
     <?php };?>
     <form action="index.php" method="post">
-            <input type="hidden" name="action" value="addMedication">
+            <input type="hidden" name="action" value="addMedicationPage">
             <input type="hidden" name="pID" value="<?php echo html_entity_decode($aPatient->getPatientID()) ?>">
-            <input class="subs" type="submit" value="Add Medication">
+            <input class="subs1" type="submit" value="Add Medication">
      </form>   
        
            
@@ -91,7 +91,7 @@ if(!isset($meds)){$meds[]='';}
     
             <legend>Update Patient Information</legend>
       
-            <table class="table table-borderless">
+            <table class="table table-borderless" id="buttontable">
                 <tr>
                      <td colspan="2"><?php ; ?></td>
                      <td><form action="index.php" method="POST">                
@@ -99,7 +99,7 @@ if(!isset($meds)){$meds[]='';}
                           value="demographic">
                          <input id="pntbutton" type="hidden" name="pid"
                                 value="<?php echo htmlentities($_SESSION['pID']) ; ?>">
-                         <input type="submit" value="Update Demographics">
+                         <input class="subs2" type="submit" value="Update Demographics">
                          </form>
                      </td> 
                    </tr>
@@ -113,7 +113,7 @@ if(!isset($meds)){$meds[]='';}
                           <input type="hidden" name="addressid" value="<?php echo htmlspecialchars($addressid); ?>">
                          <input type="hidden" name="pid"
                                 value="<?php echo htmlentities($_SESSION['pID']) ; ?>">
-                         <input type="submit" value="Update Address">
+                         <input class="subs2" type="submit" value="Update Address">
                          </form>
                      </td> 
                    </tr>

@@ -55,8 +55,12 @@ if (!isset($_SESSION['userFullName'])) {
 if (!isset($_SESSION['pic'])) {
     $_SESSION['pic'] = '';
 }
-
-
+if (!isset($_SESSION['pID'])) {
+    $_SESSION['pID'] = '';
+}
+if (!isset($_SESSION['admin'])) {
+    $_SESSION['admin'] = '';
+}
 
 $action = filter_input(INPUT_POST, 'action');
 if ($action == NULL) {
@@ -84,10 +88,7 @@ switch ($action) {
 
         $urName = filter_input(INPUT_POST, 'userName');
         $aUser = user_db::get_userInfo($urName);
-//        $_SESSION['loginUser']=$aUser;
-//        $userPic =$_SESSION['loginUser'];
         $_SESSION['uid'] = $aUser->getUserID();
-        
         $_SESSION['fName'] = $aUser->getFName();
         $_SESSION['lName'] = $aUser->getLName();
         $_SESSION['userName'] = $aUser->getUserName();
@@ -95,23 +96,35 @@ switch ($action) {
         $_SESSION['pic'] = $aUser->getFilePath();
         $pic =$_SESSION['pic'];
         $_SESSION['type'] = $aUser->getUserType();
-        $strl = strtolower($_SESSION['type']);
+        
+        If($_SESSION['type']!= 'admin'){
+           $strl = strtolower($_SESSION['type']);
         $title = '';
         if($strl === 'cna') {
             $title = "Certified Nursing Assistant";
-        }else{
+        }elseif($strl === 'cma'){
             $tile = "Certified Medication Aide";
+        }else{
+            $title ='PASS/CHORE Provider';
         }
         $_SESSION['title']= $title;
         $fullName = strtoupper($_SESSION['fName']. ' '.$_SESSION['lName']);
         
-        // Get list of user pateints
-        $pats = patient_db::selectPatients($_SESSION['uid']);
+        // Get list of active pateints
+        $today =date('Y-m-d');
+        $pats = patient_db::selectPatients($_SESSION['uid'],$today);   
+        include 'view/userProfile_view.php';
+                    
+        }else{
+            
+            if($_SESSION['type'] === 'admin'){
+                $_SESSION['admin']='admin';
+            }
+            include 'admin/adminPage.php';
+        }
         
 
-        //var_dump($pats);
-
-        include 'view/userProfile_view.php';
+      
         die();
         break;
         
@@ -123,8 +136,8 @@ switch ($action) {
         $pic =$_SESSION['pic'];
         $fullName = strtoupper($_SESSION['fName']. ' '.$_SESSION['lName']);
         $title =$_SESSION['title'];
-                
-        $pats = patient_db::selectPatients($_SESSION['uid']);
+        $today =date('Y-m-d');        
+        $pats = patient_db::selectPatients($_SESSION['uid'], $today);
         
         if(isset($_SESSION['pID'])){
             unset($_SESSION['pID']);
@@ -246,7 +259,7 @@ switch ($action) {
             $g = strtoUpper(filter_input(INPUT_POST, 'gen'));
             $bdt = date('Y-m-d');
             $dis = filter_input(INPUT_POST,'disabled');
-            $endDate ='0001-01-01';
+            $endDate ='9999-12-12';
             $today =date('Y-m-d');
        
        // Validate Patient first and last name
@@ -309,6 +322,10 @@ switch ($action) {
         $dob = strtotime($aPatient->getDob());
         $todaysAge = $today - $dob;
         $age = floor($todaysAge / 31556926);
+        $pFName = ucfirst($aPatient->getFName());
+        $pLName = ucfirst($aPatient->getLName());
+        $patientFullName = $pFName. ' '.$pLName;
+        $_SESSION['PatientFN'] =$patientFullName;
   
         $address = patient_db::select_patientAddress($_SESSION['pID'], $curDate);
         if (!empty($address)) {
@@ -482,7 +499,7 @@ switch ($action) {
           
           $currentDate =date('Y-m-d');
           $begDate =$currentDate;
-          $endDate ='01-01-2001';
+          $endDate ='01-01-0001';
           // add validation
           if(empty($_POST['num'])){
               $errNum= 'Enter Number';
@@ -527,8 +544,8 @@ switch ($action) {
         $st =$patientAddress->getState();
         $zip =$patientAddress->getZip();
         $endDate =$patientAddress->getEndDate();
-        
-        $adate=date('0000-00-00');
+       
+        $adate=date('0001-01-01');
         if($endDate ==='01'){
             
         }
@@ -567,32 +584,91 @@ switch ($action) {
         die();
         break;
 
-   case 'addMedication':
-       $today =date('Y-m-d');
-       $pid = filter_input(INPUT_POST, 'pID');
-       $drug= filter_input(INPUT_POST, 'med');
-       $quantity= (int)filter_input(INPUT_POST, 'qty');
-       $timesPerDay= (int)filter_input(INPUT_POST, 'tpd');
-       $medNote= filter_input(INPUT_POST, 'med');
-       $begDate =$today;
-       $endDate = '01-01-0001';
-       patient_db::insert_patientMed($pid, $$drug, $quantity, $timesPerDay,$medNote, $begDate, $endDate);
+   case 'addMedicationPage':
        
-       // Validate drug name added
-       // Validate quantity and times per day added and within range
+      // View add Medication page
+       $patient = patient_db::select_patient($_SESSION['pID'],$_SESSION['uid']);
        
        
        
-       var_dump($pid);
+       
+       var_dump($_SESSION['pID']);
 
         include 'view/addMedication.php';
 
         die();
         break;
+    
+    case'addMedication':
+         
+       // Validate drug name added
+       // Validate quantity and times per day added and within range
+       $valid =true;
+       $today =date('Y-m-d');
+       $drug= filter_input(INPUT_POST, 'med');
+       $quantity= (int)filter_input(INPUT_POST, 'qty');
+       $timesPerDay= (int)filter_input(INPUT_POST, 'tpd');
+       $medNote= filter_input(INPUT_POST, 'note');
+       $begDate =$today;
+       $endDate = '12-12-9999';
+        $max = 30;
+        $min =1;
+        
+        
+       if(empty($drug)){
+           $errDrug ="Name Required";
+           $valid =false;
+       }
+       
+       if(empty($quantity)){
+           $errQty ="Quantity Required";
+           $valid =false;
+       }
+       
+       if(!empty($quantity)){
+           if($quantity < $min || $quantity > $max ){
+    
+               $errQtyAmt ="Number must be between 1 and 30";
+               $valid =false;
+               
+           }
+       }
+       
+       if(!empty($timesPerDay)){
+           if($timesPerDay < $min || $timesPerDay > $max ){
+    
+               $errTPDAmt ="Number must be between 1 and 30";
+               $valid =false;
+               
+           }
+       }
+       
+       If($valid){
+           patient_db::insert_patientMed($_SESSION['pID'], $drug, $quantity, $timesPerDay,$medNote, $begDate, $endDate);
+       }
+       
+        
+       
+       header('Location: index.php?action=patient_page'); 
+        die();
+        break;
+        
+    case'updateMedication':
+      
+        
+        
+        include'view/updateMedication.php';
+        die();
+        break;
 
     case 'adminHome':
         // Admin home page
-        
+        $userId = $_SESSION['userId'];
+        $getuser = user_db::select_userid($userName);
+//        $administrator = $getuser->getUserType();
+//        If($administrator === 'admin'){
+//            $_SESSION['admin'] =true;
+//        }
         include 'admin/adminPage.php';
         
         die();
@@ -615,7 +691,8 @@ switch ($action) {
         break;
     case 'adminUserPage':
         // Admin view all users page
-        $allUsers = user_db::get_all_users();
+        $userType ='admin';
+        $allUsers = user_db::get_all_users($userType);
         
         include 'admin/adminUserView.php';
         

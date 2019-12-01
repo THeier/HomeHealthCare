@@ -77,6 +77,36 @@ h1 {
     margin: 2em 0;
     letter-spacing: 4px;
 }
+.subs1{
+     font-size: 1em;
+    color: black;
+    background: #ccc;
+    outline: none;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    padding: 0.9em;
+    width: 80%;
+    margin: 2em 0;
+    letter-spacing: 4px;
+}
+.subs2{
+     font-size: 1em;
+    color: white;
+    background: blue;
+    outline: none;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    padding: 0.9em;
+    width: 100%;
+    margin: 0.5em 0;
+    letter-spacing: 4px;
+}
+#buttontable tr{
+    margin: 1px;
+}
+table #buttontable td{
+    padding: 0.5em;
+}
 .chart{
     margin: auto;
     width: 800px;
@@ -176,7 +206,6 @@ img{
     margin-top: 30px;
     margin-bottom: 25px;
 }
-
 
 
 

@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <?php
 
-    $login = false;
-    $admin = false;
-        if (isset($_SESSION['uid']) && $_SESSION['uid'] !== "" ) 
-        {          
+    $loggedIn = false;
+    $admin =false;
+    if(!isset($_SESSION['admin'])){
+        $_SESSION['admin']= false;
+    }
+        if (isset($_SESSION['uid']) && $_SESSION['uid'] !== "" && isset($_SESSION['admin'])) 
+        {         
             $loggedIn = true;
             
-            if(isset($_SESSION['admin']) && $_SESSION['admin'] == true)
+            if(isset($_SESSION['admin']))
             {
                 $admin = true;
             }
@@ -52,16 +55,30 @@
       <a class="navbar-brand" href="#">Patient Manager</a>
 
     <ul class="navbar-nav">
+        
         <li class="nav-item"><a class="nav-link" href="?action=login">About Us</a></li>
         <li class="nav-item"><a class="nav-link" href="?action=login">Contact Us</a></li>
         <li class="nav-item"><a class="nav-link" href="?action=login">Log In</a></li>
         <li class="nav-item"><a class="nav-link" href="?action=register">Register</a></li>
-       <li class="nav-item"><a class="nav-link" href="?action=home">Home</a></li>
-      <li class="nav-item"><a class="nav-link" href="?action=addNewPatientPage">Add Patient</a></li>
-      <li class="nav-item"><a class="nav-link" href="?action=charts">Charts</a></li>
+     
+       <?php if($loggedIn ==='true'&& $admin != 'true') { ?>
+        <li class="nav-item"><a class="nav-link" href="?action=home">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="?action=addNewPatientPage">Add Patient</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+              Options..
+          </a> 
+          <div class="dropdown-menu">
+              <a class="dropdown-item" href="#">Update Info</a>
+              <a class="dropdown-item" href="#">Change Password</a>
+          </div>
+      </li>
       <li class="nav-item"><a class="nav-link" href="?action=default">Logout</a></li>
-      
-      
+        <?php }?>
+       <?php if($loggedIn ==='true'&& $admin === 'true') { ?>
+      <li class="nav-item"><a class="nav-link" href="?action=home">Admin Home</a></li>
+      <li class="nav-item"><a class="nav-link" href="?action=default">Logout</a></li>
+       <?php } ?>
     </ul>
   </div>
 </nav>

@@ -89,12 +89,11 @@ if (!isset($errFN)) {
                     
                  <br>
                     <button class="btn btn-primary" type="submit">Update Demographics</button>
-                    <form class="form" action="index.php" method="POST">
-                        <input type="hidden" name="action" value="" />
-                        <input type="hidden" name="pID" value="patient_page" />
+                                        
+            </form>
+             <form class="form" action="index.php" method="POST">
+                        <input type="hidden" name="action" value="patient_page" />
+                        <input type="hidden" name="pID" value="<?php echo $_SESSION['pID']; ?>"/>
                         <button class="btn btn-primary" type="submit">Cancel</button>
                     </form>
-                    
-            </form>
-  
 </html>
