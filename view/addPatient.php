@@ -15,6 +15,11 @@ if (!isset($errlNamefirstchar)) {
 if (!isset($errDis)) {
     $errDis = "";
 }
+if (!isset($errGen)) {
+    $errGen = "";
+}
+
+
 ?>
 
 <?php include'view/header.php'; ?>
@@ -28,10 +33,10 @@ if (!isset($errDis)) {
                         <legend>Add New Patient</legend>
                         First Name:  <input class="form-control" type="text" name="fnm">
                         <span class="error"><?php echo htmlspecialchars($errfName); ?></span><br>
-                        <span class="error"><?php echo htmlspecialchars($errfNamefirstchar); ?></span>
+                        <span class="error"><?php echo htmlspecialchars($errfNamefirstchar); ?></span><br>
                         Last Name: <input class="form-control" type="text" name="lnm">
-                        <span class="error"><?php echo htmlspecialchars($errlName); ?></span>
-                        <span class="error"><?php echo htmlspecialchars($errlNamefirstchar); ?></span>
+                        <span class="error"><?php echo htmlspecialchars($errlName); ?></span><br>
+                        <span class="error"><?php echo htmlspecialchars($errlNamefirstchar); ?></span><br>
                         Date of Birth: <input class="form-control" type="date" name="dbir"><br>
                         Disabled: <select name="disabled" style="max-width: 90%" >
                             <option value="No">No</option>  
@@ -45,14 +50,16 @@ if (!isset($errDis)) {
                         <div class="form-check-inline">
                             
                             <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input" value="male">Male
+                                <input type="checkbox" class="form-check-input" name="gen" value="male">Male
                             </label>
                         </div>
                         <div class="form-check-inline">
                             <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input" value="female">Female
+                                <input type="checkbox" class="form-check-input" name="gen" value="female">Female
                             </label>
+                            
                         </div>
+                        <span class="error"><?php echo $errGen; ?></span>
                         <!-- add validation message when not selected-->
                     </fieldset><br>
                     <button class="btn btn-primary" type="submit">Add Patient</button>

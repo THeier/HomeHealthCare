@@ -2,10 +2,10 @@
 
 class patient_db {
     
-       function insert_patient($userID, $fName, $lName, $dob, $sex, $disabled, $begDate, $endDate){
+       function insert_patient($userID, $fName, $lName, $dob, $sex, $begDate, $endDate, $disabled, $dcsDate){
         $db = database::getDB();
-        $query = 'insert into patient(userID, fName, lName, dob, sex, begDate, endDate, disabled)'
-                 .'VALUES (:userID, :fName, :lName, :dob, :sex, :begDate, :endDate, :disabled)';
+        $query = 'insert into patient(userID, fName, lName, dob, sex, begDate, endDate, disabled, dcsDate)'
+                 .'VALUES (:userID, :fName, :lName, :dob, :sex, :begDate, :endDate, :disabled, :dcsDate)';
         $statement = $db->prepare($query);
         $statement->bindValue(':userID',$userID);
         $statement->bindValue(':fName',$fName);
@@ -15,6 +15,7 @@ class patient_db {
         $statement->bindValue(':begDate',$begDate);
         $statement->bindValue(':endDate',$endDate);
         $statement->bindValue(':disabled',$disabled);
+        $statement->bindValue(':dcsDate',$dcsDate);
         $statement->execute();
         $statement->closeCursor();
                 
@@ -95,14 +96,13 @@ class patient_db {
         }
     }
     
-        public static function delete_patient($patientID, $userID){
+        public static function delete_patient($patientID){
         
         $db = Database::getDB();
         $query = 'DELETE FROM patient
-              WHERE patientID = :patientID AND userID =:userID';
+              WHERE patientID = :patientID';
         $statement = $db->prepare($query);
         $statement->bindValue(':patientID', $patientID);
-        $statement->bindValue(':userID', $userID);
         $statement->execute();
         $statement->closeCursor();
     }

@@ -161,7 +161,7 @@ switch ($action) {
         // sends user to login page 
         // add validation (page) for user information
         // add user info to database
-    
+        $regErr ='';
         $begDate = date('y-m-d');
         $fName = filter_input(INPUT_POST, 'fName');
         $lName = filter_input(INPUT_POST, 'lName');
@@ -176,19 +176,19 @@ switch ($action) {
         // Password Validation
 //        if (preg_match('/^.{10}/', $pass) != 1) {
 //            $errshortPass = "Password must be at least 10 characters.";
-//            $valid =false;
+//            $regErr =1;
 //        }
 //        if (preg_match('/[a-z]/', $pass) != 1) {
 //            $errlcasePass = "Your password must contain a lowercase letter.";
-//            $valid =false;
+//            $regErr =1;
 //        }
 //        if (preg_match('/[A-Z]/', $pass) != 1) {
 //            $errucasePass = "Your password must contain an Uppercase letter.";
-//            $valid =false;
+//            $regErr =1;
 //        }
 //        if (preg_match('/[0-9]/', $pass) != 1) {
 //            $errdigPass = "Your password must contain a digit.";
-//            $valid =false;
+//            $regErr =1;
 //        }
         
         // First and Last Name Validation
@@ -198,31 +198,31 @@ switch ($action) {
         }
         if (preg_match('/^[a-zA-Z]/', $fName) != 1) {
             $errfNamefirstchar = "First Name must begin with a letter";
-            $valid =false;
+            $regErr =1;
         }
         if ($lName == null || $lName == "") {
             $errlName = "Enter a last name";
-            $valid =false;
+            $regErr =1;
         }
         if (preg_match('/^[a-zA-Z]/', $lName) != 1) {
             $errlNamefirstchar = "Last Name must begin with a letter";
-            $valid =false;
+            $regErr =1;
         }
         // Username/Email validation
         if ($uname == null || $uname == "") {
             $errnoEmail = "Enter an Email";
-            $valid =false;
+            $regErr =1;
         } else if ($uname == false) {
             $errinvalidEmail = "Email is invalid";
-            $valid =false;
+            $regErr =1;
         }
         if (user_db::search_by_email($uname) === true) {
             $erremailTaken = "Duplicate email, please try again";
-            $valid =false;
+            $regErr =1;
         }
         
         
-     if ($valid){
+     if ($regErr ==''){
             //$options = ['cost' => 12];
             //$hashpass = password_hash($pass, PASSWORD_BCRYPT, $options);
             // fix varibles - no phone number 
@@ -252,32 +252,39 @@ switch ($action) {
         // sends them to the patient profile page
        
             // add validation to data submited
+            $err ='';
             $userid =$_SESSION['uid'];
             $fName = ucfirst(filter_input(INPUT_POST, 'fnm'));
             $lName = ucfirst(filter_input(INPUT_POST, 'lnm'));
             $pdob = filter_input(INPUT_POST, 'dbir');
-            $g = strtoUpper(filter_input(INPUT_POST, 'gen'));
+            $g = filter_input(INPUT_POST, 'gen');
+            
+            if(strtolower($g)==='female'){
+                $g ='F';
+            }else{
+                $g ='M';
+            }
             $bdt = date('Y-m-d');
             $dis = filter_input(INPUT_POST,'disabled');
             $endDate ='9999-12-12';
-            $today =date('Y-m-d');
-       
+            //$today =date('Y-m-d');
+            $dscDate =null;
        // Validate Patient first and last name
        if ($fName == null || $fName == "") {
             $errfName = "Enter a First Name";
-            $valid =false;
+            $err =1;
         }
         if (preg_match('/^[a-zA-Z]/', $fName) != 1) {
             $errfNamefirstchar = "First Name must begin with a letter";
-            $valid =false;
+            $err =1;
         }
         if ($lName == null || $lName == "") {
             $errlName = "Enter a last name";
-            $valid =false;
+            $err =1;
         }
         if (preg_match('/^[a-zA-Z]/', $lName) != 1) {
             $errlNamefirstchar = "Last Name must begin with a letter";
-            $valid =false;
+            $err =1;
         }
         // validate option is selected
         
@@ -285,26 +292,35 @@ switch ($action) {
         // Validate yes or no entered for disabled
         if (empty($dis)) {
             $errDis = "Selection required";
-            $valid =false;
+            $err =1;
         } 
         
         // Validate patient date of birth is added and is a validate date
         if(empty($pdob)){
            $errPDOB = "Date of Birth Required";
-           $valid =false;
+           $err =1;
         }
         
-        
+        if(!isset($g)){
+            $errGen ="Please select a gender";
+            $err =1;
+        }
 
             // default image added with sql -> change later???
-        if(valid){
-           patient_db::insert_patient($userid, $fName, $lName, $pdob, $g, $bdt, $endDate, $dis); 
+        if($err == '1'){
+            
+            include 'view/addPatient.php';
+            exit();
+            
+        }else{
+           patient_db::insert_patient($userid, $fName, $lName, $pdob, $g, $bdt, $endDate, $dis, $dscDate); 
+           header('Location: index.php?action=home');
         }
         
         
 
        // include 'view/userProfile_view.php';
-        header('Location: index.php?action=home');
+        
 
         die();
         break;
@@ -316,7 +332,7 @@ switch ($action) {
         $_SESSION['pID']= filter_input(INPUT_POST, 'pid');
         $userid = $_SESSION['uid'];
         $aPatient = patient_db::select_patient($_SESSION['pID'], $userid);
-        $dsabld = NULL;
+        $dsabld = $aPatient->getDisabled();
         if(empty($dsabld)){
             $disabled ='';
         } else {
@@ -407,7 +423,7 @@ switch ($action) {
 
         // insert updated patient demographic information
         // take user back to profile page 
-        $valid=true; 
+      
         $pid = $_SESSION['pID'];
         $userid = $_SESSION['uid'];
         $fname = filter_input(INPUT_POST, 'fname');
@@ -698,13 +714,16 @@ switch ($action) {
 
     case 'adminHome':
         // Admin home page
-        $userId = $_SESSION['userId'];
-        $getuser = user_db::select_userid($userName);
+ //       $userId = $_SESSION['userId'];
+        $getuser = user_db::select_userid($_SESSION['uid']);
 //        $administrator = $getuser->getUserType();
 //        If($administrator === 'admin'){
 //            $_SESSION['admin'] =true;
 //        }
+        
+      
         include 'admin/adminPage.php';
+       
         
         die();
         break;
@@ -718,7 +737,9 @@ switch ($action) {
         break;
     case 'adminDelPatient':
         // Admin view all patients page
-       $allUsers = user_db::get_all_users();
+      
+       $patientid = filter_input(INPUT_POST, 'pID');
+       patient_db::delete_patient($patientid);
         
         include 'admin/adminPage.php';
         

@@ -37,7 +37,7 @@ Website: https://mdbootstrap.com/docs/jquery/tables/editable/#!
         <?php foreach($allPats as $p) :?>
           <tr class="hide">
             <td class="pt-3-half" contenteditable="true"><?php echo htmlspecialchars($p->getUserID()); ?></td>
-            <td class="pt-3-half" contenteditable="true"><?php echo htmlspecialchars($p->getUserID()); ?></td>
+            <td class="pt-3-half" contenteditable="true"><?php echo htmlspecialchars($p->getPatientID()); ?></td>
             <td class="pt-3-half" contenteditable="true"><?php echo htmlspecialchars(ucfirst($p->getFName()));  ?></td>
             <td class="pt-3-half" contenteditable="true"><?php echo htmlspecialchars(ucfirst($p->getLName()));  ?></td>
             <td class="pt-3-half" contenteditable="true"><?php echo date('m-d-Y',strtotime($p->getDob()));  ?></td>
@@ -52,17 +52,17 @@ Website: https://mdbootstrap.com/docs/jquery/tables/editable/#!
             <td>
                 <form action="index.php" method="POST">
                     <input type="hidden" name="action" value="adminDelPatient">
-                    <input type="hidden" name="pid" value="<?php echo htmlspecialchars($p->getUserID()); ?>"
-              <span class="table-remove"><button type="button"
-                    class="btn btn-danger btn-rounded btn-sm my-0" name="remove">Remove</button></span>
+                    <input type="hidden" name="pID" value="<?php echo htmlspecialchars($p->getPatientID()); ?>">
+                           <span class="table-remove"><button type="submit"
+                    class="btn btn-danger btn-rounded btn-sm my-0">Remove</button></span>
                   </form>
             </td>
             <td>
               <form action="index.php" method="POST">
                     <input type="hidden" name="action" value="updateDemo">
-                    <input type="hidden" name="pid" value="<?php echo htmlspecialchars($p->getUserID()); ?>"
-              <span class="table-edit"><button type="button"
-                    class="btn btn-secondary btn-rounded btn-sm my-0" name="edit">Edit</button></span>
+                    <input type="hidden" name="pID" value="<?php echo htmlspecialchars($p->getPatientID()); ?>">
+                    <span class="table-edit"><button type="submit"
+                    class="btn btn-secondary btn-rounded btn-sm my-0">Edit</button></span>
                                                
               </form>
             </td>
