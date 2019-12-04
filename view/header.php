@@ -77,7 +77,7 @@ if(!isset($_SESSION['admin'])){
           </div>
       </li>
       <li class="nav-item"><a class="nav-link" href="?action=default">Logout</a></li>
-      <li class="nav-item"><a class="nav-link" href="?action=home">Admin Home</a></li>
+      <li class="nav-item"><a class="nav-link" href="?action=adminHome">Admin Home</a></li>
  
     </ul>
    

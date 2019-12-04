@@ -21,7 +21,7 @@ if (!isset($patID)) {
       <div class="col-sm-4">
       <h3><?php echo "Welcome"; ?></h3>
       <div class="card">
-            <h5 class="cardheader"><?php echo htmlspecialchars($fullName); ?></h5>
+            <h5 class="cardheader"><?php echo htmlspecialchars($_SESSION['FullName']); ?></h5>
                         <img class="card-img-top" src="<?php echo htmlspecialchars($pic); ?>" alt="Card image">
             <div class="card-body">
                 <h5 class="card-title"><?php echo htmlspecialchars($title); ?></h5>
@@ -65,25 +65,4 @@ if (!isset($patID)) {
     </div>
    
 </div>
-
-
- <h2 ></h2>  
-<div class="row">
-    
-    <div class="column">
-        
-
-    </div>   
-
-    <div class="column2">
-       
-    </div>          
-
-
-
-</div>
-
-
-
-
 <?php include 'view/footer.php'; ?>

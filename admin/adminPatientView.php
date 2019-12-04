@@ -59,8 +59,9 @@ Website: https://mdbootstrap.com/docs/jquery/tables/editable/#!
             </td>
             <td>
               <form action="index.php" method="POST">
-                    <input type="hidden" name="action" value="updateDemo">
-                    <input type="hidden" name="pID" value="<?php echo htmlspecialchars($p->getPatientID()); ?>">
+                    <input type="hidden" name="action" value="adminUpdatePatientPage">
+                    <input type="hidden" name="Pid" value="<?php echo htmlspecialchars($p->getPatientID()); ?>">
+                    <input type="hidden" name="uID" value="<?php echo htmlspecialchars($p->getUserID()); ?>">
                     <span class="table-edit"><button type="submit"
                     class="btn btn-secondary btn-rounded btn-sm my-0">Edit</button></span>
                                                
@@ -75,9 +76,7 @@ Website: https://mdbootstrap.com/docs/jquery/tables/editable/#!
   </div>
 </div>
      </div>
-<!-- Editable table -->
-    </div>
-</div>
+  </div>
 <?php include 'view/footer.php'; ?>
 </html>
 

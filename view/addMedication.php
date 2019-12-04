@@ -61,12 +61,9 @@ if (!isset($errTPDAmt)) {
                 <textarea class="form-control" rows="5" id="comment" name="note"></textarea>
             </div>
         </div>
-          <form class="form-group col-md-2" action="index.php" method="POST">
-                <input type="hidden" name="action" value="addMedication" />
                 <input type="hidden" name="pID" value="<?php echo $_SESSION['pID']; ?>"/>
                 <button class="btn btn-primary" type="submit">Add Medication</button> 
             </form>
-         
-    </form>
-  </html>
+    
+    </html>
 <?php include 'view/footer.php'; ?>

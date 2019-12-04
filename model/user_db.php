@@ -3,10 +3,10 @@
 class user_db {
 
 
-     function insert_user($fName, $lName, $userName, $password, $userType, $begDate){
+     function insert_user($fName, $lName, $userName, $password, $userType, $begDate, $endDate){
         $db = database::getDB();
-        $query = 'insert into user(fname, lname, userName, password, userType, begDate, filePath)'
-                 .'VALUES (:fName, :lName, :userName, :password, :userType, :begDate, :filePath)';
+        $query = 'insert into user(fname, lname, userName, password, userType, begDate, endDate, filePath)'
+                 .'VALUES (:fName, :lName, :userName, :password, :userType, :begDate, :endDate, :filePath)';
         $statement = $db->prepare($query);
         $statement->bindValue(':fName',$fName);
         $statement->bindValue(':lName',$lName);
@@ -14,6 +14,7 @@ class user_db {
         $statement->bindValue(':password',$password);
         $statement->bindValue(':userType',$userType);
         $statement->bindValue(':begDate', $begDate);
+        $statement->bindValue(':endDate', $endDate);
         $statement->bindValue(':filePath', 'images/default avatar.jpg');
         $statement->execute();
         $statement->closeCursor();
@@ -48,7 +49,7 @@ class user_db {
 // get all users except admin
     public static function get_all_users($userType){
       $db = Database::getDB();
-      $query = 'SELECT * from user WHERE userType !=:userType';
+      $query = 'SELECT * FROM user WHERE userType !=:userType';
       $statement = $db->prepare($query);
       $statement->bindValue(':userType', $userType);
       $statement->execute();
@@ -74,6 +75,20 @@ class user_db {
       {
           return null;
       }
+    }
+    
+    public static function select_user_pass($userName) {
+        $db = Database::getDB();
+
+        $query = 'Select * FROM user where userName = :userName';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':userName', $userName);
+        $statement->execute();
+        $row = $statement->fetch();
+        $statement->closeCursor();
+        $password = $row['password'];
+
+        return $password;
     }
     
  public static function verify_UserPass($userName, $password) {

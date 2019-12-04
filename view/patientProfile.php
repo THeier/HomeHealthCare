@@ -36,7 +36,7 @@ if(!isset($meds)){$meds[]='';}
             <form class="form" action="index.php" method="post">
                 <input type="hidden" name="action" value="addAddressPage">
             <input type="hidden" name="pID" value="<?php echo html_entity_decode($aPatient->getPatientID()) ?>">
-            <input class="subs" type="submit" value="Add Address">
+            <input class="subs1" type="submit" value="Add Address">
              <?php } ?>
             </form>
         </fieldset><br>

@@ -20,9 +20,7 @@ require_once('model/user.php');
 
 
 session_start();
-//if (!isset($valid)) {
-//    $valid = true;
-//}
+
 
 if (!isset($_SESSION['uid'])) {
     $_SESSION['uid'] = '';
@@ -61,7 +59,12 @@ if (!isset($_SESSION['pID'])) {
 if (!isset($_SESSION['admin'])) {
     $_SESSION['admin'] = '';
 }
-
+if(!isset($_SESSION['PatientFN'])){
+    $_SESSION['PatientFN']='';
+}
+if(!isset($_SESSION['disabled'])){
+    $_SESSION['disabled']='';
+}
 $action = filter_input(INPUT_POST, 'action');
 if ($action == NULL) {
     $action = filter_input(INPUT_GET, 'action');
@@ -87,44 +90,53 @@ switch ($action) {
         //add if statement to add if no validation error occur
 
         $urName = filter_input(INPUT_POST, 'userName');
+        $passw =filter_input(INPUT_POST, 'passw');
         $aUser = user_db::get_userInfo($urName);
-        $_SESSION['uid'] = $aUser->getUserID();
-        $_SESSION['fName'] = $aUser->getFName();
-        $_SESSION['lName'] = $aUser->getLName();
-        $_SESSION['userName'] = $aUser->getUserName();
-        $userName =$_SESSION['userName'];
-        $_SESSION['pic'] = $aUser->getFilePath();
-        $pic =$_SESSION['pic'];
-        $_SESSION['type'] = $aUser->getUserType();
-        
-        If($_SESSION['type']!= 'admin'){
-           $strl = strtolower($_SESSION['type']);
-        $title = '';
-        if($strl === 'cna') {
-            $title = "Certified Nursing Assistant";
-        }elseif($strl === 'cma'){
-            $tile = "Certified Medication Aide";
-        }else{
-            $title ='PASS/CHORE Provider';
-        }
-        $_SESSION['title']= $title;
-        $fullName = strtoupper($_SESSION['fName']. ' '.$_SESSION['lName']);
-        
-        // Get list of active pateints
-        $today =date('Y-m-d');
-        $pats = patient_db::selectPatients($_SESSION['uid'],$today);   
-        include 'view/userProfile_view.php';
+           
+        //$userName =$_SESSION['userName'];
+        //$pic =$_SESSION['pic'];
+             
+         if ($aUser->getUsername() === null) {
+            $errUName = 'Bad username or password';
+            include 'view/login_view.php';
+        } else {
+            $hash = user_db::select_user_pass($urName);
+            $options = ['cost' => 12];
+            if (password_verify($passw, $hash)) {
+                $_SESSION['uid'] = $aUser->getUserID();
+                $_SESSION['FullName'] = $aUser->getFName(). ' '.$aUser->getLName();
+                $_SESSION['userName'] = $aUser->getUserName();
+                $_SESSION['pic'] = $aUser->getFilePath();
+                $_SESSION['type'] = $aUser->getUserType();
+              
+                If ($_SESSION['type'] == 'admin') {
+                    $_SESSION['title'] ='Admin';
+                   
+                }elseif ($_SESSION['type'] != 'admin' && $_SESSION['type']=='cna') {
+                    $_SESSION['title'] ="Certified Nursing Assistant";
+                }elseif ($_SESSION['type'] != 'admin' && $_SESSION['type']=='cma') {
+                    $_SESSION['title'] ="Certified Nursing Assistant";
+                }else{
+                     $_SESSION['title']='PASS/CHORE Provider';
+                }
+                   
+                if($_SESSION['title'] =='Admin'){
                     
-        }else{
-            
-            if($_SESSION['type'] === 'admin'){
-                $_SESSION['admin']='admin';
+                    include 'admin/adminPage.php';
+                }else{
+                    $today = date('Y-m-d');
+                    $pats = patient_db::selectPatients($_SESSION['uid'], $today);
+                    include 'view/userProfile_view.php';
+                }
+                
+                    include 'view/userProfile_view.php';
+            } else {
+                $errUName = 'Bad username or password';
+                include 'view/login_view.php';
             }
-            include 'admin/adminPage.php';
         }
         
-
-      
+            
         die();
         break;
         
@@ -173,23 +185,25 @@ switch ($action) {
         $_SESSION['userName'] = $uname;
         $_SESSION['userType'] = $userType;
         
+        $endDate ='12-12-9999';
+        
         // Password Validation
-//        if (preg_match('/^.{10}/', $pass) != 1) {
-//            $errshortPass = "Password must be at least 10 characters.";
-//            $regErr =1;
-//        }
-//        if (preg_match('/[a-z]/', $pass) != 1) {
-//            $errlcasePass = "Your password must contain a lowercase letter.";
-//            $regErr =1;
-//        }
-//        if (preg_match('/[A-Z]/', $pass) != 1) {
-//            $errucasePass = "Your password must contain an Uppercase letter.";
-//            $regErr =1;
-//        }
-//        if (preg_match('/[0-9]/', $pass) != 1) {
-//            $errdigPass = "Your password must contain a digit.";
-//            $regErr =1;
-//        }
+        if (preg_match('/^.{10}/', $password) != 1) {
+            $errshortPass = "Password must be at least 10 characters.";
+            $regErr =1;
+        }
+        if (preg_match('/[a-z]/', $password) != 1) {
+            $errlcasePass = "Your password must contain a lowercase letter.";
+            $regErr =1;
+        }
+        if (preg_match('/[A-Z]/', $password) != 1) {
+            $errucasePass = "Your password must contain an Uppercase letter.";
+            $regErr =1;
+        }
+        if (preg_match('/[0-9]/', $password) != 1) {
+            $errdigPass = "Your password must contain a digit.";
+            $regErr =1;
+        }
         
         // First and Last Name Validation
         if ($fName == null || $fName == "") {
@@ -223,19 +237,17 @@ switch ($action) {
         
         
      if ($regErr ==''){
-            //$options = ['cost' => 12];
-            //$hashpass = password_hash($pass, PASSWORD_BCRYPT, $options);
-            // fix varibles - no phone number 
-            //user_db::insert_users($fName, $lName, $username, $pNumber, $hashpass);
-            user_db::insert_user($fName, $lName, $uname, $password, $userType, $begDate);
+            $options = ['cost' => 12];
+            $hashpass = password_hash($pass, PASSWORD_BCRYPT, $options);
+            user_db::insert_user($fName, $lName, $uname, $hashpass, $userType, $begDate, $endDate);
 
             include 'view/login_view.php';
         } else {
-            include 'view/register_view.php';
+           include 'view/register_view.php';
             
         }        
         
-        // include 'view/login_view.php';
+   
         die();
         break;
 
@@ -333,6 +345,7 @@ switch ($action) {
         $userid = $_SESSION['uid'];
         $aPatient = patient_db::select_patient($_SESSION['pID'], $userid);
         $dsabld = $aPatient->getDisabled();
+        $_SESSION['disabled']=$dsabld;
         if(empty($dsabld)){
             $disabled ='';
         } else {
@@ -640,11 +653,6 @@ switch ($action) {
       // View add Medication page
        $patient = patient_db::select_patient($_SESSION['pID'],$_SESSION['uid']);
        
-       
-       
-       
-       var_dump($_SESSION['pID']);
-
         include 'view/addMedication.php';
 
         die();
@@ -654,7 +662,7 @@ switch ($action) {
          
        // Validate drug name added
        // Validate quantity and times per day added and within range
-    
+       $errMed =0;
        $today =date('Y-m-d');
        $drug= filter_input(INPUT_POST, 'med');
        $quantity= (int)filter_input(INPUT_POST, 'qty');
@@ -668,19 +676,19 @@ switch ($action) {
         
        if(empty($drug)){
            $errDrug ="Name Required";
-           $valid =false;
+           $valid =1;
        }
        
        if(empty($quantity)){
            $errQty ="Quantity Required";
-           $valid =false;
+           $valid =1;
        }
        
        if(!empty($quantity)){
            if($quantity < $min || $quantity > $max ){
     
                $errQtyAmt ="Number must be between 1 and 30";
-               $valid =false;
+               $valid =1;
                
            }
        }
@@ -689,26 +697,26 @@ switch ($action) {
            if($timesPerDay < $min || $timesPerDay > $max ){
     
                $errTPDAmt ="Number must be between 1 and 30";
-               $valid =false;
+               $errMed =1;
                
            }
        }
        
-       If(valid != false){
+       If(errMed == '1'){
            patient_db::insert_patientMed($_SESSION['pID'], $drug, $quantity, $timesPerDay,$medNote, $begDate, $endDate);
        }
        
         
-       
-       include 'view/patientProfile.php';
+       header('Location: index.php?action=home');
+       //include 'view/patientProfile.php';
         die();
         break;
         
     case'updateMedication':
       
+        header('Location: index.php?action=home');
         
-        
-        include'view/updateMedication.php';
+       // include'view/updateMedication.php';
         die();
         break;
 
@@ -754,6 +762,45 @@ switch ($action) {
         
         die();
         break;
+    case 'adminUpdatePatientPage':
+        
+        $patientid = filter_input(INPUT_POST, 'Pid');
+        $userid = filter_input(INPUT_POST, 'uID');
+        $aPatient = patient_db::select_patient($patientid, $userid);
+        $fname = $aPatient->getFName();
+        $lname = $aPatient->getLName();
+        $dob = $aPatient->getDob();
+        $adob = date("m-d-Y", strtotime($dob));
+        $sex = $aPatient->getSex();
+        $enddate = $aPatient->getEndDate();
+        $dis =$aPatient->getDisabled();
+        $ddate =$aPatient->getDcsDate();
+        $edate ='';
+        
+        if($edate ==='9999-12-12'){
+            $endDate ='';
+        }
+        
+        if(empty($ddate)){
+            $ddate='';
+        }
+
+        include 'view/demographicUpdate.php';
+        
+        die();
+        break;
+    
+    case 'adminDelUser':
+        // Delete user and all associated 
+        
+        $usertoDelID = filter_input(INPUT_POST, 'userID');
+        user_db::delete_user($usertoDelID);
+        
+        include 'admin/adminPage.php';
+        
+        die();
+        break;
+    
     default :
 
         $_SESSION = array();

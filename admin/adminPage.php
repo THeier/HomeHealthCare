@@ -10,7 +10,7 @@ and open the template in the editor.
             $adminError = "";
         }
         
-        include 'view/header.php'; 
+        include 'view/adminHeader.php'; 
 ?>
 <div class="row justify-content-center">
     <h3 class="error"><?php ?></h3>

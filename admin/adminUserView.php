@@ -59,16 +59,16 @@ Website: https://mdbootstrap.com/docs/jquery/tables/editable/#!
             <td>
                 <form action="index.php" method="POST">
                     <input type="hidden" name="action" value="adminDelUser">
-                    <input type="hidden" name="pid" value="<?php echo htmlspecialchars($u->getUserID()); ?>"
-              <span class="table-remove"><button type="button"
+                    <input type="hidden" name="userID" value="<?php echo htmlspecialchars($u->getUserID()); ?>"
+                           <span class="table-remove"><button type="submit"
                     class="btn btn-danger btn-rounded btn-sm my-0" name="remove">Remove</button></span>
                   </form>
             </td>
             <td>
               <form action="index.php" method="POST">
                     <input type="hidden" name="action" value="adminUpdateUser">
-                    <input type="hidden" name="pid" value="<?php echo htmlspecialchars($u->getUserID()); ?>"
-              <span class="table-edit"><button type="button"
+                    <input type="hidden" name="userID" value="<?php echo htmlspecialchars($u->getUserID()); ?>"
+                           <span class="table-edit"><button type="submit"
                     class="btn btn-secondary btn-rounded btn-sm my-0" name="edit">Edit</button></span>
                                                
               </form>
