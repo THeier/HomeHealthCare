@@ -147,7 +147,7 @@ class patient_db {
     public function select_patientAddress($patientID,$endDate) { 
         
         $db = Database::getDB();
-        $query = 'SELECT * FROM patientaddress WHERE patientID =:patientID AND endDate <=:endDate';
+        $query = 'SELECT * FROM patientaddress WHERE patientID =:patientID AND endDate >=:endDate';
         $statement = $db->prepare($query);
         $statement->bindValue(':patientID', $patientID);
         $statement->bindValue(':endDate', $endDate);
@@ -234,15 +234,18 @@ class patient_db {
 
     // ALL PATIENT MED SQL
     // sql to select pateint med by id 
-    public static function insert_patientMed($patientID, $drug, $quantity, $timesPerDay){
+    public static function insert_patientMed($patientID, $drug, $quantity, $timesPerDay, $medNote, $begDate, $endDate){
         $db = Database::getDB();
-        $query = 'INSERT INTO patientmed (patientID, drug, quantity, timesPerDay) '
-                . 'VALUES (:patientID, :drug, :quantity, :timesPerDay)';
+        $query = 'INSERT INTO patientmed (patientID, drug, quantity, timesPerDay, medNote, begDate, endDate) '
+                . 'VALUES (:patientID, :drug, :quantity, :timesPerDay, :medNote, :begDate, :endDate)';
         $statement = $db->prepare($query);
         $statement->bindValue(':patientID', $patientID);
         $statement->bindValue(':drug', $drug);
         $statement->bindValue(':quantity', $quantity);
         $statement->bindValue(':timesPerDay', $timesPerDay);
+        $statement->bindValue(':medNote', $medNote);
+        $statement->bindValue(':begDate', $begDate);
+        $statement->bindValue(':endDate', $endDate);
         $statement->execute();
         $statement->closeCursor();
         

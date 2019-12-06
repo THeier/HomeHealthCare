@@ -10,7 +10,12 @@ if (!isset($errSt)) {$errSt = '';}
 if (!isset($errCty)) {$errCty = '';}
 if (!isset($errZip)) {$errZip = '';}
 if (!isset($name)) {$name = '';}
-
+if (!isset($num)) {$num = '';}
+if (!isset($street)) {$street = '';}
+if (!isset($city)) {$city = '';}
+if (!isset($st)) {$st = '';}
+if (!isset($zip)) {$zip = '';}
+if (!isset($email)) {$email = '';}
 ?>
 <?php include'view/header.php'; ?>
 
@@ -73,7 +78,7 @@ if (!isset($name)) {$name = '';}
 </form>
     <form class="form" action="index.php" method="POST">
                         <input type="hidden" name="action" value="patient_page" />
-                        <input type="hidden" name="pID" value="<?php echo $_SESSION['pID']; ?>"/>
+                      
                         <button class="btn btn-primary" type="submit">Cancel</button>
                     </form>
 </html>

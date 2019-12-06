@@ -17,19 +17,19 @@ if (!isset($patID)) {
 <?php include 'view/header.php'; ?>
 
 <div class="container">
-    <div class="row">
-      <div class="col-sm-4">
-      <h3><?php echo "Welcome"; ?></h3>
+    <div class="row col-md-12">
+      <div class="col-sm-6">
+          <h3><?php echo "Welcome"; ?></h3>
       <div class="card">
             <h5 class="cardheader"><?php echo htmlspecialchars($_SESSION['FullName']); ?></h5>
-                        <img class="card-img-top" src="<?php echo htmlspecialchars($pic); ?>" alt="Card image">
+                        <img class="card-img-top" src="<?php echo htmlspecialchars($_SESSION['pic']); ?>" alt="Card image">
             <div class="card-body">
-                <h5 class="card-title"><?php echo htmlspecialchars($title); ?></h5>
-                <p class="card-text"><?php echo htmlspecialchars($userName); ?></p>
+                <h5 class="card-title"><?php echo htmlspecialchars($_SESSION['title']); ?></h5>
+                <p class="card-text"><?php echo htmlspecialchars($_SESSION['userName']); ?></p>
             </div>
         </div>
     </div>
-    <div class="col-lg-20">
+    <div class="col-lg-4">
         <div>
              <?php if(!is_array($pats)): ?>
         <h3><?php echo 'Add New Patients'; ?></h3>

@@ -111,7 +111,7 @@ switch ($action) {
               
                 If ($_SESSION['type'] == 'admin') {
                     $_SESSION['title'] ='Admin';
-                   
+                   $_SESSION['admin']=true;
                 }elseif ($_SESSION['type'] != 'admin' && $_SESSION['type']=='cna') {
                     $_SESSION['title'] ="Certified Nursing Assistant";
                 }elseif ($_SESSION['type'] != 'admin' && $_SESSION['type']=='cma') {
@@ -129,7 +129,7 @@ switch ($action) {
                     include 'view/userProfile_view.php';
                 }
                 
-                    include 'view/userProfile_view.php';
+                 
             } else {
                 $errUName = 'Bad username or password';
                 include 'view/login_view.php';
@@ -171,10 +171,8 @@ switch ($action) {
        
         // adds registered user info to database
         // sends user to login page 
-        // add validation (page) for user information
-        // add user info to database
         $regErr ='';
-        $begDate = date('y-m-d');
+        $begDate = date_default_timezone_get('Y-m-d');;
         $fName = filter_input(INPUT_POST, 'fName');
         $lName = filter_input(INPUT_POST, 'lName');
         // email is the user name
@@ -208,7 +206,7 @@ switch ($action) {
         // First and Last Name Validation
         if ($fName == null || $fName == "") {
             $errfName = "Enter a First Name";
-            $valid =false;
+            $regErr=1;
         }
         if (preg_match('/^[a-zA-Z]/', $fName) != 1) {
             $errfNamefirstchar = "First Name must begin with a letter";
@@ -250,15 +248,16 @@ switch ($action) {
    
         die();
         break;
+        
+   // Patient --->>     
 
     case 'addNewPatientPage';
-
+        // Add new patient page
         include 'view/addPatient.php';
 
         die();
         break;
 
-// Patient --->>
     case 'addPatient';
         // add new client info to the database
         // sends them to the patient profile page
@@ -276,7 +275,7 @@ switch ($action) {
             }else{
                 $g ='M';
             }
-            $bdt = date('Y-m-d');
+            $bdt = date_default_timezone_get('Y-m-d');
             $dis = filter_input(INPUT_POST,'disabled');
             $endDate ='9999-12-12';
             //$today =date('Y-m-d');
@@ -318,22 +317,21 @@ switch ($action) {
             $err =1;
         }
 
-            // default image added with sql -> change later???
+         
         if($err == '1'){
             
             include 'view/addPatient.php';
             exit();
             
         }else{
+ 
+           $today =date('Y-m-d');        
+           $pats = patient_db::selectPatients($_SESSION['uid'], $today); 
            patient_db::insert_patient($userid, $fName, $lName, $pdob, $g, $bdt, $endDate, $dis, $dscDate); 
-           header('Location: index.php?action=home');
+           include 'view/userProfile_view.php';
         }
         
-        
-
-       // include 'view/userProfile_view.php';
-        
-
+ 
         die();
         break;
 
@@ -344,16 +342,10 @@ switch ($action) {
         $_SESSION['pID']= filter_input(INPUT_POST, 'pid');
         $userid = $_SESSION['uid'];
         $aPatient = patient_db::select_patient($_SESSION['pID'], $userid);
-        $dsabld = $aPatient->getDisabled();
-        $_SESSION['disabled']=$dsabld;
-        if(empty($dsabld)){
-            $disabled ='';
-        } else {
-            $disabled =$dsabld;
-        }
         $curDate =date('Y-m-d');
         $today = time();
-        $dob = strtotime($aPatient->getDob());
+        $bd =$aPatient->getDob();
+        $dob = strtotime($bd);
         $todaysAge = $today - $dob;
         $age = floor($todaysAge / 31556926);
         $pFName = ucfirst($aPatient->getFName());
@@ -371,34 +363,21 @@ switch ($action) {
             $zip = $address->getZip();
             $fullstreet = $number . ' ' . $street;
             $email = $address->getEmail();
-            
-        } else {
-            $addressid='';
-            $number = '';
-            $street = '';
-            $city = '';
-            $st = '';
-            $zip = '';
-            $fullstreet = '';
-            $email = '';
         }
-        
-        $patID =$_SESSION['pID'];
-        
-        $meds = patient_db::select_patientMeds($patID);
+
+               
+        $meds = patient_db::select_patientMeds($_SESSION['pID']);
         $_SESSION['meds']=$meds;
-//       $medication=array();
+
         $valid =true;
         if(empty($meds)){
             $nomeds =array();
             $meds=$nomeds;
         }     
-
-      // var_dump($address);
-       //var_dump($meds);
-       //var_dump($amed);
-       // include 'view/patientPage.php';
+       
         include 'view/patientProfile.php';
+         var_dump($address);
+        var_dump($_SESSION['thePatient']);
         die();
         break;
 
@@ -441,8 +420,7 @@ switch ($action) {
         $userid = $_SESSION['uid'];
         $fname = filter_input(INPUT_POST, 'fname');
         $lname = filter_input(INPUT_POST, 'lname');
-        $dob = filter_input(INPUT_POST, 'adob');
-        //$adob = date("m-d-Y", strtotime($dob));
+        $dob = date(filter_input(INPUT_POST, 'adob'));
         $sex = filter_input(INPUT_POST, 'sex');
         $disabled = filter_input(INPUT_POST, 'dis');
         $endDate = filter_input(INPUT_POST, 'endDate');
@@ -479,10 +457,7 @@ switch ($action) {
               $errDis= 'Yes or No answer required';
               $valid =false;
           } 
-            
-     
-            
-          
+  
           // Validation for date fields 
           // validates the end date need to 
           // validate its not greater than current date
@@ -515,18 +490,20 @@ switch ($action) {
           If(valid){
                patient_db::update_patient($pid, $userid, $fname, $lname, 
                 $dob, $sex, $endDate, $begDate, $disabled, $dcsDate);
+               $aPatient = patient_db::select_patient($_SESSION['pID'], $_SESSION['uid']);
+                 header('Location: index.php?action=home');
               
           }else{
               
               include 'view/demographicUpdate.php';
           }
-        // add validation to date format
+     
         
 //        var_dump($aPatient);
 //        var_dump($patientid);
 //        var_dump($userid);
        // include 'view/userProfile_view.php';
-        header('Location: index.php?action=home');
+        //header('Location: index.php?action=home');
         die();
         break;
     
@@ -540,15 +517,15 @@ switch ($action) {
         $name =$patient->getFName(). ' '.$patient->getLName();
         
         include 'view/addPntAddress.php';         
-        var_dump($pid);
+         var_dump($_SESSION['pID']);
         
         die();
         break;
        
     case 'addNewAddress';
         
-        // Insert new Address for oatient
-        $valid =true;
+        // Insert new Address for patient
+        $err='';
         
           $pid = $_SESSION['pID'];
           $num =filter_input(INPUT_POST,'num');
@@ -561,31 +538,48 @@ switch ($action) {
               $email= NULL;
           }
           
-          $currentDate =date('Y-m-d');
-          $begDate =$currentDate;
-          $endDate ='01-01-0001';
-          // add validation
-          if(empty($_POST['num'])){
+          $currentDate = date('Y-m-d');
+          $endDate ='9999-12-12';
+         
+          if($num =='' || $num ==NULL){
               $errNum= 'Enter Number';
-              $valid =false;
+              $err=1;
           }
       
-          if(empty($_POST['street'])){
+          if($street =='' || $street ==NULL){
               $errSt= 'Enter Street';
-              $valid =false;
+              $err=1;
           }
           
-          if(empty($_POST['zip'])){
+          if($zip =='' || $zip ==NULL){
               $errZip= 'Enter Number';
-              $valid =false;
+                $err=1;
           }
-        // if valid = false insert address
-        if ($valid) {
-            patient_db::add_patientAddress($pid, $num, $street, $city, $state, $zip, $email, $begDate,$endDate);
+        
+        if ($err ==0) {
+            patient_db::add_patientAddress($pid, $num, $street, $city, $state, $zip, $email, $currentDate ,$endDate);
+            $aPatient = patient_db::select_patient($_SESSION['pID'], $_SESSION['uid']);
+            $today = time();
+            $bd =$aPatient->getDob();
+            $dob = strtotime($bd);
+            $todaysAge = $today - $dob;
+            $age = floor($todaysAge / 31556926);
+            
+            $meds = patient_db::select_patientMeds($_SESSION['pID']);
+            if(empty($meds)){
+            $nomeds =array();
+            $meds=$nomeds;
+        }     
+            $curDate =date('Y-m-d');
+            $address = patient_db::select_patientAddress($_SESSION['pID'], $curDate);
+            $addressid =$address->getAddressID();
+            $number=$address->getNumber();
+            include 'view/patientProfile.php';
         }
+        
 
         
-        header('Location: index.php?action=home');   
+        //header('Location: index.php?action=home');   
         
         die();
         break;
@@ -621,7 +615,7 @@ switch ($action) {
             $endDate='';
         }
          include 'view/addressUpdate.php';         
-         var_dump($patientid);
+        
         die();
         break;
     
@@ -663,32 +657,31 @@ switch ($action) {
        // Validate drug name added
        // Validate quantity and times per day added and within range
        $errMed =0;
-       $today =date('Y-m-d');
+       $today = date_default_timezone_get('Y-m-d');
        $drug= filter_input(INPUT_POST, 'med');
        $quantity= (int)filter_input(INPUT_POST, 'qty');
        $timesPerDay= (int)filter_input(INPUT_POST, 'tpd');
        $medNote= filter_input(INPUT_POST, 'note');
-       $begDate =$today;
-       $endDate = '12-12-9999';
-        $max = 30;
-        $min =1;
+       $endDate = date('9999-12-12');
+       $max = 30;
+       $min =1;
         
         
        if(empty($drug)){
            $errDrug ="Name Required";
-           $valid =1;
+           $errMed =1;
        }
        
        if(empty($quantity)){
            $errQty ="Quantity Required";
-           $valid =1;
+           $errMed =1;
        }
        
        if(!empty($quantity)){
            if($quantity < $min || $quantity > $max ){
     
                $errQtyAmt ="Number must be between 1 and 30";
-               $valid =1;
+               $errMed =1;
                
            }
        }
@@ -702,8 +695,8 @@ switch ($action) {
            }
        }
        
-       If(errMed == '1'){
-           patient_db::insert_patientMed($_SESSION['pID'], $drug, $quantity, $timesPerDay,$medNote, $begDate, $endDate);
+       If(errMed ==0){
+           patient_db::insert_patientMed($_SESSION['pID'], $drug, $quantity, $timesPerDay, $medNote, $today, $endDate);
        }
        
         
@@ -713,8 +706,10 @@ switch ($action) {
         break;
         
     case'updateMedication':
+        
+        
       
-        header('Location: index.php?action=home');
+        header('Location: index.php?action=patient_page');
         
        // include'view/updateMedication.php';
         die();

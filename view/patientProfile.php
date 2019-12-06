@@ -7,6 +7,12 @@ and open the template in the editor.
 <?php 
 if(!isset($pats)){$pats[]='';}
 if(!isset($meds)){$meds[]='';}
+if(!isset($number)){ $number ='';}
+if(!isset($street)){ $street ='';}
+if(!isset($city)){ $city ='';}
+if(!isset($st)){ $st ='';}
+if(!isset($zip)){ $zip ='';}
+if(!isset($email)){ $email ='';}
 ?>
 <?php include 'view/header.php'; ?>
 <html>
@@ -19,7 +25,7 @@ if(!isset($meds)){$meds[]='';}
             Age:&nbsp;<?php echo htmlspecialchars($age); ?><br>
             Date of Birth:&nbsp;<?php echo date("m-d-Y", strtotime($aPatient->getDob())); ?><br>
             Gender: &nbsp;<?php echo htmlspecialchars($aPatient->getSex()); ?><br>
-            Disabled:  &nbsp;<?php echo htmlspecialchars($disabled);  ?><br>
+            Disabled:  &nbsp;<?php echo htmlspecialchars($aPatient->getDisabled());  ?><br>
             
         </fieldset><br>
         <!-- Conditionally display
@@ -54,9 +60,9 @@ if(!isset($meds)){$meds[]='';}
       </tr>
     </thead>
     <tbody>
-        <?php if(is_null($meds)) {  ?>
+        <?php if(empty($meds)) {  ?>
         <p>No Medications found</p>
-    <?php }else ?>
+    <?php }else { ?>
        <tr>
            
        <?php  foreach($meds as $m) : ?>
@@ -66,7 +72,7 @@ if(!isset($meds)){$meds[]='';}
         <td colspan="2"><?php echo htmlspecialchars($m->getmedNote()); ?></td>
         </tr>
         <?php endforeach;   ?>
-      
+      <?php }?>
     </tbody>    
   </table>
     <?php if(!empty($meds)) { ?>     
@@ -75,7 +81,7 @@ if(!isset($meds)){$meds[]='';}
             <input type="hidden" name="pID" value="<?php echo html_entity_decode($aPatient->getPatientID()) ?>">
             <input class="subs1" type="submit" value="Update Medication">
      </form>
-    <?php };?>
+    <?php }?>
     <form action="index.php" method="post">
             <input type="hidden" name="action" value="addMedicationPage">
             <input type="hidden" name="pID" value="<?php echo html_entity_decode($aPatient->getPatientID()) ?>">
