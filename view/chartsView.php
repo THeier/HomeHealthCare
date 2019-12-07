@@ -6,13 +6,46 @@ and open the template in the editor.
 -->
 <?php include 'view/header.php'; ?>
 
-<script src="chart.js"></script>
+
+<html>
+    <head>
+        <script src="Chart.js"></script>
+    </head>  
+    <body>
+        <canvas id="mycanvas" width="256" height="256">
+            <script>
+                $(document).ready(function(){
+                    var ctx = document.getElementById('mycanvas').getContext('2d');
+                    
+                    var data[
+                        {
+                            value: 270;
+                            color: "blue",
+                            hightlight: "lightskyblue",
+                            label: "Active Users"
+                            
+                        },
+                        {
+                            value: 90;
+                            color: "blue",
+                            hightlight: "lightskyblue",
+                            label: "Inactive Users"
+                        }
+                ];
+                
+                var piechart = new Chart(ctx).Pie(data);
+                                  
+          });       
+            </script>
+        </body>
+    
+</html>
 <body>
     <div class="chart">
-    <canvas id="myChart"></canvas>
+    
 
     <script>
-        var ctx = document.getElementById('myChart').getContext('2d');
+        
         // mydata will come form the sql done to 
         var mydata ='';
         var chart = new Chart(ctx, {

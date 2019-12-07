@@ -46,7 +46,12 @@ $admin=false;
 
 <header>
     <div class="jumbotron text-center mb-0">
-    <img src="images/CAREGiver.jpg" style="width: 80% !important; opacity: 0.5 !important;">
+        <div class="page-header">
+            <p class="page-header">
+            <h1><span id="h1span">HHC Patient Manager</span><img class="" src="images/CAREGiver.jpg"  opacity: 0.8 !important;"></h1> 
+               
+            </p>
+        </div>
     </div>
 </header>
     <div>

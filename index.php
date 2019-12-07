@@ -820,8 +820,8 @@ switch ($action) {
     case 'adminHome':
         // Admin home page
 
-        $getuser = user_db::select_userid($_SESSION['uid']);
-        $administrator = $getuser->getUserType();
+        $getuserID = user_db::get_userinfo($_SESSION['userName']);
+        $administrator = $getuserID->getUserType();
         If($administrator === 'admin'){
             $_SESSION['admin'] =true;
         }
@@ -836,6 +836,7 @@ switch ($action) {
     case 'adminPatientPage':
         // View all patients page
         $allPats= patient_db::select_allPatients();
+        
         include 'admin/adminPatientView.php';
         
         die();
@@ -843,18 +844,18 @@ switch ($action) {
     case 'adminDelPatient':
         // Admin view all patients page
       
-       $patientid = filter_input(INPUT_POST, 'pID');
-       patient_db::delete_patient($patientid);
-        
-        include 'admin/adminPage.php';
+         $patientid = filter_input(INPUT_POST, 'pID');
+         patient_db::delete_patient($patientid);
+         $allPats= patient_db::select_allPatients();
+        include 'admin/adminPatientView.php';
         
         die();
         break;
     case 'adminUserPage':
         // Admin view all users page
         $userType ='admin';
-        //$allUsers = user_db::get_all_users($userType);
         $allUsers = user_db::getUsers($userType);
+        
         include 'admin/adminUserView.php';
         
         die();
