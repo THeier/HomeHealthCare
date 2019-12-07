@@ -74,12 +74,12 @@ if (!isset($email)) {$email = '';}
         </div>   
     </div>
     <input type="hidden" name="begDate" value="<?php echo htmlspecialchars($patientAddress->getBegDate());  ?>"/>
-    <button type="submit" class="btn btn-primary">Update Address</button>
+    <button type="submit" name="updateAddressBtn" id="UpdateAddress" class="btn btn-primary">Update Address</button>
 </form>
     <form class="form" action="index.php" method="POST">
-                        <input type="hidden" name="action" value="patient_page" />
-                      
-                        <button class="btn btn-primary" type="submit">Cancel</button>
+                        <input type="hidden" name="action" value="updateAddress" />
+                        <input type="hidden" name="addressID" value="<?php echo htmlspecialchars($address->getAddressID()) ?>"
+                        <button name="updateAddressBtn" id="cancel" class="btn btn-primary" type="submit">Cancel</button>
                     </form>
 </html>
 

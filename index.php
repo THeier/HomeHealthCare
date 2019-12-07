@@ -59,12 +59,12 @@ if (!isset($_SESSION['pID'])) {
 if (!isset($_SESSION['admin'])) {
     $_SESSION['admin'] = '';
 }
-if(!isset($_SESSION['PatientFN'])){
-    $_SESSION['PatientFN']='';
-}
-if(!isset($_SESSION['disabled'])){
-    $_SESSION['disabled']='';
-}
+//if(!isset($_SESSION['PatientFN'])){
+//    $_SESSION['PatientFN']='';
+//}
+//if(!isset($_SESSION['disabled'])){
+//    $_SESSION['disabled']='';
+//}
 $action = filter_input(INPUT_POST, 'action');
 if ($action == NULL) {
     $action = filter_input(INPUT_GET, 'action');
@@ -172,7 +172,7 @@ switch ($action) {
         // adds registered user info to database
         // sends user to login page 
         $regErr ='';
-        $begDate = date_default_timezone_get('Y-m-d');;
+        $begDate = date('Y-m-d');;
         $fName = filter_input(INPUT_POST, 'fName');
         $lName = filter_input(INPUT_POST, 'lName');
         // email is the user name
@@ -643,12 +643,10 @@ switch ($action) {
     case 'UpdateAddressPage';
         
         // Page to update patient address 
-        
-        $patientid= $_SESSION['pID'];
-        $userid =$_SESSION['uid'];
-        $idAndBegDate= filter_input(INPUT_POST, 'addressid');
+       $patientid= $_SESSION['pID'];
+        //$userid =$_SESSION['uid'];
         $curDate =date('Y-m-d');
-        $patientAddress = patient_db::select_patientAddress($patientid, $curDate);
+        $patientAddress = patient_db::select_patientAddress($_SESSION['pID'], $curDate);
         $patient = patient_db::select_patient($_SESSION['pID'], $_SESSION['uid']);
         $name =$patient->getFName(). ' '.$patient->getLName();
         $num =$patientAddress->getNumber();
@@ -675,7 +673,7 @@ switch ($action) {
     
     case 'updateAddress';
         // update patient address
-        //add validation 
+        //add validation for required fields
         $err =0;
         $pid =$_SESSION['pID'];
         $n = filter_input(INPUT_POST, 'num');
@@ -684,9 +682,14 @@ switch ($action) {
         $st =filter_input(INPUT_POST, 'st');
         $zip =filter_input(INPUT_POST, 'zip');
         $email = filter_input(INPUT_POST, 'email');
-        $endDate =filter_input(INPUT_POST, 'endDate');
-        $bdate=filter_input(INPUT_POST, 'begDate');
+        $endDate =(string)filter_input(INPUT_POST, 'endDate');
+        $bdate=(string)filter_input(INPUT_POST, 'begDate');
         $curDate =date('Y-m-d');
+        
+        if($n ==null || $n ==''){
+            $errNum ='Street Number required';
+            $err =1;
+        }
         
         if(!empty($endDate)){
             function checkisAValidendDate($endDate) {
@@ -729,7 +732,6 @@ switch ($action) {
                     $city =$address->getCity();
                     $st = ucfirst($address->getState());
                     $zip = $address->getZip();
-                    $fullstreet = $number . ' ' . $street;
                     $email = $address->getEmail();
                           
                 
@@ -759,8 +761,6 @@ switch ($action) {
     
     case'addMedication':
          
-       // Validate drug name added
-       // Validate quantity and times per day added and within range
        $errMed =0;
        $today = date_default_timezone_get('Y-m-d');
        $drug= filter_input(INPUT_POST, 'med');
@@ -811,9 +811,7 @@ switch ($action) {
         break;
         
     case'updateMedication':
-        
-        
-      
+       // lots of work here 
         header('Location: index.php?action=patient_page');
         
        // include'view/updateMedication.php';
@@ -822,12 +820,12 @@ switch ($action) {
 
     case 'adminHome':
         // Admin home page
- //       $userId = $_SESSION['userId'];
+
         $getuser = user_db::select_userid($_SESSION['uid']);
-//        $administrator = $getuser->getUserType();
-//        If($administrator === 'admin'){
-//            $_SESSION['admin'] =true;
-//        }
+        $administrator = $getuser->getUserType();
+        If($administrator === 'admin'){
+            $_SESSION['admin'] =true;
+        }
         
       
         include 'admin/adminPage.php';
