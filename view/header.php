@@ -61,7 +61,7 @@ $admin=false;
          <?php }?>
       <?php if($loggedIn ==true && $loggedIn !='' && $admin ==false){ ?>
         <li class="nav-item"><a class="nav-link" onclick="window.location.href='?action=home';" >Home</a></li>
-        <li class="nav-item"><a class="nav-link" onclick="window.location.href='?action=PatientPage';">Add Patient</a></li>
+        <li class="nav-item"><a class="nav-link" onclick="window.location.href='?action=addNewPatientPage';">Add Patient</a></li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" id="navbardrop" data-toggle="dropdown" onclick="window.location.href='#';">
               Options..

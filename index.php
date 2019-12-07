@@ -259,10 +259,8 @@ switch ($action) {
         break;
 
     case 'addPatient';
-        // add new client info to the database
-        // sends them to the patient profile page
-       
-            // add validation to data submited
+        // add new patient to the database
+    
             $err ='';
             $userid =$_SESSION['uid'];
             $fName = ucfirst(filter_input(INPUT_POST, 'fnm'));
@@ -275,12 +273,12 @@ switch ($action) {
             }else{
                 $g ='M';
             }
-            $bdt = date_default_timezone_get('Y-m-d');
+            $bdt = date('Y-m-d');
             $dis = filter_input(INPUT_POST,'disabled');
             $endDate ='9999-12-12';
-            //$today =date('Y-m-d');
             $dscDate =null;
-       // Validate Patient first and last name
+            
+       // Validate 
        if ($fName == null || $fName == "") {
             $errfName = "Enter a First Name";
             $err =1;
@@ -297,16 +295,12 @@ switch ($action) {
             $errlNamefirstchar = "Last Name must begin with a letter";
             $err =1;
         }
-        // validate option is selected
-        
-        
-        // Validate yes or no entered for disabled
+            
         if (empty($dis)) {
             $errDis = "Selection required";
             $err =1;
         } 
         
-        // Validate patient date of birth is added and is a validate date
         if(empty($pdob)){
            $errPDOB = "Date of Birth Required";
            $err =1;
@@ -322,12 +316,10 @@ switch ($action) {
             
             include 'view/addPatient.php';
             exit();
-            
         }else{
- 
+           patient_db::insert_patient($userid, $fName, $lName, $pdob, $g, $bdt, $endDate, $dis, $dscDate); 
            $today =date('Y-m-d');        
            $pats = patient_db::selectPatients($_SESSION['uid'], $today); 
-           patient_db::insert_patient($userid, $fName, $lName, $pdob, $g, $bdt, $endDate, $dis, $dscDate); 
            include 'view/userProfile_view.php';
         }
         
@@ -376,8 +368,7 @@ switch ($action) {
         }     
        
         include 'view/patientProfile.php';
-         var_dump($address);
-        var_dump($_SESSION['thePatient']);
+        var_dump($address);
         die();
         break;
 
@@ -391,7 +382,7 @@ switch ($action) {
         $fname = $aPatient->getFName();
         $lname = $aPatient->getLName();
         $dob = $aPatient->getDob();
-        $adob = date("m-d-Y", strtotime($dob));
+        $adob = $dob;
         $sex = $aPatient->getSex();
         $enddate = $aPatient->getEndDate();
         $dis =$aPatient->getDisabled();
@@ -413,97 +404,161 @@ switch ($action) {
     
     case 'updateDemo':
 
-        // insert updated patient demographic information
-        // take user back to profile page 
-      
+        // insert updated patient demographic information       
+        $err=0;
         $pid = $_SESSION['pID'];
         $userid = $_SESSION['uid'];
         $fname = filter_input(INPUT_POST, 'fname');
         $lname = filter_input(INPUT_POST, 'lname');
-        $dob = date(filter_input(INPUT_POST, 'adob'));
+        $dob = filter_input(INPUT_POST, 'dob');
         $sex = filter_input(INPUT_POST, 'sex');
         $disabled = filter_input(INPUT_POST, 'dis');
+        $dsbld = mb_strtoupper($disabled);
         $endDate = filter_input(INPUT_POST, 'endDate');
         $dcsDate =filter_input(INPUT_POST,'ddate');
-        $begDate = filter_input(INPUT_POST, 'begDates');
+        $begDate = filter_input(INPUT_POST, 'begDate');
         $today = date('Y-m-d');
         
         if($fname == null || $fname == ""){
              $errFN ='First Name Required';
-            $valid =false;
+            $err =1;
             
         }
 
-        if($lname ==nul || $lname ==""){
+        if($lname ==null || $lname ==""){
             $errLN ='Last Name Required';
-            $valid =false;
+            $err =1;
         }
         if($dob ==null || $dob ==""){
             $errBD ='Birth Date Required';
-            $valid =false;
+            $err =1;
         }
         if($sex ==null || $sex ==""){
             $errGen ='Gender Required';
-            $valid =false;
+            $err =1;
         }
         
-        if($disabled ==null || $disabled ==''){
+        if($dsbld ==null || $dsbld ==''){
               $errDis= 'Yes or No answer required';
-              $valid =false;
+              $err =1;
+          }else if($dsbld =='YES' || $dsbld == 'NO' ){
+              
+              $err =0;
+          } else{
+              $errDis= 'Yes or No answer required';
+              $err =1;
           }
           
-        if(strtolower($disabled) !='yes' || strtolower($disabled) != 'no' ){
-              
-              $errDis= 'Yes or No answer required';
-              $valid =false;
-          } 
-  
-          // Validation for date fields 
-          // validates the end date need to 
-          // validate its not greater than current date
-          //$date =$edate;
+          if($dcsDate =='' || $dcsDate ==NULL){
+              $dcsDate =NULL;
+          }else{
+              function checkisAValidDcsDate($dcsDate) {
+                if (preg_match("/^(((((1[26]|2[048])00)|[12]\d([2468][048]|[13579][26]|0[48]))-((((0[13578]|1[02])-(0[1-9]|[12]\d|3[01]))|((0[469]|11)-(0[1-9]|[12]\d|30)))|(02-(0[1-9]|[12]\d))))|((([12]\d([02468][1235679]|[13579][01345789]))|((1[1345789]|2[1235679])00))-((((0[13578]|1[02])-(0[1-9]|[12]\d|3[01]))|((0[469]|11)-(0[1-9]|[12]\d|30)))|(02-(0[1-9]|1\d|2[0-8])))))$/", $dcsDate)) {
+                    return (string)$dcsDate;
+                } else {
+                    $errNotValiddcs = "Must be a valid date";
+                    $err =1;
+                }
+            }
+          }
+ 
           if(empty($endDate)){
               $endDate ='9999-12-12';
           }else{
               if($endDate > $today){
                   $errFutureDate ="Cannot be a future date";
-                  $valid =false;
+                  $err =1;
                    
               }
               
           }
                  
-          If (!empty($endDate)) {
+          If (!empty($endDate) || $endDate !='9999-12-12') {
 
             function checkisAValidDate($endDate) {
                 if (preg_match("/^(((((1[26]|2[048])00)|[12]\d([2468][048]|[13579][26]|0[48]))-((((0[13578]|1[02])-(0[1-9]|[12]\d|3[01]))|((0[469]|11)-(0[1-9]|[12]\d|30)))|(02-(0[1-9]|[12]\d))))|((([12]\d([02468][1235679]|[13579][01345789]))|((1[1345789]|2[1235679])00))-((((0[13578]|1[02])-(0[1-9]|[12]\d|3[01]))|((0[469]|11)-(0[1-9]|[12]\d|30)))|(02-(0[1-9]|1\d|2[0-8])))))$/", $endDate)) {
                     return $endDate;
                 } else {
                     $errNotValidDate = "Must be a valid date";
-                    $valid = false;
+                    $err =1;
                 }
             }
+            
+                }
+        
+            If (!empty($dob)) {
+            function checkisAValidBD($dob) {
+                if (preg_match("/^(((((1[26]|2[048])00)|[12]\d([2468][048]|[13579][26]|0[48]))-((((0[13578]|1[02])-(0[1-9]|[12]\d|3[01]))|((0[469]|11)-(0[1-9]|[12]\d|30)))|(02-(0[1-9]|[12]\d))))|((([12]\d([02468][1235679]|[13579][01345789]))|((1[1345789]|2[1235679])00))-((((0[13578]|1[02])-(0[1-9]|[12]\d|3[01]))|((0[469]|11)-(0[1-9]|[12]\d|30)))|(02-(0[1-9]|1\d|2[0-8])))))$/", $dob)) {
+                    return (string)$dob;
+                } else{
+                    $errNotValidBD = "Must be a valid date";
+                    $err =1;
+                }
+            }
+            
+                }
+        
+          
+          If($err == 0){
+              
+            patient_db::update_patient($pid, $userid, $fname, $lname, 
+                $dob, $sex, $begDate, $endDate, $disabled, $dcsDate);
+            $aPatient = patient_db::select_patient($_SESSION['pID'], $_SESSION['uid']);
+            if(!empty($aPatient)){
+                
+                    $bd =$aPatient->getDob();
+                    $dob = strtotime($bd);
+                    $today = time();
+                    $todaysAge = $today - $dob;
+                    $age = floor($todaysAge / 31556926);
 
-        }
-          
-          
-          If(valid){
-               patient_db::update_patient($pid, $userid, $fname, $lname, 
-                $dob, $sex, $endDate, $begDate, $disabled, $dcsDate);
-               $aPatient = patient_db::select_patient($_SESSION['pID'], $_SESSION['uid']);
-                 header('Location: index.php?action=home');
+                    $meds = patient_db::select_patientMeds($_SESSION['pID']);
+                    if(empty($meds)){
+                        $nomeds =array();
+                        $meds=$nomeds;
+                     }     
+                    $curDate =date('Y-m-d');
+                    $address = patient_db::select_patientAddress($_SESSION['pID'], $curDate);
+                    $addressid =$address->getAddressID();
+                    $number=$address->getNumber();
+                    $street =$address->getStreet();
+                    $city =$address->getCity();
+                    $st = ucfirst($address->getState());
+                    $zip = $address->getZip();
+                    $fullstreet = $number . ' ' . $street;
+                    $email = $address->getEmail();
+                          
+                
+            }
+            
+            
+            include 'view/patientProfile.php';
               
-          }else{
+          } else {
               
+            $aPatient = patient_db::select_patient($_SESSION['pID'], $_SESSION['uid']);
+            $fname = $aPatient->getFName();
+            $lname = $aPatient->getLName();
+            $dob = $aPatient->getDob();
+            $adob = date("m-d-Y", strtotime($dob));
+            $sex = $aPatient->getSex();
+            $enddate = $aPatient->getEndDate();
+            $dis =$aPatient->getDisabled();
+            $ddate =$aPatient->getDcsDate();
+            $edate ='';
+
+            if($edate ==='9999-12-12'){
+                $endDate ='';
+            }
+
+            if(empty($ddate)){
+                $ddate='';
+            }
+          
               include 'view/demographicUpdate.php';
           }
      
-        
-//        var_dump($aPatient);
-//        var_dump($patientid);
-//        var_dump($userid);
-       // include 'view/userProfile_view.php';
-        //header('Location: index.php?action=home');
+
         die();
         break;
     
@@ -603,17 +658,16 @@ switch ($action) {
         $zip =$patientAddress->getZip();
         $endDate =$patientAddress->getEndDate();
        
-        $adate=date('0001-01-01');
-        if($endDate ==='01'){
-            
+       
+        if($endDate ==='9999-12-12'){
+            $endDate ='';
         }
-        $email =$patientAddress->getEmail();
+        
+           $email =$patientAddress->getEmail();
         if(is_null($email)){
             $email='';
         }
-        if(is_null($endDate) || strtotime($endDate) === strtotime($adate)){
-            $endDate='';
-        }
+        
          include 'view/addressUpdate.php';         
         
         die();
@@ -622,7 +676,7 @@ switch ($action) {
     case 'updateAddress';
         // update patient address
         //add validation 
-       // $valid=true;
+        $err =0;
         $pid =$_SESSION['pID'];
         $n = filter_input(INPUT_POST, 'num');
         $str = filter_input(INPUT_POST, 'street');
@@ -633,11 +687,62 @@ switch ($action) {
         $endDate =filter_input(INPUT_POST, 'endDate');
         $bdate=filter_input(INPUT_POST, 'begDate');
         $curDate =date('Y-m-d');
-        $addressid = patient_db::select_patientAddressID($pid, $curDate);
-        patient_db::update_patientAddress($pid, $n, $str, $city, $st, $zip, $email, $bdate, $endDate);
+        
+        if(!empty($endDate)){
+            function checkisAValidendDate($endDate) {
+                if (preg_match("/^(((((1[26]|2[048])00)|[12]\d([2468][048]|[13579][26]|0[48]))-((((0[13578]|1[02])-(0[1-9]|[12]\d|3[01]))|((0[469]|11)-(0[1-9]|[12]\d|30)))|(02-(0[1-9]|[12]\d))))|((([12]\d([02468][1235679]|[13579][01345789]))|((1[1345789]|2[1235679])00))-((((0[13578]|1[02])-(0[1-9]|[12]\d|3[01]))|((0[469]|11)-(0[1-9]|[12]\d|30)))|(02-(0[1-9]|1\d|2[0-8])))))$/", $endDate)) {
+                    return $endDate;
+                } else {
+                    $errNotValidDate = "Must be a valid date";
+                    $err =1;
+                }
+            }
+           
+        } else {
+            $endDate ='9999-12-12';
+        }
+        
+        if($err ==0){
+            $addressid = patient_db::select_patientAddressID($pid, $curDate);
+            patient_db::update_patientAddress($pid, $n, $str, $city, $st, $zip, $email, $bdate, $endDate);
+            
+            
+            $aPatient = patient_db::select_patient($_SESSION['pID'], $_SESSION['uid']);
+            if(!empty($aPatient)){
+                
+                    $bd =$aPatient->getDob();
+                    $dob = strtotime($bd);
+                    $today = time();
+                    $todaysAge = $today - $dob;
+                    $age = floor($todaysAge / 31556926);
+
+                    $meds = patient_db::select_patientMeds($_SESSION['pID']);
+                    if(empty($meds)){
+                        $nomeds =array();
+                        $meds=$nomeds;
+                     }     
+                    $curDate =date('Y-m-d');
+                    $address = patient_db::select_patientAddress($_SESSION['pID'], $curDate);
+                    $addressid =$address->getAddressID();
+                    $number=$address->getNumber();
+                    $street =$address->getStreet();
+                    $city =$address->getCity();
+                    $st = ucfirst($address->getState());
+                    $zip = $address->getZip();
+                    $fullstreet = $number . ' ' . $street;
+                    $email = $address->getEmail();
+                          
+                
+            }
+            
+            
+            include 'view/patientProfile.php';
+            
+        }
+        
         
        
-        header('Location: index.php?action=home');
+       // header('Location: index.php?action=home');
         
         die();
         break;
@@ -751,8 +856,8 @@ switch ($action) {
     case 'adminUserPage':
         // Admin view all users page
         $userType ='admin';
-        $allUsers = user_db::get_all_users($userType);
-        
+        //$allUsers = user_db::get_all_users($userType);
+        $allUsers = user_db::getUsers($userType);
         include 'admin/adminUserView.php';
         
         die();

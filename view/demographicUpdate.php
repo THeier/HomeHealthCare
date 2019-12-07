@@ -5,7 +5,6 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <?php
-
 if (!isset($errFN)) {
     $errFN = "";
 }
@@ -31,6 +30,36 @@ if (!isset($errNotValidDate)) {
 if (!isset($errFutureDate)) {
     $errFutureDate = "";
 }
+if (!isset($errBD)) {
+    $errBD = "";
+}
+if (!isset($errNotValidBD)) {
+    $errNotValidBD = "";
+}
+if (!isset($patientid)) {
+    $patientid = "";
+}
+if (!isset($fname)) {
+    $fname = "";
+}
+if (!isset($lname)) {
+    $lname = "";
+}
+if (!isset($adob)) {
+    $adob = "";
+}
+if (!isset($sex)) {
+    $sex = "";
+}
+if (!isset($dis)) {
+    $dis = "";
+}
+if (!isset($ddate)) {
+    $ddate = "";
+}
+if (!isset($edate)) {
+    $edate = "";
+}
 ?>
 
 <?php include'view/header.php'; ?>
@@ -39,6 +68,7 @@ if (!isset($errFutureDate)) {
    
             <form class="form" action="index.php" method="POST">
                 <input type="hidden" name="action" value="updateDemo" />
+                <input type="hidden" name="begDate" value="<?php echo htmlspecialchars($aPatient->getBegDate()); ?>"
                 <div class="form-row">
                     <legend>Update Demographics</legend>
                     <label>Client ID:</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo htmlspecialchars($patientid); ?><br>
@@ -58,7 +88,7 @@ if (!isset($errFutureDate)) {
                 <div class="form-row">
                 <div class="form-group col-md-2">
                     <label>Date of Birth:</label>
-                    <input class="form-control" type="text" name="adob" value="<?php echo htmlspecialchars($adob); ?>">
+                    <input class="form-control" type="text" name="dob" value="<?php echo htmlspecialchars($adob); ?>">
                     <span class="error"><?php  ?></span><br>
                     
                 </div>
@@ -82,14 +112,15 @@ if (!isset($errFutureDate)) {
                 <div class="form-group col-md-2">
                    <label>Deceased Date:</label>
                     <input class="form-control" type="date" name="ddate"value="<?php echo htmlspecialchars($ddate); ?>" >
-                    <span class="error"><?php ?></span><br> 
+                    <span class="error"><?php echo $errBD ?></span><br>
+                    <span class="error"><?php echo $errNotValidBD ?></span><br> 
                 </div>
                
                 <div class="form-group col-md-2">
                      <label>End Date:</label>
                     <input class="form-control" type="date" name="endDate" value="<?php echo htmlspecialchars($edate); ?>">
-                     <span class="error"><?php ?></span><br> 
-                     <span class="error"><?php ?></span><br> 
+                      <span class="error"><?php echo $errFutureDate ?></span><br>  
+                    <span class="error"><?php echo $errNotValidDate ?></span><br>
                 </div>
                 </div>
                 <div class="form-row">
@@ -102,9 +133,5 @@ if (!isset($errFutureDate)) {
                     <button class="btn btn-primary" type="submit">Update Demographics</button>
                                         
             </form>
-             <form class="form" action="index.php" method="POST">
-                <input type="hidden" name="action" value="patient_page" />
-                <input type="hidden" name="pID" value="<?php echo $_SESSION['pID']; ?>"/>
-                <button class="btn btn-primary" type="submit">Cancel</button>
-             </form>
+             
 </html>

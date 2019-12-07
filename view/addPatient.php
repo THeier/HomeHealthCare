@@ -18,7 +18,9 @@ if (!isset($errDis)) {
 if (!isset($errGen)) {
     $errGen = "";
 }
-
+if (!isset($fname)) {
+    $fname = "";
+}
 
 ?>
 
@@ -31,14 +33,14 @@ if (!isset($errGen)) {
                     <input type="hidden" name="action" value="addPatient" />
                     <fieldset class="field_set">
                         <legend>Add New Patient</legend>
-                        First Name:  <input class="form-control" type="text" name="fnm">
+                        First Name:  <input class="form-control" type="text" name="fnm" value='<?php echo $fname; ?>'>
                         <span class="error"><?php echo htmlspecialchars($errfName); ?></span><br>
                         <span class="error"><?php echo htmlspecialchars($errfNamefirstchar); ?></span><br>
                         Last Name: <input class="form-control" type="text" name="lnm">
-                        <span class="error"><?php echo htmlspecialchars($errlName); ?></span><br>
-                        <span class="error"><?php echo htmlspecialchars($errlNamefirstchar); ?></span><br>
+                        <span class="error"><?php echo $errlName; ?></span><br>
+                        <span class="error"><?php echo $errlNamefirstchar; ?></span><br>
                         Date of Birth: <input class="form-control" type="date" name="dbir"><br>
-                        Disabled: <select name="disabled" style="max-width: 90%" >
+                        Disabled: <select class='form-control selcls' name="disabled">
                             <option value="No">No</option>  
                             <option value="Yes">Yes</option>
 

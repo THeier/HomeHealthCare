@@ -58,7 +58,7 @@ class user_db {
       
       $countofArray = count($results);
             
-      if(!empty($results)&& $countofArray >1){
+      if(!empty($results)&& $countofArray > intval(1)){
           
           foreach ($results as $result){
             $u = new user($result['userID'], $result['fName'], $result['lName'], 
@@ -67,10 +67,42 @@ class user_db {
       }
         return $users;
       }
-      elseif (array_count_values($results)==1) 
+      elseif (array_count_values($results)==intval(1)) 
       {
             $users[]= $results;
       }      
+      else
+      {
+          return null;
+      }
+    }
+    
+      public static function getUsers($userType){
+          $db = Database::getDB();
+          $query = 'SELECT COUNT(*) FROM user WHERE userType !=:userType';
+          $statement = $db->prepare($query);
+          $statement->bindValue(':userType', $userType);
+          $statement->execute();
+          $count = $statement->fetchAll();
+      
+            
+      if($count >0 ){
+          
+          $db = Database::getDB();
+          $query = 'SELECT * FROM user WHERE userType !=:userType';
+          $statement = $db->prepare($query);
+          $statement->bindValue(':userType', $userType);
+          $statement->execute();
+          $results =  $statement->fetchAll();
+          $statement->closeCursor();
+          
+          foreach ($results as $result){
+            $u = new user($result['userID'], $result['fName'], $result['lName'], 
+                $result['userName'], $result['userType'], $result['begDate'], $result['endDate'], $result['filePath']);
+            $users[] = $u;
+      }
+        return $users;
+      }
       else
       {
           return null;

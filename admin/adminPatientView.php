@@ -28,7 +28,6 @@ Website: https://mdbootstrap.com/docs/jquery/tables/editable/#!
             <th class="text-center">DOB</th>
             <th class="text-center">Gender</th>
             <th class="text-center">Disabled</th>
-            <th class="text-center">Sort</th>
             <th class="text-center">Remove</th>
             <th class="text-center">Edit</th>
           </tr>
@@ -43,12 +42,6 @@ Website: https://mdbootstrap.com/docs/jquery/tables/editable/#!
             <td class="pt-3-half" contenteditable="true"><?php echo date('m-d-Y',strtotime($p->getDob()));  ?></td>
             <td class="pt-3-half" contenteditable="true"><?php echo htmlspecialchars($p->getSex());  ?></td>
             <td class="pt-3-half" contenteditable="true"><?php echo htmlspecialchars($p->getDisabled());  ?></td>
-            <td class="pt-3-half">
-              <span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up"
-                    aria-hidden="true"></i></a></span>
-              <span class="table-down"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-down"
-                    aria-hidden="true"></i></a></span>
-            </td>
             <td>
                 <form action="index.php" method="POST">
                     <input type="hidden" name="action" value="adminDelPatient">
