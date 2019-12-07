@@ -15,7 +15,7 @@ class user_db {
         $statement->bindValue(':userType',$userType);
         $statement->bindValue(':begDate', $begDate);
         $statement->bindValue(':endDate', $endDate);
-        $statement->bindValue(':filePath', 'images/default avatar.jpg');
+        $statement->bindValue(':filePath', 'images/default avatar.png');
         $statement->execute();
         $statement->closeCursor();
                 

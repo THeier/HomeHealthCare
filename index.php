@@ -87,17 +87,13 @@ switch ($action) {
 
     case 'login_user':
         //user profile view 
-        //add if statement to add if no validation error occur
-
         $urName = filter_input(INPUT_POST, 'userName');
-        $passw =filter_input(INPUT_POST, 'passw');
+        $passw =filter_input(INPUT_POST, 'pass');
         $aUser = user_db::get_userInfo($urName);
            
-        //$userName =$_SESSION['userName'];
-        //$pic =$_SESSION['pic'];
-             
-         if ($aUser->getUsername() === null) {
-            $errUName = 'Bad username or password';
+                 
+         if ($aUser->getUserName() === null) {
+            $loginErr = 'Bad username or password';
             include 'view/login_view.php';
         } else {
             $hash = user_db::select_user_pass($urName);
@@ -236,7 +232,7 @@ switch ($action) {
         
      if ($regErr ==''){
             $options = ['cost' => 12];
-            $hashpass = password_hash($pass, PASSWORD_BCRYPT, $options);
+            $hashpass = password_hash($password, PASSWORD_BCRYPT, $options);
             user_db::insert_user($fName, $lName, $uname, $hashpass, $userType, $begDate, $endDate);
 
             include 'view/login_view.php';
@@ -504,7 +500,7 @@ switch ($action) {
             patient_db::update_patient($pid, $userid, $fname, $lname, 
                 $dob, $sex, $begDate, $endDate, $disabled, $dcsDate);
             $aPatient = patient_db::select_patient($_SESSION['pID'], $_SESSION['uid']);
-            if(!empty($aPatient)){
+            
                 
                     $bd =$aPatient->getDob();
                     $dob = strtotime($bd);
@@ -519,17 +515,20 @@ switch ($action) {
                      }     
                     $curDate =date('Y-m-d');
                     $address = patient_db::select_patientAddress($_SESSION['pID'], $curDate);
-                    $addressid =$address->getAddressID();
-                    $number=$address->getNumber();
-                    $street =$address->getStreet();
-                    $city =$address->getCity();
-                    $st = ucfirst($address->getState());
-                    $zip = $address->getZip();
-                    $fullstreet = $number . ' ' . $street;
-                    $email = $address->getEmail();
+                    if(!empty($address)){
+                        $addressid =$address->getAddressID();
+                        $number=$address->getNumber();
+                        $street =$address->getStreet();
+                        $city =$address->getCity();
+                        $st = ucfirst($address->getState());
+                        $zip = $address->getZip();
+                        $email = $address->getEmail();
+                        
+                    }
+                    
                           
                 
-            }
+            
             
             
             include 'view/patientProfile.php';

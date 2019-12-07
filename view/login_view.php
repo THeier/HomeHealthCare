@@ -9,9 +9,7 @@
 if (!isset($userName)) {
     $userName = '';
 }
-if (!isset($pass)) {
-    $pass = '';
-}
+
 if (!isset($loginErr)) {
     $loginErr = '';
 }
@@ -33,6 +31,7 @@ if (!isset($loginErr)) {
             <div  class="agileits-top">
                 <label>User Name </label>
                 <input class="form-control" type="text" name="userName" value='<?php echo htmlspecialchars($userName) ?>'required>
+                <span class="error"><?php echo $loginErr ?></span><br>
                 <br>   
                 <label>Password </label>
                 <input class="form-control" type="password" name="pass" required>

@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <?php
-
+If(!isset($_SESSION['uid'])){
+    $_SESSION['uid'] ='';
+}
+If(!isset($_SESSION['admin'])){
+    $_SESSION['admin'] ='';
+}
 $loggedIn=false;
 
 $admin=false;    
@@ -53,7 +58,7 @@ $admin=false;
    <a class="navbar-brand" href="#">Patient Manager</a>
 
     <ul class="navbar-nav">
-         <?php if(!isset($_SESSION['uid']) && !isset($_SESSION['admin'])) { ?>
+         <?php if($_SESSION['uid'] =='' && $_SESSION['admin'] =='') { ?>
         <li class="nav-item"><a class="nav-link" onclick="window.location.href='?action=login';">About Us</a></li>
         <li class="nav-item"><a class="nav-link" onclick="window.location.href='?action=login';">Contact Us</a></li>
         <li class="nav-item"><a class="nav-link" onclick="window.location.href='?action=login';">Log In</a></li>
