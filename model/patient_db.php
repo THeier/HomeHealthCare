@@ -235,7 +235,7 @@ class patient_db {
     // sql to select pateint med by id 
     public static function insert_patientMed($patientID, $drug, $quantity, $timesPerDay, $medNote, $begDate, $endDate){
         $db = Database::getDB();
-        $query = 'INSERT INTO patientmed (patientID, drug, quantity, timesPerDay, medNote, begDate, endDate) '
+        $query = 'UPDATE patientmed (patientID, drug, quantity, timesPerDay, medNote, begDate, endDate) '
                 . 'VALUES (:patientID, :drug, :quantity, :timesPerDay, :medNote, :begDate, :endDate)';
         $statement = $db->prepare($query);
         $statement->bindValue(':patientID', $patientID);
@@ -250,6 +250,30 @@ class patient_db {
         
         
     }
+    
+      public static function update_patientMed($medID, $patientID, $drug, $quantity, $timesPerDay, $medNote, $begDate, $endDate){
+        $db = Database::getDB();
+        $query = 'UPDATE patientmed '
+                . 'SET medID =:medID, '
+                . 'patientID =:patientID, drug =:drug, '
+                . 'quantity =:quantity, timesPerDay =:timesPerDay, '
+                . 'medNote =:medNote, begDate =:begDate, '
+                . 'endDate =:endDate WHERE medID =:medID';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':medID', $medID);
+        $statement->bindValue(':patientID', $patientID);
+        $statement->bindValue(':drug', $drug);
+        $statement->bindValue(':quantity', $quantity);
+        $statement->bindValue(':timesPerDay', $timesPerDay);
+        $statement->bindValue(':medNote', $medNote);
+        $statement->bindValue(':begDate', $begDate);
+        $statement->bindValue(':endDate', $endDate);
+        $statement->execute();
+        $statement->closeCursor();
+        
+        
+    }
+    
      public function select_patientMeds($patientid,$endDate) { 
         
         $db = Database::getDB();

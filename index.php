@@ -627,9 +627,18 @@ switch ($action) {
         }     
             $curDate =date('Y-m-d');
             $address = patient_db::select_patientAddress($_SESSION['pID'], $curDate);
-            $addressid =$address->getAddressID();
-            $number=$address->getNumber();
-            include 'view/patientProfile.php';
+            if(!empty($address)){
+                        $addressid =$address->getAddressID();
+                        $number=$address->getNumber();
+                        $street =$address->getStreet();
+                        $city =$address->getCity();
+                        $st = ucfirst($address->getState());
+                        $zip = $address->getZip();
+                        $email = $address->getEmail();
+                        
+                    }
+            
+             include 'view/patientProfile.php';
         }
         
 
@@ -847,7 +856,7 @@ switch ($action) {
         break;
         
     case'updateMedicationView':
-       // lots of work here 
+       // view list of current meds
         $adate =date('Y-m-d');
        $medication = patient_db::select_patientMeds($_SESSION['pID'], $adate);
         
@@ -876,10 +885,61 @@ switch ($action) {
     
     case'updateMedication':
        // add code to insert update
+        $errMed =0;
+       $begDate = filter_input(INPUT_POST, 'begDate');
+       $pid = filter_input(INPUT_POST, 'pID');
+       $medid = filter_input(INPUT_POST, 'medID');
+       $drug= filter_input(INPUT_POST, 'med');
+       $quantity= filter_input(INPUT_POST, 'qty');
+       $timesPerDay= filter_input(INPUT_POST, 'tpd');
+       $medNote= filter_input(INPUT_POST, 'note');
+       $endDate = filter_input(INPUT_POST, 'endDate');
+       $max = 30;
+       $min =1;
+        
+       if($endDate ==null || $endDate ==''){
+           $endDate ='9999-12-12';
+       } 
+       
+       if(empty($drug)){
+           $errDrug ="Name Required";
+           $errMed =1;
+       }
+       
+       if(empty($quantity)){
+           $errQty ="Quantity Required";
+           $errMed =1;
+       }
+       
+       if(!empty($quantity)){
+           if($quantity < $min || $quantity > $max ){
+    
+               $errQtyAmt ="Number must be between 1 and 30";
+               $errMed =1;
+               
+           }
+       }
+       
+       if(!empty($timesPerDay)){
+           if($timesPerDay < $min || $timesPerDay > $max ){
+    
+               $errTPDAmt ="Number must be between 1 and 30";
+               $errMed =1;
+               
+           }
+       }
+       
+       If($errMed ==0){
+           patient_db::update_patientMed($medid, $pid, $drug, $quantity, $timesPerDay, $medNote, $begDate, $endDate);
+            $adate =date('Y-m-d');
+           $medication = patient_db::select_patientMeds($_SESSION['pID'], $adate);
+
+           include'view/updateMedicationView.php';
+       }     
         
        
         
-       include'view/updateMedicationView.php';
+      
         die();
         break;
 

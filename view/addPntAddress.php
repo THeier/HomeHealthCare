@@ -44,7 +44,7 @@ if (!isset($name)) {$name = '';}
             <div class="form-group col-md-2">
                 <label for="inputState">State</label>
                 <select id="inputState" class="form-control" name="inputState">
-                    <option>Choose...</option>
+                    <option value="0" selected="selected">Choose...</option>
                     <option value="NE">NE</option>
                 </select>
             </div>

@@ -21,6 +21,9 @@ if(!isset($errQtyAmt)){
 if(!isset($errTPDAmt)){
     $errTPDAmt='';
 }
+if(!isset($errValidEndDate)){
+    $errValidEndDate='';
+}
 
 ?>
 <?php include'view/header.php'; ?>
@@ -57,20 +60,21 @@ if(!isset($errTPDAmt)){
             </div>
             <div class="form-group col-md-2">
                 <label for="inputPDay">End Date</label>
-                <input type="text" class="form-control" id="inputeDate" name="endDate" value="<?php echo htmlspecialchars($endDate); ?>">
-                <span class="error"><?php echo $errTPD ?></span> 
-                <span class="error"><?php echo $errTPDAmt ?></span> 
+                <input type="date" class="form-control" id="inputeDate" name="endDate" value="<?php echo htmlspecialchars($endDate); ?>">
+                <span class="error"><?php echo $errValidEndDate ?></span> 
             </div>
         </div>
         <div class="row">
             <div class="form-group col-md-6">
                 <label for="notes">Notes:</label>
-                <textarea class="form-control" rows="5" id="comment" name="note" value="<?php echo $note; ?>"></textarea>
+                <textarea type='text' class="form-control" rows="5" id="comment" name="note" value=""><?php echo htmlspecialchars($note); ?></textarea>
             </div><br>
         </div>
         <form class="form" action="index.php" method="POST">
-                        <input type="hidden" name="action" value="patient_page" />
+                        <input type="hidden" name="action" value="updateMedication" />
                         <input type="hidden" name="pID" value="<?php echo $_SESSION['pID']; ?>"/>
+                        <input type="hidden" name="medID" value="<?php echo htmlspecialchars($aMed->getMedID()); ?>"/>
+                        <input type="hidden" name="begDate" value="<?php echo htmlspecialchars($aMed->getBegDate()); ?>"/>
         <button class="btn btn-primary" type="submit">Update Medication</button> 
         </form>
     </form>
