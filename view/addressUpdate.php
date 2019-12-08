@@ -78,7 +78,7 @@ if (!isset($email)) {$email = '';}
 </form>
     <form class="form" action="index.php" method="POST">
                         <input type="hidden" name="action" value="updateAddress" />
-                        <input type="hidden" name="addressID" value="<?php echo htmlspecialchars($address->getAddressID()) ?>"
+                        <input type="hidden" name="addressID" value="<?php echo htmlspecialchars($patientAddress->getAddressID()) ?>"
                         <button name="updateAddressBtn" id="cancel" class="btn btn-primary" type="submit">Cancel</button>
                     </form>
 </html>

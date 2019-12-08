@@ -19,7 +19,9 @@ if (!isset($patID)) {
 <div class="container">
     <div class="row col-md-12">
       <div class="col-sm-6">
-          <h3><?php echo "Welcome"; ?></h3>
+          <div class="profileh3" id="profileh3">
+              <h3>Welcome</h3>
+          </div>
       <div class="card">
             <h5 class="cardheader"><?php echo htmlspecialchars($_SESSION['FullName']); ?></h5>
                         <img class="card-img-top" src="<?php echo htmlspecialchars($_SESSION['pic']); ?>" alt="Card image">

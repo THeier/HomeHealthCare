@@ -250,12 +250,13 @@ class patient_db {
         
         
     }
-     public function select_patientMeds($patientid) { 
+     public function select_patientMeds($patientid,$endDate) { 
         
         $db = Database::getDB();
-        $query = 'SELECT * FROM patientmed WHERE patientid =:patientID';
+        $query = 'SELECT * FROM patientmed WHERE patientid =:patientID AND endDate >=:endDate';
         $statement = $db->prepare($query);
         $statement->bindValue(':patientID', $patientid);
+        $statement->bindValue(':endDate', $endDate);
         $statement->execute();
         $results = $statement->fetchAll();
         $statement->closeCursor();
@@ -275,21 +276,22 @@ class patient_db {
     }
     
   
-    public function select_patMed($patientid) { 
+    public function select_patMed($medID, $patientid) { 
         
         $db = Database::getDB();
-        $query = 'SELECT * FROM patientmed WHERE patientid =:PatientID';
+        $query = 'SELECT * FROM patientmed WHERE medID =:medID AND patientid =:patientID';
         $statement = $db->prepare($query);
-        $statement->bindValue(':PatientID', $patientid);
+        $statement->bindValue(':medID', $medID);
+        $statement->bindValue(':patientID', $patientid);
         $statement->execute();
-        $results = $statement->fetch();
+        $result = $statement->fetch();
         $statement->closeCursor();
                
-        if (!empty($results)) 
+        if (!empty($result)) 
           {
-                    $med = new patientMedications($results['medID'], 
-                    $results['patientID'], $results['drug'],
-                    $results['quantity'], $results['timesPerDay']);
+                    $med = new patientMedications($result['medID'], 
+                    $result['patientID'], $result['drug'],
+                    $result['quantity'], $result['timesPerDay'],$result['medNote'], $result['begDate'], $result['endDate']);
         
               return $med;
       }else{

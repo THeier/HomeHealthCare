@@ -3,7 +3,7 @@
 class user_db {
 
 
-     function insert_user($fName, $lName, $userName, $password, $userType, $begDate, $endDate){
+     function insert_user($fName, $lName, $userName, $password, $userType, $begDate, $endDate, $filePath){
         $db = database::getDB();
         $query = 'insert into user(fname, lname, userName, password, userType, begDate, endDate, filePath)'
                  .'VALUES (:fName, :lName, :userName, :password, :userType, :begDate, :endDate, :filePath)';
@@ -15,7 +15,7 @@ class user_db {
         $statement->bindValue(':userType',$userType);
         $statement->bindValue(':begDate', $begDate);
         $statement->bindValue(':endDate', $endDate);
-        $statement->bindValue(':filePath', 'images/default avatar.png');
+        $statement->bindValue(':filePath', $filePath);
         $statement->execute();
         $statement->closeCursor();
                 

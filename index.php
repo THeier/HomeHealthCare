@@ -139,8 +139,6 @@ switch ($action) {
          case 'home':
          
         // takes the logged in user to their profile page 
-        
-        $userName =$_SESSION['userName'];
         $pic =$_SESSION['pic'];
         $fullName = strtoupper($_SESSION['fName']. ' '.$_SESSION['lName']);
         $title =$_SESSION['title'];
@@ -178,8 +176,8 @@ switch ($action) {
         $_SESSION['fName'] = $fName;
         $_SESSION['userName'] = $uname;
         $_SESSION['userType'] = $userType;
-        
-        $endDate ='12-12-9999';
+        $endDate ='9999-12-12';
+        $filePath ='images/default avatar.png';
         
         // Password Validation
         if (preg_match('/^.{10}/', $password) != 1) {
@@ -218,7 +216,7 @@ switch ($action) {
         }
         // Username/Email validation
         if ($uname == null || $uname == "") {
-            $errnoEmail = "Enter an Email";
+            $errnoEmail = "Enter an Email Address";
             $regErr =1;
         } else if ($uname == false) {
             $errinvalidEmail = "Email is invalid";
@@ -233,7 +231,7 @@ switch ($action) {
      if ($regErr ==''){
             $options = ['cost' => 12];
             $hashpass = password_hash($password, PASSWORD_BCRYPT, $options);
-            user_db::insert_user($fName, $lName, $uname, $hashpass, $userType, $begDate, $endDate);
+            user_db::insert_user($fName, $lName, $uname, $hashpass, $userType, $begDate, $endDate, $filePath);
 
             include 'view/login_view.php';
         } else {
@@ -354,10 +352,10 @@ switch ($action) {
         }
 
                
-        $meds = patient_db::select_patientMeds($_SESSION['pID']);
+        $meds = patient_db::select_patientMeds($_SESSION['pID'], $today);
         $_SESSION['meds']=$meds;
 
-        $valid =true;
+        
         if(empty($meds)){
             $nomeds =array();
             $meds=$nomeds;
@@ -508,7 +506,7 @@ switch ($action) {
                     $todaysAge = $today - $dob;
                     $age = floor($todaysAge / 31556926);
 
-                    $meds = patient_db::select_patientMeds($_SESSION['pID']);
+                    $meds = patient_db::select_patientMeds($_SESSION['pID'], $today);
                     if(empty($meds)){
                         $nomeds =array();
                         $meds=$nomeds;
@@ -585,7 +583,7 @@ switch ($action) {
           $num =filter_input(INPUT_POST,'num');
           $street = filter_input(INPUT_POST, 'street');
           $city = filter_input(INPUT_POST, 'city');
-          $state =filter_input(INPUT_POST, 'st');
+          $state =filter_input(INPUT_POST, 'inputState');
           $zip = filter_input(INPUT_POST, 'zip');
           $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);  
           if(is_null($email)){
@@ -594,7 +592,10 @@ switch ($action) {
           
           $currentDate = date('Y-m-d');
           $endDate ='9999-12-12';
-         
+         if($state !=null || $state !=''){
+             $state ='NE';
+         }
+          
           if($num =='' || $num ==NULL){
               $errNum= 'Enter Number';
               $err=1;
@@ -619,7 +620,7 @@ switch ($action) {
             $todaysAge = $today - $dob;
             $age = floor($todaysAge / 31556926);
             
-            $meds = patient_db::select_patientMeds($_SESSION['pID']);
+            $meds = patient_db::select_patientMeds($_SESSION['pID'],$today);
             if(empty($meds)){
             $nomeds =array();
             $meds=$nomeds;
@@ -718,20 +719,25 @@ switch ($action) {
                     $todaysAge = $today - $dob;
                     $age = floor($todaysAge / 31556926);
 
-                    $meds = patient_db::select_patientMeds($_SESSION['pID']);
+                    $meds = patient_db::select_patientMeds($_SESSION['pID'], $today);
                     if(empty($meds)){
                         $nomeds =array();
                         $meds=$nomeds;
                      }     
                     $curDate =date('Y-m-d');
                     $address = patient_db::select_patientAddress($_SESSION['pID'], $curDate);
-                    $addressid =$address->getAddressID();
-                    $number=$address->getNumber();
-                    $street =$address->getStreet();
-                    $city =$address->getCity();
-                    $st = ucfirst($address->getState());
-                    $zip = $address->getZip();
-                    $email = $address->getEmail();
+                    if(!empty($address)){
+                        $addressid =$address->getAddressID();
+                        $number=$address->getNumber();
+                        $street =$address->getStreet();
+                        $city =$address->getCity();
+                        $st = ucfirst($address->getState());
+                        $zip = $address->getZip();
+                        $email = $address->getEmail();
+                        
+                        
+                    }
+                    
                           
                 
             }
@@ -743,8 +749,6 @@ switch ($action) {
         
         
        
-       // header('Location: index.php?action=home');
-        
         die();
         break;
 
@@ -761,7 +765,7 @@ switch ($action) {
     case'addMedication':
          
        $errMed =0;
-       $today = date_default_timezone_get('Y-m-d');
+       $today = date('Y-m-d');
        $drug= filter_input(INPUT_POST, 'med');
        $quantity= (int)filter_input(INPUT_POST, 'qty');
        $timesPerDay= (int)filter_input(INPUT_POST, 'tpd');
@@ -799,21 +803,83 @@ switch ($action) {
            }
        }
        
-       If(errMed ==0){
+       If($errMed ==0){
            patient_db::insert_patientMed($_SESSION['pID'], $drug, $quantity, $timesPerDay, $medNote, $today, $endDate);
-       }
-       
+           
+           $aPatient = patient_db::select_patient($_SESSION['pID'], $_SESSION['uid']);
+            if(!empty($aPatient)){
+                
+                    $bd =$aPatient->getDob();
+                    $dob = strtotime($bd);
+                    $today = time();
+                    $todaysAge = $today - $dob;
+                    $age = floor($todaysAge / 31556926);
+
+                    $meds = patient_db::select_patientMeds($_SESSION['pID'],$today);
+                    if(empty($meds)){
+                        $nomeds =array();
+                        $meds=$nomeds;
+                     }     
+                    $curDate =date('Y-m-d');
+                    $address = patient_db::select_patientAddress($_SESSION['pID'], $curDate);
+                    if(!empty($address)){
+                        $addressid =$address->getAddressID();
+                        $number=$address->getNumber();
+                        $street =$address->getStreet();
+                        $city =$address->getCity();
+                        $st = ucfirst($address->getState());
+                        $zip = $address->getZip();
+                        $email = $address->getEmail();
+
+                        
+                    }
+                    
+                          
+                
+            }
+            
+            
+            include 'view/patientProfile.php';
+       }     
         
-       header('Location: index.php?action=home');
-       //include 'view/patientProfile.php';
+       
         die();
         break;
         
-    case'updateMedication':
+    case'updateMedicationView':
        // lots of work here 
-        header('Location: index.php?action=patient_page');
+        $adate =date('Y-m-d');
+       $medication = patient_db::select_patientMeds($_SESSION['pID'], $adate);
         
-       // include'view/updateMedication.php';
+       include'view/updateMedicationView.php';
+        die();
+        break;
+
+    case'updateMedicationPage':
+       // get selected med and display for update
+        $today =date('Y-m-d');
+        $medid = filter_input(INPUT_POST, 'medID');
+        $patid = filter_input(INPUT_POST, 'Pid');
+        $aMed = patient_db::select_patMed($medid, $patid);
+        $note =$aMed->getMedNote();
+        $eDate = $aMed->getEndDate();
+        if($eDate =='9999-12-12'){
+            
+            $endDate='';
+        }
+        
+       
+        
+       include'view/updateMedication.php';
+        die();
+        break;
+    
+    case'updateMedication':
+       // add code to insert update
+        
+       
+        
+       include'view/updateMedicationView.php';
         die();
         break;
 
@@ -895,6 +961,27 @@ switch ($action) {
         user_db::delete_user($usertoDelID);
         
         include 'admin/adminPage.php';
+        
+        die();
+        break;
+    
+     case 'adminEditUser':
+        // Delete user and all associated 
+        
+        $userID = filter_input(INPUT_POST, 'userID');
+        $userNameToEdit = filter_input(INPUT_POST, 'userName');
+        $userToEdit = user_db::get_userInfo($userNameToEdit);
+        
+        include 'admin/adminEditUserPage.php';
+        
+        die();
+        break;
+    
+    case 'charts':
+        // get number of active users and number of inactive users
+        //  add numbers to data in pie 
+        // two sql calls one for number of active and other number of inactive
+        
         
         die();
         break;

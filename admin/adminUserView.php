@@ -67,7 +67,8 @@ Website: https://mdbootstrap.com/docs/jquery/tables/editable/#!
             <td>
               <form action="index.php" method="POST">
                     <input type="hidden" name="action" value="adminUpdateUser">
-                    <input type="hidden" name="userID" value="<?php echo htmlspecialchars($u->getUserID()); ?>"
+                    <input type="hidden" name="userID" value="<?php echo htmlspecialchars($u->getUserID()); ?>">
+                    <input type="hidden" name="userName" value="<?php echo htmlspecialchars($u->getUserName()); ?>">
                            <span class="table-edit"><button type="submit"
                     class="btn btn-secondary btn-rounded btn-sm my-0" name="edit">Edit</button></span>
                                                

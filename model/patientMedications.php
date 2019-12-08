@@ -7,13 +7,13 @@
  */
 class patientMedications {
    
-    private $medID, $patientID, $drug, $quanity, $timesPerDay, $medNote, $begDate, $endDate;
+    private $medID, $patientID, $drug, $quantity, $timesPerDay, $medNote, $begDate, $endDate;
     
-    function __construct($medID, $patientID, $drug, $quanity, $timesPerDay, $medNote, $begDate, $endDate) {
+    function __construct($medID, $patientID, $drug, $quantity, $timesPerDay, $medNote, $begDate, $endDate) {
         $this->medID = $medID;
         $this->patientID = $patientID;
         $this->drug = $drug;
-        $this->quanity = $quanity;
+        $this->quanity = $quantity;
         $this->timesPerDay = $timesPerDay;
         $this->medNote = $medNote;
         $this->begDate =$begDate;
@@ -32,7 +32,7 @@ class patientMedications {
         return $this->drug;
     }
 
-    function getQuanity() {
+    function getQuantity() {
         return $this->quanity;
     }
 

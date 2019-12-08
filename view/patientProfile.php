@@ -67,7 +67,7 @@ if(!isset($email)){ $email ='';}
            
        <?php  foreach($meds as $m) : ?>
            <td><?php echo htmlspecialchars($m->getDrug());; ?></td>
-        <td><?php echo htmlspecialchars($m->getQuanity()); ?></td>
+        <td><?php echo htmlspecialchars($m->getQuantity()); ?></td>
         <td><?php echo htmlspecialchars($m->getTimesPerDay()); ?></td>
         <td colspan="2"><?php echo htmlspecialchars($m->getmedNote()); ?></td>
         </tr>
@@ -77,7 +77,7 @@ if(!isset($email)){ $email ='';}
   </table>
     <?php if(!empty($meds)) { ?>     
        <form action="index.php" method="post">
-            <input type="hidden" name="action" value="updateMedication">
+            <input type="hidden" name="action" value="updateMedicationView">
             <input type="hidden" name="pID" value="<?php echo html_entity_decode($aPatient->getPatientID()) ?>">
             <input class="subs1" type="submit" value="Update Medication">
      </form>

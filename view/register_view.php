@@ -114,7 +114,6 @@ if (!isset($errfNamefirstchar)) {
                             <option value="cna">Certified Nurse Assistant</option>
                             <option value="cma">Certified Medication Assistant</option>
                             <option value="cma">Other (PAS/CHORE)</option>
-                            <option value="admin">Administrator</option>
                         </select>
                    
                     <label>&nbsp;</label><br>
