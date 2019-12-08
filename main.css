@@ -19,6 +19,11 @@ html, body, form{
    margin-right: 120px;
     text-align: center;
 }
+.chart-container{
+    margin: 25px;
+    width: 500px;
+    height: auto;
+}
 #h1span {
    padding: 30px;
    font-family:  Verdana, sans-serif;

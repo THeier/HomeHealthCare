@@ -85,6 +85,7 @@ $admin=false;
       <?php }?>
       <?php if($loggedIn == true && $admin ==true) { ?>
       <li class="nav-item"><a class="nav-link" onclick="window.location.href='?action=adminHome';">Admin Home</a></li>
+      <li class="nav-item"><a class="nav-link" onclick="window.location.href='?action=default';">Logout</a></li>
     <?php }?>
     </ul>
    

@@ -169,6 +169,36 @@ class user_db {
         }
     }
     
+    public static function countActiveUsers($endDate){
+        
+        $db = Database::getDB();
+        
+        $query = 'Select COUNT(userID) from user where endDate >=:endDate';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':endDate', $endDate);
+        $statement->execute();
+        $count =$statement->fetchColumn();
+        $statement->closeCursor();
+             
+        return $count;
+        
+        
+    }
+     public static function countInactiveUsers($endDate){
+        
+        $db = Database::getDB();
+        
+        $query = 'Select COUNT(userID) from user where endDate <:endDate';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':endDate', $endDate);
+        $statement->execute();
+        $count =$statement->fetchColumn();
+        $statement->closeCursor();
+             
+        return $count;
+        
+        
+    }
 }
 
 

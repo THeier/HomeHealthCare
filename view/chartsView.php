@@ -9,67 +9,43 @@ and open the template in the editor.
 
 <html>
     <head>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
         <script src="Chart.js"></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js'></script>
     </head>  
     <body>
-        <canvas id="mycanvas" width="256" height="256">
+        <div class="form-row">
+        <div class="chart-container justify-content-center">
+        <canvas id="myChart" width="10%" height="10%">
+            </div>
+            </div>
             <script>
-                $(document).ready(function(){
-                    var ctx = document.getElementById('mycanvas').getContext('2d');
-                    
-                    var data[
-                        {
-                            value: 270;
-                            color: "blue",
-                            hightlight: "lightskyblue",
-                            label: "Active Users"
-                            
+               
+                var ctx = document.getElementById('myChart').getContext('2d');
+                ctx.width =500;
+                ctx.height =300;
+                    var chart = new Chart(ctx, {
+                        // The type of chart we want to create
+                        type: 'pie',
+
+                        // The data for our dataset
+                        data: {
+                            labels: ['Active', 'Inactive'],
+                            datasets: [{
+                                label: 'User Chart',
+                                backgroundColor: 'rgb(100, 99, 120)',
+                                borderColor: 'rgb(255, 99, 132)',
+                                data: <?php echo json_encode($myData, JSON_NUMERIC_CHECK); ?>,
+                            }]
                         },
-                        {
-                            value: 90;
-                            color: "blue",
-                            hightlight: "lightskyblue",
-                            label: "Inactive Users"
-                        }
-                ];
-                
-                var piechart = new Chart(ctx).Pie(data);
-                                  
-          });       
+
+                        // Configuration options go here
+                        options: {}
+});  
             </script>
         </body>
     
 </html>
-<body>
-    <div class="chart">
-    
 
-    <script>
-        
-        // mydata will come form the sql done to 
-        var mydata ='';
-        var chart = new Chart(ctx, {
-            // The type of chart we want to create
-            type: 'line',
-
-            // The data for our dataset
-            data: {
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-                datasets: [{
-                        label: 'Number of Patients by Month',
-                        backgroundColor: 'rgb(255, 99, 132)',
-                        borderColor: 'rgb(255, 99, 132)',
-                        data: [0, 10, 5, 2, 20, 30, 45]
-                    }]
-            },
-
-            // Configuration options go here
-            options: {}
-        });
-
-    </script>
-    </div>
-
-</body>
 
 <?php include 'view/footer.php'; ?>

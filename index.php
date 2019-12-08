@@ -981,8 +981,15 @@ switch ($action) {
         // get number of active users and number of inactive users
         //  add numbers to data in pie 
         // two sql calls one for number of active and other number of inactive
+        $today =date('Y-m-d');
+        $myData = array();
+        $activeCount = user_db::countActiveUsers($today);
+        $AU =(int)$activeCount;
+        $inactiveCount = user_db::countInactiveUsers($today);
+        array_push($myData, $AU);
+        array_push($myData, $inactiveCount);
         
-        
+        include 'view/chartsView.php';
         die();
         break;
     
