@@ -54,13 +54,13 @@ $admin=false;
             <a class="nav-link" href="?action=adminHome">Admin Home</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="?action=adminHome">Users List</a>
+            <a class="nav-link" href="?action=adminUserPage">Users List</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="?action=adminHome">Patient List</a>
+            <a class="nav-link" href="?action=adminPatientPage">Patient List</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="?action=adminHome">Chart</a>
+            <a class="nav-link" href="?action=charts">Chart</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="?action=default">Log Out</a>

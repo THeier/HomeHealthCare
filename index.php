@@ -1026,9 +1026,9 @@ switch ($action) {
         break;
     
      case 'adminEditUser':
-        // Delete user and all associated 
+        // edit user page view
         
-        $userID = filter_input(INPUT_POST, 'userID');
+        $userIdToEdit = filter_input(INPUT_POST, 'userID');
         $userNameToEdit = filter_input(INPUT_POST, 'userName');
         $userToEdit = user_db::get_userInfo($userNameToEdit);
         
@@ -1037,17 +1037,37 @@ switch ($action) {
         die();
         break;
     
+    case 'adminEditUser':
+        //update user info
+        
+        $userIdUpdate = filter_input(INPUT_POST, 'userIdToEdit');
+        $FNameToUpdate = filter_input(INPUT_POST, 'fName');
+       
+        
+        $userType ='admin';
+        $allUsers = user_db::getUsers($userType);
+        
+        include 'admin/adminUserView.php';
+        
+        
+        die();
+        break;
+    
+    
+    
     case 'charts':
         // get number of active users and number of inactive users
         //  add numbers to data in pie 
         // two sql calls one for number of active and other number of inactive
         $today =date('Y-m-d');
         $myData = array();
-        $activeCount = user_db::countActiveUsers($today);
+        $type ='admin';
+        $activeCount = user_db::countActiveUsers($type, $today);
         $AU =(int)$activeCount;
-        $inactiveCount = user_db::countInactiveUsers($today);
+        $inactiveCount = user_db::countInactiveUsers($type, $today);
+        $IU =(int)$inactiveCount;
         array_push($myData, $AU);
-        array_push($myData, $inactiveCount);
+        array_push($myData, $IU);
         
         include 'view/chartsView.php';
         die();

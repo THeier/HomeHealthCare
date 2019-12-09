@@ -35,7 +35,6 @@ Website: https://mdbootstrap.com/docs/jquery/tables/editable/#!
             <th class="text-center">Type</th>
             <th class="text-center">Begin Date</th>
             <th class="text-center">End Date</th>
-            <th class="text-center">Sort</th>
             <th class="text-center">Remove</th>
             <th class="text-center">Edit</th>
           </tr>
@@ -50,12 +49,6 @@ Website: https://mdbootstrap.com/docs/jquery/tables/editable/#!
             <td class="pt-3-half" contenteditable="true"><?php echo strtoupper($u->getUserType());  ?></td>
             <td class="pt-3-half" contenteditable="true"><?php echo date('m-d-Y',strtotime($u->getBegDate())); ?></td>
             <td class="pt-3-half" contenteditable="true"><?php echo htmlspecialchars($u->getEndDate()); ?></td>
-            <td class="pt-3-half">
-              <span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up"
-                    aria-hidden="true"></i></a></span>
-              <span class="table-down"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-down"
-                    aria-hidden="true"></i></a></span>
-            </td>
             <td>
                 <form action="index.php" method="POST">
                     <input type="hidden" name="action" value="adminDelUser">
@@ -66,7 +59,7 @@ Website: https://mdbootstrap.com/docs/jquery/tables/editable/#!
             </td>
             <td>
               <form action="index.php" method="POST">
-                    <input type="hidden" name="action" value="adminUpdateUser">
+                    <input type="hidden" name="action" value="adminEditUser">
                     <input type="hidden" name="userID" value="<?php echo htmlspecialchars($u->getUserID()); ?>">
                     <input type="hidden" name="userName" value="<?php echo htmlspecialchars($u->getUserName()); ?>">
                            <span class="table-edit"><button type="submit"

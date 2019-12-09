@@ -169,12 +169,13 @@ class user_db {
         }
     }
     
-    public static function countActiveUsers($endDate){
+    public static function countActiveUsers($userType,$endDate){
         
         $db = Database::getDB();
         
-        $query = 'Select COUNT(userID) from user where endDate >=:endDate';
+        $query = 'Select COUNT(userID) from user WHERE userType !=:userType AND endDate >=:endDate';
         $statement = $db->prepare($query);
+        $statement->bindValue(':userType', $userType);
         $statement->bindValue(':endDate', $endDate);
         $statement->execute();
         $count =$statement->fetchColumn();
@@ -184,12 +185,13 @@ class user_db {
         
         
     }
-     public static function countInactiveUsers($endDate){
+     public static function countInactiveUsers($userType, $endDate){
         
         $db = Database::getDB();
         
-        $query = 'Select COUNT(userID) from user where endDate <:endDate';
+        $query = 'Select COUNT(userID) from user WHERE userType !=:userType AND endDate <:endDate';
         $statement = $db->prepare($query);
+        $statement->bindValue(':userType', $userType);
         $statement->bindValue(':endDate', $endDate);
         $statement->execute();
         $count =$statement->fetchColumn();
