@@ -353,7 +353,7 @@ switch ($action) {
 
                
         $meds = patient_db::select_patientMeds($_SESSION['pID'], $today);
-        $_SESSION['meds']=$meds;
+        //$_SESSION['meds']=$meds;
 
         
         if(empty($meds)){
@@ -362,7 +362,7 @@ switch ($action) {
         }     
        
         include 'view/patientProfile.php';
-        var_dump($address);
+        
         die();
         break;
 
@@ -505,8 +505,8 @@ switch ($action) {
                     $today = time();
                     $todaysAge = $today - $dob;
                     $age = floor($todaysAge / 31556926);
-
-                    $meds = patient_db::select_patientMeds($_SESSION['pID'], $today);
+                    $curDate =date('Y-m-d');
+                    $meds = patient_db::select_patientMeds($_SESSION['pID'], $curDate);
                     if(empty($meds)){
                         $nomeds =array();
                         $meds=$nomeds;
@@ -569,7 +569,7 @@ switch ($action) {
         $name =$patient->getFName(). ' '.$patient->getLName();
         
         include 'view/addPntAddress.php';         
-         var_dump($_SESSION['pID']);
+         
         
         die();
         break;
@@ -933,8 +933,40 @@ switch ($action) {
            patient_db::update_patientMed($medid, $pid, $drug, $quantity, $timesPerDay, $medNote, $begDate, $endDate);
             $adate =date('Y-m-d');
            $medication = patient_db::select_patientMeds($_SESSION['pID'], $adate);
+           if(!empty($medication)){
+               include'view/updateMedicationView.php';
+               
+           } else {
+                $aPatient = patient_db::select_patient($_SESSION['pID'], $_SESSION['uid']);
+            
+                
+                    $bd =$aPatient->getDob();
+                    $dob = strtotime($bd);
+                    $today = time();
+                    $todaysAge = $today - $dob;
+                    $age = floor($todaysAge / 31556926);
 
-           include'view/updateMedicationView.php';
+                    $meds = patient_db::select_patientMeds($_SESSION['pID'], $today);
+                    if(empty($meds)){
+                        $nomeds =array();
+                        $meds=$nomeds;
+                     }     
+                    $curDate =date('Y-m-d');
+                    $address = patient_db::select_patientAddress($_SESSION['pID'], $curDate);
+                    if(!empty($address)){
+                        $addressid =$address->getAddressID();
+                        $number=$address->getNumber();
+                        $street =$address->getStreet();
+                        $city =$address->getCity();
+                        $st = ucfirst($address->getState());
+                        $zip = $address->getZip();
+                        $email = $address->getEmail();
+                        
+                    }
+               
+               include 'view/patientProfile.php'; 
+           }
+           
        }     
         
        
@@ -1077,6 +1109,8 @@ switch ($action) {
 
         $_SESSION = array();
         session_destroy();
-        // header('Location: index.php?action=login');
+       
         include 'view/login_view.php';
+        die();
+        break;
 }
