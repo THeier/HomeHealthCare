@@ -352,7 +352,7 @@ switch ($action) {
         }
 
                
-        $meds = patient_db::select_patientMeds($_SESSION['pID'], $today);
+        $meds = patient_db::select_patientMeds($_SESSION['pID'], $curDate);
         //$_SESSION['meds']=$meds;
 
         

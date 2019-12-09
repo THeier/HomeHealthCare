@@ -235,7 +235,7 @@ class patient_db {
     // sql to select pateint med by id 
     public static function insert_patientMed($patientID, $drug, $quantity, $timesPerDay, $medNote, $begDate, $endDate){
         $db = Database::getDB();
-        $query = 'UPDATE patientmed (patientID, drug, quantity, timesPerDay, medNote, begDate, endDate) '
+        $query = 'INSERT patientmed (patientID, drug, quantity, timesPerDay, medNote, begDate, endDate) '
                 . 'VALUES (:patientID, :drug, :quantity, :timesPerDay, :medNote, :begDate, :endDate)';
         $statement = $db->prepare($query);
         $statement->bindValue(':patientID', $patientID);

@@ -30,7 +30,9 @@ Website: https://mdbootstrap.com/docs/jquery/tables/editable/#!
             <th class="text-center">Edit</th>
           </tr>
         </thead>
-        
+        <?php if(empty($contactUs)) { ?>
+        <p>No Medications found</p>
+        <?php }else { ?>
         <?php foreach($medication as $med) :?>
           <tr class="hide">
               <td class="pt-3-half" contenteditable="true"><?php echo htmlspecialchars($med->getPatientID()); ?></td>
@@ -51,6 +53,7 @@ Website: https://mdbootstrap.com/docs/jquery/tables/editable/#!
             </td>
           </tr>
           <?php endforeach; ?>
+        <?php }?>
         </tbody>
       </table>
     </div>
