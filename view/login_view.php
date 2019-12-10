@@ -28,17 +28,17 @@ if (!isset($loginErr)) {
             <div  class="main-agileinfo">
                 <input type="hidden" name="action" value="login_user" />
                 <div class="main-layouts wrapper">           
-            <div  class="agileits-top">
-                <label>User Name </label>
-                <input class="form-control" type="text" name="userName" value='<?php echo htmlspecialchars($userName) ?>'required>
-                <span class="error"><?php echo $loginErr ?></span><br>
-                <br>   
-                <label>Password </label>
-                <input class="form-control" type="password" name="pass" required>
-                <input class="subs" type="submit" value="Login">
-             </div>
-              </div>
-</div>
+                    <div  class="agileits-top">
+                        <label>User Name </label>
+                        <input class="form-control" type="text" name="userName" value='<?php echo htmlspecialchars($userName) ?>'required>
+                        <span class="error"><?php echo $loginErr ?></span><br>
+                        <br>   
+                        <label>Password </label>
+                        <input class="form-control" type="password" name="pass" required>
+                        <input class="subs" type="submit" value="Login">
+                    </div>
+                </div>
+            </div>
         </form>
     </div>
 </div>

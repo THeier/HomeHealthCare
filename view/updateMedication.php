@@ -4,27 +4,26 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<?php 
-if(!isset($errDrug)){
-    $errDrug='';
+<?php
+if (!isset($errDrug)) {
+    $errDrug = '';
 }
 
-if(!isset($errQty)){
-    $errQty='';
+if (!isset($errQty)) {
+    $errQty = '';
 }
-if(!isset($errTPD)){
-    $errTPD='';
+if (!isset($errTPD)) {
+    $errTPD = '';
 }
-if(!isset($errQtyAmt)){
-    $errQtyAmt='';
+if (!isset($errQtyAmt)) {
+    $errQtyAmt = '';
 }
-if(!isset($errTPDAmt)){
-    $errTPDAmt='';
+if (!isset($errTPDAmt)) {
+    $errTPDAmt = '';
 }
-if(!isset($errValidEndDate)){
-    $errValidEndDate='';
+if (!isset($errValidEndDate)) {
+    $errValidEndDate = '';
 }
-
 ?>
 <?php include'view/header.php'; ?>
 <html>
@@ -32,7 +31,7 @@ if(!isset($errValidEndDate)){
     <form class="form" action="index.php" method="POST">
         <input type="hidden" name="action" value="addMedication" />
         <div class="form-row">
-            <br>  <label><?php echo 'Update Medication for ' .$_SESSION['PatientFN']; ?></label><br>
+            <br>  <label><?php echo 'Update Medication for ' . $_SESSION['PatientFN']; ?></label><br>
         </div>
 
         <div class="form-row">
@@ -71,13 +70,13 @@ if(!isset($errValidEndDate)){
             </div><br>
         </div>
         <form class="form" action="index.php" method="POST">
-                        <input type="hidden" name="action" value="updateMedication" />
-                        <input type="hidden" name="pID" value="<?php echo $_SESSION['pID']; ?>"/>
-                        <input type="hidden" name="medID" value="<?php echo htmlspecialchars($aMed->getMedID()); ?>"/>
-                        <input type="hidden" name="begDate" value="<?php echo htmlspecialchars($aMed->getBegDate()); ?>"/>
-        <button class="btn btn-primary" type="submit">Update Medication</button> 
+            <input type="hidden" name="action" value="updateMedication" />
+            <input type="hidden" name="pID" value="<?php echo $_SESSION['pID']; ?>"/>
+            <input type="hidden" name="medID" value="<?php echo htmlspecialchars($aMed->getMedID()); ?>"/>
+            <input type="hidden" name="begDate" value="<?php echo htmlspecialchars($aMed->getBegDate()); ?>"/>
+            <button class="btn btn-primary" type="submit">Update Medication</button> 
         </form>
     </form>
-    
+
 </html>
 <?php include 'view/footer.php'; ?>

@@ -21,12 +21,11 @@ if (!isset($errGen)) {
 if (!isset($fname)) {
     $fname = "";
 }
-
 ?>
 
 <?php include'view/header.php'; ?>
 <html>
-   <div class="container">
+    <div class="container">
         <div class="row">
             <div class="col-sm-4">
                 <form class="form" action="index.php" method="post">
@@ -45,12 +44,12 @@ if (!isset($fname)) {
                             <option value="Yes">Yes</option>
 
                         </select>
-                        <span class="error"><?php echo $errDis ;?></span><br><br>
-                        
+                        <span class="error"><?php echo $errDis; ?></span><br><br>
+
                         <h6>Gender</h6>
 
                         <div class="form-check-inline">
-                            
+
                             <label class="form-check-label">
                                 <input type="checkbox" class="form-check-input" name="gen" value="male">Male
                             </label>
@@ -59,7 +58,7 @@ if (!isset($fname)) {
                             <label class="form-check-label">
                                 <input type="checkbox" class="form-check-input" name="gen" value="female">Female
                             </label>
-                            
+
                         </div>
                         <span class="error"><?php echo $errGen; ?></span>
                         <!-- add validation message when not selected-->

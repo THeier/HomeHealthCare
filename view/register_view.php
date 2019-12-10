@@ -103,19 +103,20 @@ if (!isset($errfNamefirstchar)) {
                         ?></span>
                     <label>Password</label>
                     <input class="form-control" type="password" name="password"><br>
+                    <a href="register_view.php"></a>
                     <span class="error"><?php echo htmlspecialchars($errshortPass); ?></span>
                     <span class="error"><?php echo htmlspecialchars($errlcasePass); ?></span>
                     <span class="error"><?php echo htmlspecialchars($errucasePass); ?></span>
                     <span class="error"><?php echo htmlspecialchars($errdigPass); ?></span><br>
 
-                   
-                        <select class="custom-select custom-select-sm" name="type" required="true">
-                            <option>Select...</option>
-                            <option value="cna">Certified Nurse Assistant</option>
-                            <option value="cma">Certified Medication Assistant</option>
-                            <option value="cma">Other (PAS/CHORE)</option>
-                        </select>
-                   
+
+                    <select class="custom-select custom-select-sm" name="type" required="true">
+                        <option>Select...</option>
+                        <option value="cna">Certified Nurse Assistant</option>
+                        <option value="cma">Certified Medication Assistant</option>
+                        <option value="cma">Other (PAS/CHORE)</option>
+                    </select>
+
                     <label>&nbsp;</label><br>
                     <input class="subs" type="submit" value="Register">   
 

@@ -1,25 +1,23 @@
 <!DOCTYPE html>
 <?php
-If(!isset($_SESSION['uid'])){
-    $_SESSION['uid'] ='';
+If (!isset($_SESSION['uid'])) {
+    $_SESSION['uid'] = '';
 }
-If(!isset($_SESSION['admin'])){
-    $_SESSION['admin'] ='';
+If (!isset($_SESSION['admin'])) {
+    $_SESSION['admin'] = '';
 }
-$loggedIn=false;
+$loggedIn = false;
 
-$admin=false;    
-   
-    if(isset($_SESSION['admin'])&& $_SESSION['admin'] ==true){
-       $admin =true;
-    }
-       
-    if(isset($_SESSION['uid']) && $_SESSION['uid'] !='')  {         
-            $loggedIn = true;
-            
-     }
+$admin = false;
 
-        ?>
+if (isset($_SESSION['admin']) && $_SESSION['admin'] == true) {
+    $admin = true;
+}
+
+if (isset($_SESSION['uid']) && $_SESSION['uid'] != '') {
+    $loggedIn = true;
+}
+?>
 <html lang="en">
     <head>
         <!-- Required meta tags -->
@@ -42,58 +40,57 @@ $admin=false;
 
     </head>
 
-<!-- the body section -->
+    <!-- the body section -->
 
-<header>
-    <div class="jumbotron text-center mb-0">
-        <div class="page-header">
-            <p class="page-header">
-            <h1><span id="h1span">HHC Patient Manager</span><img class="" src="images/CAREGiver.jpg"  opacity: 0.8 !important;"></h1> 
-               
-            </p>
+    <header>
+        <div class="jumbotron text-center mb-0">
+            <div class="page-header">
+                <p class="page-header">
+                <h1><span id="h1span">HHC Patient Manager</span><img class="" src="images/CAREGiver.jpg"  opacity: 0.8 !important;"></h1> 
+
+                </p>
+            </div>
         </div>
-    </div>
-</header>
+    </header>
     <div>
-        
-        
-<nav class="navbar navbar-expand-sm bg-light ">
-  <div class="container-fluid">
-    
-   <a class="navbar-brand" href="#">Patient Manager</a>
 
-    <ul class="navbar-nav">
-         <?php if($_SESSION['uid'] =='' && $_SESSION['admin'] =='') { ?>
-        <li class="nav-item"><a class="nav-link" onclick="window.location.href='?action=login';">About Us</a></li>
-        <li class="nav-item"><a class="nav-link" onclick="window.location.href='?action=login';">Contact Us</a></li>
-        <li class="nav-item"><a class="nav-link" onclick="window.location.href='?action=login';">Log In</a></li>
-        <li class="nav-item"><a class="nav-link" onclick="window.location.href='?action=register';">Register</a></li>
-         <?php }?>
-      <?php if($loggedIn ==true && $loggedIn !='' && $admin ==false){ ?>
-        <li class="nav-item"><a class="nav-link" onclick="window.location.href='?action=home';" >Home</a></li>
-        <li class="nav-item"><a class="nav-link" onclick="window.location.href='?action=addNewPatientPage';">Add Patient</a></li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="navbardrop" data-toggle="dropdown" onclick="window.location.href='#';">
-              Options..
-          </a> 
-          <div class="dropdown-menu">
-              <a class="dropdown-item" onclick="window.location.href='#';">Update Info</a>
-              <a class="dropdown-item" onclick="window.location.href='#';">Change Password</a>
-          </div>
-      </li>
-      <li class="nav-item"><a class="nav-link" onclick="window.location.href='?action=default';">Logout</a></li>
-      <?php }?>
-      <?php if($loggedIn == true && $admin ==true) { ?>
-      <li class="nav-item"><a class="nav-link" onclick="window.location.href='?action=adminHome';">Admin Home</a></li>
-      <li class="nav-item"><a class="nav-link" onclick="window.location.href='?action=adminUserPage';">Users List</a></li>
-      <li class="nav-item"><a class="nav-link" onclick="window.location.href='?action=adminPatientPage';">Patient List</a></li>
-      <li class="nav-item"><a class="nav-link" onclick="window.location.href='?action=charts';">Chart</a></li>
-      <li class="nav-item"><a class="nav-link" onclick="window.location.href='?action=default';">Logout</a></li>
-    <?php }?>
-    </ul>
-   
-   
-  </div>
-</nav>
+
+        <nav class="navbar navbar-expand-sm bg-light ">
+            <div class="container-fluid">
+
+                <a class="navbar-brand" href="#">Patient Manager</a>
+
+                <ul class="navbar-nav">
+<?php if ($_SESSION['uid'] == '' && $_SESSION['admin'] == '') { ?>
+                        <li class="nav-item"><a class="nav-link" onclick="window.location.href = '?action=login';">About Us</a></li>
+                        <li class="nav-item"><a class="nav-link" onclick="window.location.href = '?action=login';">Contact Us</a></li>
+                        <li class="nav-item"><a class="nav-link" onclick="window.location.href = '?action=login';">Log In</a></li>
+                        <li class="nav-item"><a class="nav-link" onclick="window.location.href = '?action=register';">Register</a></li>
+<?php } ?>
+                    <?php if ($loggedIn == true && $loggedIn != '' && $admin == false) { ?>
+                        <li class="nav-item"><a class="nav-link" onclick="window.location.href = '?action=home';" >Home</a></li>
+                        <li class="nav-item"><a class="nav-link" onclick="window.location.href = '?action=addNewPatientPage';">Add Patient</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbardrop" data-toggle="dropdown" onclick="window.location.href = '#';">
+                                Options..
+                            </a> 
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" onclick="window.location.href = '#';">Update Info</a>
+                                <a class="dropdown-item" onclick="window.location.href = '#';">Change Password</a>
+                            </div>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" onclick="window.location.href = '?action=default';">Logout</a></li>
+<?php } ?>
+                    <?php if ($loggedIn == true && $admin == true) { ?>
+                        <li class="nav-item"><a class="nav-link" onclick="window.location.href = '?action=adminHome';">Admin Home</a></li>
+                        <li class="nav-item"><a class="nav-link" onclick="window.location.href = '?action=adminUserPage';">Users List</a></li>
+                        <li class="nav-item"><a class="nav-link" onclick="window.location.href = '?action=adminPatientPage';">Patient List</a></li>
+                        <li class="nav-item"><a class="nav-link" onclick="window.location.href = '?action=charts';">Chart</a></li>
+                        <li class="nav-item"><a class="nav-link" onclick="window.location.href = '?action=default';">Logout</a></li>
+<?php } ?>
+                </ul>
+
+
+            </div>
+        </nav>
     </div>
-            

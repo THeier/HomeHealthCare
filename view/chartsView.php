@@ -15,36 +15,36 @@ and open the template in the editor.
     </head>  
     <body>
         <div class="form-row">
-        <div class="chart-container justify-content-center">
-        <canvas id="myChart" width="10%" height="10%">
+            <div class="chart-container justify-content-center">
+                <canvas id="myChart" width="10%" height="10%">
             </div>
-            </div>
-            <script>
-               
-                var ctx = document.getElementById('myChart').getContext('2d');
-                ctx.width =500;
-                ctx.height =300;
-                    var chart = new Chart(ctx, {
-                        // The type of chart we want to create
-                        type: 'pie',
+        </div>
+        <script>
 
-                        // The data for our dataset
-                        data: {
-                            labels: ['Active', 'Inactive'],
-                            datasets: [{
-                                label: 'User Chart',
-                                backgroundColor: 'rgb(100, 99, 120)',
-                                borderColor: 'rgb(255, 99, 132)',
-                                data: <?php echo json_encode($myData, JSON_NUMERIC_CHECK); ?>,
-                            }]
-                        },
+            var ctx = document.getElementById('myChart').getContext('2d');
+            ctx.width = 500;
+            ctx.height = 300;
+            var chart = new Chart(ctx, {
+                // The type of chart we want to create
+                type: 'pie',
 
-                        // Configuration options go here
-                        options: {}
-});  
-            </script>
-        </body>
-    
+                // The data for our dataset
+                data: {
+                    labels: ['Active', 'Inactive'],
+                    datasets: [{
+                            label: 'User Chart',
+                            backgroundColor: 'rgb(100, 99, 120)',
+                            borderColor: 'rgb(255, 99, 132)',
+                            data: <?php echo json_encode($myData, JSON_NUMERIC_CHECK); ?>,
+                        }]
+                },
+
+                // Configuration options go here
+                options: {}
+            });
+        </script>
+    </body>
+
 </html>
 
 

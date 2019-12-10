@@ -179,6 +179,15 @@ switch ($action) {
         $endDate ='9999-12-12';
         $filePath ='images/default avatar.png';
         
+        if($userType == 'cna'){
+            $uType ="cna";
+        }elseif ($userType =='cma') {
+            $uType ="cma";
+            
+        }else{
+            $uType ='Other';
+        }
+        
         // Password Validation
         if (preg_match('/^.{10}/', $password) != 1) {
             $errshortPass = "Password must be at least 10 characters.";
@@ -456,6 +465,9 @@ switch ($action) {
             }
           }
  
+          if(!empty($dcsDate)&& $endDate =='' || $endDate ==null){
+              $endDate =$dscDate;
+          }
           if(empty($endDate)){
               $endDate ='9999-12-12';
           }else{
@@ -857,8 +869,9 @@ switch ($action) {
         
     case'updateMedicationView':
        // view list of current meds
-        $adate =date('Y-m-d');
-       $medication = patient_db::select_patientMeds($_SESSION['pID'], $adate);
+        $pid = filter_input(INPUT_POST, 'pID');
+        $curDate =date('Y-m-d');
+        $medication = patient_db::select_patientMeds($pid, $curDate);
         
        include'view/updateMedicationView.php';
         die();
@@ -931,8 +944,8 @@ switch ($action) {
        
        If($errMed ==0){
            patient_db::update_patientMed($medid, $pid, $drug, $quantity, $timesPerDay, $medNote, $begDate, $endDate);
-            $adate =date('Y-m-d');
-           $medication = patient_db::select_patientMeds($_SESSION['pID'], $adate);
+            $curDate =date('Y-m-d');
+           $medication = patient_db::select_patientMeds($pid, $curDate);
            if(!empty($medication)){
                include'view/updateMedicationView.php';
                
