@@ -104,6 +104,9 @@ if (!isset($errfNamefirstchar)) {
                     <label>Password</label>
                     <input class="form-control" type="password" name="password"><br>
                     <a href="register_view.php"></a>
+                    <span class="error"><?php echo htmlspecialchars($errinvalidEmail); ?></span>
+                     <span class="error"><?php echo htmlspecialchars($errnoEmail); ?></span>
+                     <span class="error"><?php echo htmlspecialchars($erremailTaken); ?></span>
                     <span class="error"><?php echo htmlspecialchars($errshortPass); ?></span>
                     <span class="error"><?php echo htmlspecialchars($errlcasePass); ?></span>
                     <span class="error"><?php echo htmlspecialchars($errucasePass); ?></span>

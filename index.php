@@ -84,6 +84,11 @@ switch ($action) {
 
         die();
         break;
+    case 'contactus':
+        
+        include 'view/contactUsView.php';
+        die();
+        break;
 
     case 'login_user':
         //user profile view 
@@ -243,7 +248,7 @@ switch ($action) {
             user_db::insert_user($fName, $lName, $uname, $hashpass, $userType, $begDate, $endDate, $filePath);
 
             include 'view/login_view.php';
-        } else {
+        }else{ 
            include 'view/register_view.php';
             
         }        

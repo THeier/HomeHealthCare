@@ -63,7 +63,7 @@ if (isset($_SESSION['uid']) && $_SESSION['uid'] != '') {
                 <ul class="navbar-nav">
 <?php if ($_SESSION['uid'] == '' && $_SESSION['admin'] == '') { ?>
                         <li class="nav-item"><a class="nav-link" onclick="window.location.href = '?action=login';">About Us</a></li>
-                        <li class="nav-item"><a class="nav-link" onclick="window.location.href = '?action=login';">Contact Us</a></li>
+                        <li class="nav-item"><a class="nav-link" onclick="window.location.href = '?action=contactus';">Contact Us</a></li>
                         <li class="nav-item"><a class="nav-link" onclick="window.location.href = '?action=login';">Log In</a></li>
                         <li class="nav-item"><a class="nav-link" onclick="window.location.href = '?action=register';">Register</a></li>
 <?php } ?>
